@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: f6d5530dd255a6242875e17905c22004
+  productGUID: 7e5461c6bf12922448a0517f236bf82b
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -916,10 +916,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 97e2484c-c95d-4823-9f63-b715fbc3a9bd
+  cloudProjectId: 7e788dcb-54e2-4118-9ec9-eb96618a02be
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: OurGame
+  projectName: OurGame 2025-07-24_15-27-10
   organizationId: lahlama
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
