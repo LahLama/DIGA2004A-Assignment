@@ -145,10 +145,10 @@
                 {
                     "name": "",
                     "id": "03466921-c36f-41f8-923f-4a165c6ab14d",
-                    "path": "<Pointer>/delta",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": ";Keyboard;Console",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false

@@ -390,7 +390,6 @@ GameObject:
   - component: {fileID: 830116207}
   - component: {fileID: 830116212}
   - component: {fileID: 830116211}
-  - component: {fileID: 830116210}
   - component: {fileID: 830116213}
   m_Layer: 0
   m_Name: Cube
@@ -468,33 +467,6 @@ Transform:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &830116210
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830116205}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &830116211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,8 +480,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  lookSensitivity: 50
+  LookVector: {x: 0, y: 0}
+  rotation: {x: 0, y: 0, z: 0}
   _moveDirection: {x: 0, y: 0}
-  characterController: {fileID: 0}
+  characterController: {fileID: 830116213}
 --- !u!114 &830116212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,7 +531,19 @@ MonoBehaviour:
     m_ActionId: c27be083-f073-45fd-9175-56f8899717fb
     m_ActionName: 'Gameplay/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 830116211}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnLook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: dc82c0ce-ab8c-4db8-9e21-68701d8d299c
     m_ActionName: 'Gameplay/Look[/Mouse/delta,/Touchscreen/delta,/Pen/delta]'
   - m_PersistentCalls:
@@ -586,10 +573,10 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0.06
+  m_Height: 1.49
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.02
+  m_StepOffset: 0.3
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: -0, z: 0}
