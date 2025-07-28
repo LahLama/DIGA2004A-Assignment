@@ -1,4 +1,5 @@
 using Unity.Mathematics;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -19,13 +20,18 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Components")]
     public CharacterController characterController;
+    private InputActionAsset inputActions;
+    private InputAction lookAction;
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         rotation = transform.localEulerAngles;
+        lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
 
-        Cursor.visible = true; // Hide the cursor
+        lookAction.performed += context => LookVector = context.ReadValue<Vector2>();
+        lookAction.canceled += context => LookVector = Vector2.zero;
+
     }
     void Update()
     {
@@ -46,20 +52,12 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move(move * moveSpeed * Time.deltaTime);
     }
 
-    public void OnLook(InputAction.CallbackContext context) //this is how we read the input
-    {
-        LookVector = context.ReadValue<Vector2>();
-        print("LookVector: " + LookVector);
-    }
+
 
     private void RotatePlayer()
     {
-        /*print("Rotation: " + rotation);
-        print("LookVector: " + LookVector.x);
-        print("lookSensitivity: " + lookSensitivity);
-       */
-        rotation.y += LookVector.x * lookSensitivity;
-        transform.rotation = Quaternion.Euler(new Vector3(0, rotation.y, 0));
+        float mouseX = LookVector.x * lookSensitivity;
+        transform.Rotate(0, mouseX, 0);
     }
 
 
