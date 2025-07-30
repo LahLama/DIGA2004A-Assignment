@@ -6,15 +6,6 @@
             "id": "ee15873d-cbd8-4d2a-88a7-d7b5b22b2e7e",
             "actions": [
                 {
-                    "name": "Throw",
-                    "type": "Button",
-                    "id": "c7e529eb-5b2f-4103-ba69-9d3424035d2a",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Movement",
                     "type": "Value",
                     "id": "c27be083-f073-45fd-9175-56f8899717fb",
@@ -40,31 +31,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Pickup",
+                    "type": "Button",
+                    "id": "708dd01e-1bda-4da9-a6e3-dfc4e3cb48d6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "707656eb-6e8b-4526-b5d0-e69fdc5ed872",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard",
-                    "action": "Throw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7a7ae9ae-b706-47c0-9109-a7a8b503e185",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Throw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "cf1bba42-343c-4bd9-84b9-287d3c84bba0",
@@ -172,6 +150,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "105a559f-b46b-4481-bdcc-4581c0654269",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09919203-ce3f-4e03-a83b-1ec00492cfd2",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pickup",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

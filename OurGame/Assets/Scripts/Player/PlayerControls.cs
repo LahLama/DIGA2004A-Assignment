@@ -92,15 +92,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""ee15873d-cbd8-4d2a-88a7-d7b5b22b2e7e"",
             ""actions"": [
                 {
-                    ""name"": ""Throw"",
-                    ""type"": ""Button"",
-                    ""id"": ""c7e529eb-5b2f-4103-ba69-9d3424035d2a"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Movement"",
                     ""type"": ""Value"",
                     ""id"": ""c27be083-f073-45fd-9175-56f8899717fb"",
@@ -126,31 +117,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pickup"",
+                    ""type"": ""Button"",
+                    ""id"": ""708dd01e-1bda-4da9-a6e3-dfc4e3cb48d6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""707656eb-6e8b-4526-b5d0-e69fdc5ed872"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard"",
-                    ""action"": ""Throw"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7a7ae9ae-b706-47c0-9109-a7a8b503e185"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Throw"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""cf1bba42-343c-4bd9-84b9-287d3c84bba0"",
@@ -260,6 +238,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""105a559f-b46b-4481-bdcc-4581c0654269"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""09919203-ce3f-4e03-a83b-1ec00492cfd2"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -291,10 +291,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
 }");
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_Throw = m_Gameplay.FindAction("Throw", throwIfNotFound: true);
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
+        m_Gameplay_Pickup = m_Gameplay.FindAction("Pickup", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -375,10 +375,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
-    private readonly InputAction m_Gameplay_Throw;
     private readonly InputAction m_Gameplay_Movement;
     private readonly InputAction m_Gameplay_Look;
     private readonly InputAction m_Gameplay_Jump;
+    private readonly InputAction m_Gameplay_Pickup;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -391,10 +391,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// </summary>
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Gameplay/Throw".
-        /// </summary>
-        public InputAction @Throw => m_Wrapper.m_Gameplay_Throw;
-        /// <summary>
         /// Provides access to the underlying input action "Gameplay/Movement".
         /// </summary>
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
@@ -406,6 +402,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/Jump".
         /// </summary>
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Pickup".
+        /// </summary>
+        public InputAction @Pickup => m_Wrapper.m_Gameplay_Pickup;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -432,9 +432,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_GameplayActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_GameplayActionsCallbackInterfaces.Add(instance);
-            @Throw.started += instance.OnThrow;
-            @Throw.performed += instance.OnThrow;
-            @Throw.canceled += instance.OnThrow;
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
@@ -444,6 +441,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Pickup.started += instance.OnPickup;
+            @Pickup.performed += instance.OnPickup;
+            @Pickup.canceled += instance.OnPickup;
         }
 
         /// <summary>
@@ -455,9 +455,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="GameplayActions" />
         private void UnregisterCallbacks(IGameplayActions instance)
         {
-            @Throw.started -= instance.OnThrow;
-            @Throw.performed -= instance.OnThrow;
-            @Throw.canceled -= instance.OnThrow;
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
@@ -467,6 +464,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Pickup.started -= instance.OnPickup;
+            @Pickup.performed -= instance.OnPickup;
+            @Pickup.canceled -= instance.OnPickup;
         }
 
         /// <summary>
@@ -534,13 +534,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IGameplayActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Throw" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnThrow(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "Movement" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -561,5 +554,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Pickup" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPickup(InputAction.CallbackContext context);
     }
 }

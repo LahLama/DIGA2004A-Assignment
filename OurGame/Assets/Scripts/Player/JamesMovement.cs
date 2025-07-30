@@ -8,13 +8,14 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f;
     public float lookSensitivity = 2f;
     public Vector2 LookVector;
-    public Vector3 _lookDirection;
-    public Vector2 _moveDirection;
+    public Vector2 MoveVector;
+
+
 
 
     public CharacterController characterController;
-    private PlayerControls playerControls;
-    private InputAction lookDirectionAction;
+
+
 
     void Start()
     {
@@ -26,27 +27,28 @@ public class PlayerMovement : MonoBehaviour
         RotatePlayer();
 
     }
-    public void OnMove(InputAction.CallbackContext context) //this is how we read the input
+    public void OnMove(InputValue value) //this is how we read the input
     {
-        _moveDirection = context.ReadValue<Vector2>();
+        MoveVector = value.Get<Vector2>();
+        print("MoveVector: " + MoveVector);
 
     }
 
-    public void OnLook(InputAction.CallbackContext context) //this is how we read the input
+    public void OnLook(InputValue value) //this is how we read the input
     {
-        LookVector = context.ReadValue<Vector2>();
+        LookVector = value.Get<Vector2>();
+        print("LookVector: " + LookVector);
 
     }
 
     private void RotatePlayer()
     {
-        _lookDirection.y += LookVector.x * lookSensitivity * Time.deltaTime;
-        transform.localEulerAngles = _lookDirection;
+        transform.Translate(new Vector3(LookVector.x, LookVector.y, 0) * lookSensitivity * Time.deltaTime);
     }
 
     private void MovePlayer()
     {
-        Vector3 move = transform.right * _moveDirection.x + transform.forward * _moveDirection.y;
+        Vector3 move = transform.right * MoveVector.x + transform.forward * MoveVector.y;
         characterController.Move(move * moveSpeed * Time.deltaTime);
     }
 
