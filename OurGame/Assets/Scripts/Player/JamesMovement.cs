@@ -1,25 +1,26 @@
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
     //https://www.youtube.com/watch?v=BxIIg639KpM
     public float moveSpeed = 5f;
-    public float lookSensitivity = 2f;
+    public float lookSensitivity = 50f;
     public Vector2 LookVector;
-    public Vector2 MoveVector;
-
-
+    public Vector3 rotation;
+    public Vector2 _moveDirection;
 
 
     public CharacterController characterController;
 
-
-
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        rotation = transform.localEulerAngles;
+        Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
+
     }
     void Update()
     {
@@ -27,30 +28,31 @@ public class PlayerMovement : MonoBehaviour
         RotatePlayer();
 
     }
-    public void OnMove(InputValue value) //this is how we read the input
+    public void OnMove(InputAction.CallbackContext context) //this is how we read the input
     {
-        MoveVector = value.Get<Vector2>();
-        print("MoveVector: " + MoveVector);
+        _moveDirection = context.ReadValue<Vector2>();
 
     }
 
-    public void OnLook(InputValue value) //this is how we read the input
-    {
-        LookVector = value.Get<Vector2>();
-        print("LookVector: " + LookVector);
 
+    private void MovePlayer()
+    {
+        Vector3 move = transform.right * _moveDirection.x + transform.forward * _moveDirection.y;
+        characterController.Move(move * moveSpeed * Time.deltaTime);
+    }
+
+    public void OnLook(InputAction.CallbackContext context) //this is how we read the input
+    {
+        LookVector = context.ReadValue<Vector2>();
+        print("LookVector: " + LookVector);
     }
 
     private void RotatePlayer()
     {
-        transform.Translate(new Vector3(LookVector.x, LookVector.y, 0) * lookSensitivity * Time.deltaTime);
+        rotation.y += LookVector.x * lookSensitivity * Time.deltaTime;
+        transform.localEulerAngles = rotation;
     }
 
-    private void MovePlayer()
-    {
-        Vector3 move = transform.right * MoveVector.x + transform.forward * MoveVector.y;
-        characterController.Move(move * moveSpeed * Time.deltaTime);
-    }
 
 
 

@@ -71,7 +71,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -82,7 +82,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -93,7 +93,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -104,29 +104,18 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "",
-                    "id": "4779f6cc-b2fe-45de-b3c7-efcef04ddb32",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "03466921-c36f-41f8-923f-4a165c6ab14d",
+                    "id": "f8f005c1-7511-4b4c-966a-85aa04f9f49d",
                     "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard;Console",
+                    "groups": "",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -180,11 +169,16 @@
     ],
     "controlSchemes": [
         {
-            "name": "Keyboard",
-            "bindingGroup": "Keyboard",
+            "name": "Keyboard&Mouse",
+            "bindingGroup": "Keyboard&Mouse",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }

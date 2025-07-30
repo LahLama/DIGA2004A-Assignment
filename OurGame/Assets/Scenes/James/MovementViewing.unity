@@ -389,8 +389,8 @@ GameObject:
   - component: {fileID: 830116208}
   - component: {fileID: 830116207}
   - component: {fileID: 830116212}
-  - component: {fileID: 830116211}
   - component: {fileID: 830116213}
+  - component: {fileID: 830116214}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -467,24 +467,6 @@ Transform:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &830116211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830116205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b36ede1c001dd0d468ac503580d9dfe6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  _moveDirection: {x: 0, y: 0}
-  LookVector: {x: 0, y: 0}
-  rotation: {x: 0, y: 0, z: 0}
-  lookSensitivity: 50
-  characterController: {fileID: 830116213}
 --- !u!114 &830116212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,12 +493,8 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c7e529eb-5b2f-4103-ba69-9d3424035d2a
-    m_ActionName: 'Gameplay/Throw[/Keyboard/f]'
-  - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 830116211}
+      - m_Target: {fileID: 830116214}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
@@ -532,7 +510,7 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 830116211}
+      - m_Target: {fileID: 830116214}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: OnLook
         m_Mode: 0
@@ -550,8 +528,12 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 2ef822c6-c597-4bde-a448-5aed61b16b20
     m_ActionName: 'Gameplay/Jump[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 708dd01e-1bda-4da9-a6e3-dfc4e3cb48d6
+    m_ActionName: 'Gameplay/Pickup[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard
+  m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -580,6 +562,24 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: -0, z: 0}
+--- !u!114 &830116214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830116205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36ede1c001dd0d468ac503580d9dfe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  lookSensitivity: 2
+  LookVector: {x: 0, y: 0}
+  rotation: {x: 0, y: 0, z: 0}
+  _moveDirection: {x: 0, y: 0}
+  characterController: {fileID: 830116213}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
