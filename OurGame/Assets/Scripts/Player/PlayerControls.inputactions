@@ -148,7 +148,7 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Pickup",
                     "isComposite": false,
                     "isPartOfComposite": false

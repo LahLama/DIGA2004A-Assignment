@@ -1,3 +1,4 @@
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -6,14 +7,21 @@ using UnityEngine.Rendering;
 public class PlayerMovement : MonoBehaviour
 {
     //https://www.youtube.com/watch?v=BxIIg639KpM
+
+    [Header("Movement Settings")]
     public float moveSpeed = 5f;
+    private Vector2 _moveDirection;
+
+
+    [Header("Looking Settings")]
     public float lookSensitivity = 50f;
-    public Vector2 LookVector;
-    public Vector3 rotation;
-    public Vector2 _moveDirection;
+    private Vector2 LookVector;
+    private Vector3 rotation;
+    public float bobbingSensitivity = 0.1f; // Adjust this value to control the bobbing effect
 
-
+    [Header("Character Controller")]
     public CharacterController characterController;
+    public GameObject FPUI; // Reference to the camera for looking around
 
     void Start()
     {
@@ -32,6 +40,11 @@ public class PlayerMovement : MonoBehaviour
     {
         _moveDirection = context.ReadValue<Vector2>();
 
+
+        if (context.performed)
+        {
+            BobCamera();
+        }
     }
 
 
@@ -39,21 +52,30 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 move = transform.right * _moveDirection.x + transform.forward * _moveDirection.y;
         characterController.Move(move * moveSpeed * Time.deltaTime);
+        transform.position = new Vector3(transform.position.x, 1, transform.position.z); // Ensure the player stays on the ground plane
+
+
     }
 
     public void OnLook(InputAction.CallbackContext context) //this is how we read the input
     {
         LookVector = context.ReadValue<Vector2>();
-        print("LookVector: " + LookVector);
+
+
     }
 
     private void RotatePlayer()
     {
         rotation.y += LookVector.x * lookSensitivity * Time.deltaTime;
+        rotation.x -= LookVector.y * lookSensitivity * Time.deltaTime;
+        rotation.x = Mathf.Clamp(rotation.x, -90f, 90f); // Clamp the vertical rotation to prevent flipping
         transform.localEulerAngles = rotation;
     }
 
-
+    private void BobCamera()
+    { //Bobbing
+        FPUI.transform.position = new Vector3(FPUI.transform.position.x, FPUI.transform.position.y + Mathf.Sin(Time.time * 10) * bobbingSensitivity, 0);
+    }
 
 
 
