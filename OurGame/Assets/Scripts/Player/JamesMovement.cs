@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Character Controller")]
     public CharacterController characterController;
-    public GameObject FPUI; // Reference to the camera for looking around
+    public Camera FPCamera; // Reference to the camera for looking around
 
     void Start()
     {
@@ -41,10 +41,7 @@ public class PlayerMovement : MonoBehaviour
         _moveDirection = context.ReadValue<Vector2>();
 
 
-        if (context.performed)
-        {
-            BobCamera();
-        }
+        BobCamera();
     }
 
 
@@ -52,16 +49,16 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 move = transform.right * _moveDirection.x + transform.forward * _moveDirection.y;
         characterController.Move(move * moveSpeed * Time.deltaTime);
+
+        //-------------------TEMPORARY-------------------
         transform.position = new Vector3(transform.position.x, 1, transform.position.z); // Ensure the player stays on the ground plane
 
-
+        BobCamera();
     }
 
     public void OnLook(InputAction.CallbackContext context) //this is how we read the input
     {
         LookVector = context.ReadValue<Vector2>();
-
-
     }
 
     private void RotatePlayer()
@@ -74,7 +71,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void BobCamera()
     { //Bobbing
-        FPUI.transform.position = new Vector3(FPUI.transform.position.x, FPUI.transform.position.y + Mathf.Sin(Time.time * 10) * bobbingSensitivity, 0);
+        float bobbingAmount = Mathf.Sin(Time.time * 10) * bobbingSensitivity; // Adjust the multiplier for more or less bobbing
+        FPCamera.transform.localEulerAngles = new Vector3(FPCamera.transform.rotation.x + bobbingAmount, FPCamera.transform.rotation.y, FPCamera.transform.rotation.z);
     }
 
 
