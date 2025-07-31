@@ -1620,6 +1620,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 708dd01e-1bda-4da9-a6e3-dfc4e3cb48d6
     m_ActionName: 'Gameplay/Pickup[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 830116214}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnSprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d348257f-cf80-4b4c-b477-41019fc5b864
+    m_ActionName: 'Gameplay/Sprint[/Keyboard/ctrl]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Gameplay
@@ -1667,6 +1683,8 @@ MonoBehaviour:
   cameraTransform: {fileID: 330585546}
   lookSensitivity: 0.2
   verticalLookLimit: 90
+  bobbingSensitivity: 4
+  FPCamera: {fileID: 330585545}
 --- !u!114 &830116215
 MonoBehaviour:
   m_ObjectHideFlags: 0
