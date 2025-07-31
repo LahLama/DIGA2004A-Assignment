@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform cameraTransform;
     public float lookSensitivity = 2f;
     public float verticalLookLimit = 90f;
-    public float bobbingSensitivity = 4; // Sensitivity for camera bobbing
+    public float bobbingSensitivity = 0.1f; // Sensitivity for camera bobbing
 
     private CharacterController controller;
     private Vector2 moveInput;
@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+        BobCamera();
     }
 
     public void OnLook(InputAction.CallbackContext context)
@@ -66,13 +67,15 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        BobCamera();
+
 
 
     }
 
     private void BobCamera()
     { //Bobbing
+        print("Bobbing");
+        if (!controller.isGrounded) return; // Only bob when grounded
         float bobbingAmount = Mathf.Sin(Time.time * 10) * bobbingSensitivity; // Adjust the multiplier for more or less bobbing
         cameraTransform.transform.localEulerAngles = new Vector3(cameraTransform.transform.rotation.x + bobbingAmount, cameraTransform.transform.rotation.y, cameraTransform.transform.rotation.z);
     }
