@@ -1,4 +1,5 @@
 using System.Xml.Serialization;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -6,92 +7,64 @@ using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //https://www.youtube.com/watch?v=BxIIg639KpM
-
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
-    private Vector2 _moveDirection;
+    public float gravity = -9.81f;
 
+    [Header("Look Settings")]
+    public Transform cameraTransform;
+    public float lookSensitivity = 2f;
+    public float verticalLookLimit = 90f;
 
-    [Header("Looking Settings")]
-    public float lookSensitivity = 50f;
-    private Vector2 LookVector;
-    private Vector3 rotation;
-    public float bobbingSensitivity = 0.1f; // Adjust this value to control the bobbing effect
+    private CharacterController controller;
+    private Vector2 moveInput;
+    private Vector2 lookInput;
+    private Vector3 velocity;
+    private float verticalRotation = 0f;
 
-    [Header("Character Controller")]
-    public CharacterController characterController;
-    public Camera FPCamera; // Reference to the camera for looking around
-
-    void Start()
+    private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
-        rotation = transform.localEulerAngles;
-        Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
-
+        controller = GetComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
-    void Update()
+
+    private void Update()
     {
-        MovePlayer();
-        RotatePlayer();
-
+        HandleMovement();
+        HandleLook();
     }
-    public void OnMove(InputAction.CallbackContext context) //this is how we read the input
+    public void OnMove(InputAction.CallbackContext context)
     {
-        _moveDirection = context.ReadValue<Vector2>();
-
-
-        BobCamera();
+        moveInput = context.ReadValue<Vector2>();
     }
 
-
-    private void MovePlayer()
+    public void OnLook(InputAction.CallbackContext context)
     {
-        Vector3 move = transform.right * _moveDirection.x + transform.forward * _moveDirection.y;
-        characterController.Move(move * moveSpeed * Time.deltaTime);
-
-        //-------------------TEMPORARY-------------------
-        transform.position = new Vector3(transform.position.x, 1, transform.position.z); // Ensure the player stays on the ground plane
-
-        BobCamera();
+        lookInput = context.ReadValue<Vector2>();
     }
 
-    public void OnLook(InputAction.CallbackContext context) //this is how we read the input
+    public void HandleMovement()
     {
-        LookVector = context.ReadValue<Vector2>();
+        Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
+        controller.Move(move * moveSpeed * Time.deltaTime);
+
+        if (controller.isGrounded && velocity.y < 0)
+            velocity.y = -2f;
+
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
     }
 
-    private void RotatePlayer()
+    public void HandleLook()
     {
-        rotation.y += LookVector.x * lookSensitivity * Time.deltaTime;
-        rotation.x -= LookVector.y * lookSensitivity * Time.deltaTime;
-        rotation.x = Mathf.Clamp(rotation.x, -90f, 90f); // Clamp the vertical rotation to prevent flipping
-        transform.localEulerAngles = rotation;
+        float mouseX = lookInput.x * lookSensitivity;
+        float mouseY = lookInput.y * lookSensitivity;
+
+        verticalRotation -= mouseY;
+        verticalRotation = Mathf.Clamp(verticalRotation, -verticalLookLimit, verticalLookLimit);
+
+        cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+        transform.Rotate(Vector3.up * mouseX);
     }
-
-    private void BobCamera()
-    { //Bobbing
-        float bobbingAmount = Mathf.Sin(Time.time * 10) * bobbingSensitivity; // Adjust the multiplier for more or less bobbing
-        FPCamera.transform.localEulerAngles = new Vector3(FPCamera.transform.rotation.x + bobbingAmount, FPCamera.transform.rotation.y, FPCamera.transform.rotation.z);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
