@@ -1,4 +1,5 @@
 using System.Xml.Serialization;
+using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,10 +13,10 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = -9.81f;
 
     [Header("Look Settings")]
-    public Transform cameraTransform;
+    public GameObject cameraTransform;
     public float lookSensitivity = 2f;
     public float verticalLookLimit = 90f;
-    public float bobbingSensitivity = 4; // Sensitivity for camera bobbing
+    public float bobbingSensitivity = 0.1f; // Sensitivity for camera bobbing
 
     private CharacterController controller;
     private Vector2 moveInput;
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+
         HandleMovement();
         HandleLook();
         HandleSprint();
@@ -41,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+
     }
 
     public void OnLook(InputAction.CallbackContext context)
@@ -60,6 +63,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
         controller.Move(move * moveSpeed * Time.deltaTime);
 
+
+
         if (controller.isGrounded && velocity.y < 0)
             velocity.y = -2f;
 
@@ -69,12 +74,19 @@ public class PlayerMovement : MonoBehaviour
         BobCamera();
 
 
+
+
+
     }
 
     private void BobCamera()
     { //Bobbing
-        float bobbingAmount = Mathf.Sin(Time.time * 10) * bobbingSensitivity; // Adjust the multiplier for more or less bobbing
-        cameraTransform.transform.localEulerAngles = new Vector3(cameraTransform.transform.rotation.x + bobbingAmount, cameraTransform.transform.rotation.y, cameraTransform.transform.rotation.z);
+
+        float bobbingAmount = Mathf.Sin(Time.time * moveSpeed * 2) * bobbingSensitivity * Mathf.RoundToInt(moveInput.magnitude);
+        Vector3 camPos = cameraTransform.transform.localPosition;
+        camPos.y = bobbingAmount;
+        cameraTransform.transform.localPosition = camPos;
+
     }
     public void HandleLook()
     {
@@ -84,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -verticalLookLimit, verticalLookLimit);
 
-        cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+        cameraTransform.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
     }
 
