@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private float verticalRotation = 0f;
 
+    public GameObject Hand; // Reference to the hand object for bobbing
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -86,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 camPos = cameraTransform.transform.localPosition;
         camPos.y = bobbingAmount;
         cameraTransform.transform.localPosition = camPos;
+        //Hand.transform.position = camPos;
 
     }
     public void HandleLook()
