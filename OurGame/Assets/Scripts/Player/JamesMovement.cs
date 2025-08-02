@@ -1,4 +1,5 @@
 using System.Xml.Serialization;
+using TMPro;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool sprintInput;
     private bool crouchInput;
+    public TextMeshProUGUI debugText;
 
 
     private Vector3 velocity;
@@ -136,11 +138,12 @@ public class PlayerMovement : MonoBehaviour
         if (sprintInput)
         {
             moveSpeed = sprintSpeed; // Sprint speed
-            Debug.Log("Sprinting");
+            debugText.text = "Sprinting"; // Update debug text
         }
         else
         {
             moveSpeed = normalSpeed; // Reset to normal speed
+            debugText.text = "Walking"; // Update debug text
         }
     }
     public void HandleCrouch()
@@ -155,12 +158,13 @@ public class PlayerMovement : MonoBehaviour
         {
             moveSpeed = crouchSpeed; // Sprint speed
             this.transform.localScale = new Vector3(scaleModifer, scaleModifer, scaleModifer); // Adjust player scale for crouching
-            Debug.Log("Crouching");
+            debugText.text = "Crouching"; // Update debug text
         }
         else
         {
             moveSpeed = normalSpeed; // Reset to normal speed
             this.transform.localScale = new Vector3(normalScale, normalScale, normalScale); // Adjust player scale for crouching
+            debugText.text = "Walking"; // Update debug text
         }
     }
 
