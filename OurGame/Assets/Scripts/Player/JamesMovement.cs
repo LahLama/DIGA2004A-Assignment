@@ -16,13 +16,17 @@ public class PlayerMovement : MonoBehaviour
     public GameObject cameraTransform;
     public float lookSensitivity = 2f;
     public float verticalLookLimit = 90f;
-    public float bobbingSensitivity = 0.1f; // Sensitivity for camera bobbing
+    public float bobbingAmplitude = 25f; // Sensitivity for camera bobbing
+    public float bobbingFrequency = 1f; // Frequency of bobbing
 
     private CharacterController controller;
     private Vector2 moveInput;
     private Vector2 lookInput;
 
     private bool sprintInput;
+    private bool crouchInput;
+
+
     private Vector3 velocity;
     private float verticalRotation = 0f;
 
@@ -32,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
 
     private void Update()
@@ -40,7 +44,10 @@ public class PlayerMovement : MonoBehaviour
 
         HandleMovement();
         HandleLook();
-        HandleSprint();
+
+        HandleCrouchOrSprint();
+
+
     }
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -57,7 +64,10 @@ public class PlayerMovement : MonoBehaviour
     {
         sprintInput = context.ReadValueAsButton();
     }
-
+    public void OnCrouch(InputAction.CallbackContext context)
+    {
+        crouchInput = context.ReadValueAsButton();
+    }
 
 
     public void HandleMovement()
@@ -68,13 +78,20 @@ public class PlayerMovement : MonoBehaviour
 
 
         if (controller.isGrounded && velocity.y < 0)
+        {
             velocity.y = -2f;
-
+        }
         velocity.y += gravity * Time.deltaTime;
+
+
         controller.Move(velocity * Time.deltaTime);
 
-        BobCamera();
 
+
+        if (moveInput.magnitude > 0.1f) // Only bob when moving
+        {
+            BobCamera();
+        }
 
 
 
@@ -84,11 +101,18 @@ public class PlayerMovement : MonoBehaviour
     private void BobCamera()
     { //Bobbing
 
-        float bobbingAmount = Mathf.Sin(Time.time * moveSpeed * 2) * bobbingSensitivity * Mathf.RoundToInt(moveInput.magnitude);
-        Vector3 camPos = cameraTransform.transform.localPosition;
-        camPos.y = bobbingAmount;
-        cameraTransform.transform.localPosition = camPos;
-        //Hand.transform.position = camPos;
+        float bobbingAmount = Mathf.Sin(Time.time * (bobbingFrequency + moveSpeed / 2)) * bobbingAmplitude;
+
+        // print(bobbingAmount);
+        /* Vector3 camPos = cameraTransform.transform.localPosition;
+         camPos.y = bobbingAmount;
+         cameraTransform.transform.localPosition = camPos;*/
+
+
+
+        cameraTransform.transform.localRotation = Quaternion.Euler(cameraTransform.transform.localRotation.eulerAngles.x, cameraTransform.transform.localRotation.eulerAngles.y, (bobbingAmount / bobbingAmplitude) * 0.1f);
+        Hand.transform.position = new Vector3(Hand.transform.position.x, bobbingAmount, Hand.transform.position.z); // Adjust hand position based on bobbing
+
 
     }
     public void HandleLook()
@@ -99,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -verticalLookLimit, verticalLookLimit);
 
-        cameraTransform.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+        cameraTransform.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, cameraTransform.transform.localRotation.eulerAngles.z);
         transform.Rotate(Vector3.up * mouseX);
     }
 
@@ -112,10 +136,48 @@ public class PlayerMovement : MonoBehaviour
         if (sprintInput)
         {
             moveSpeed = sprintSpeed; // Sprint speed
+            Debug.Log("Sprinting");
         }
         else
         {
             moveSpeed = normalSpeed; // Reset to normal speed
         }
     }
+    public void HandleCrouch()
+    {
+        float crouchSpeed = 1f;
+        float scaleModifer = 0.4f;
+        float normalScale = 0.7f;
+        float normalSpeed = 5f;
+
+
+        if (crouchInput)
+        {
+            moveSpeed = crouchSpeed; // Sprint speed
+            this.transform.localScale = new Vector3(scaleModifer, scaleModifer, scaleModifer); // Adjust player scale for crouching
+            Debug.Log("Crouching");
+        }
+        else
+        {
+            moveSpeed = normalSpeed; // Reset to normal speed
+            this.transform.localScale = new Vector3(normalScale, normalScale, normalScale); // Adjust player scale for crouching
+        }
+    }
+
+    private void HandleCrouchOrSprint()
+    {
+        if (sprintInput)
+        {
+            HandleSprint();
+        }
+        if (crouchInput)
+        {
+            HandleCrouch();
+        }
+
+    }
+
+
+
+
 }
