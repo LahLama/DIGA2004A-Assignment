@@ -1,3 +1,4 @@
+using System;
 using System.Xml.Serialization;
 using TMPro;
 using Unity.VisualScripting;
@@ -47,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();
         HandleLook();
 
-        HandleCrouchOrSprint();
+        HandleMovementModifiers();
 
 
     }
@@ -132,7 +133,6 @@ public class PlayerMovement : MonoBehaviour
     public void HandleSprint()
     {
         float sprintSpeed = 10f;
-        float normalSpeed = 5f;
 
 
         if (sprintInput)
@@ -142,16 +142,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            moveSpeed = normalSpeed; // Reset to normal speed
-            debugText.text = "Walking"; // Update debug text
+
         }
     }
     public void HandleCrouch()
     {
         float crouchSpeed = 1f;
         float scaleModifer = 0.4f;
-        float normalScale = 0.7f;
-        float normalSpeed = 5f;
+
 
 
         if (crouchInput)
@@ -162,23 +160,35 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            moveSpeed = normalSpeed; // Reset to normal speed
-            this.transform.localScale = new Vector3(normalScale, normalScale, normalScale); // Adjust player scale for crouching
-            debugText.text = "Walking"; // Update debug text
+
+
         }
     }
 
-    private void HandleCrouchOrSprint()
+    private void HandleWalk()
     {
-        if (sprintInput)
+        float normalScale = 0.7f;
+        float normalSpeed = 5f;
+
+
+        moveSpeed = normalSpeed; // Reset to normal speed
+        this.transform.localScale = new Vector3(normalScale, normalScale, normalScale); // Adjust player scale for crouching
+        debugText.text = "Walking"; // Update debug text
+
+    }
+
+    private void HandleMovementModifiers()
+    {
+        if (sprintInput && !crouchInput)
         {
             HandleSprint();
         }
-        if (crouchInput)
+        else if (crouchInput && !sprintInput)
         {
             HandleCrouch();
         }
-
+        else
+            HandleWalk();
     }
 
 

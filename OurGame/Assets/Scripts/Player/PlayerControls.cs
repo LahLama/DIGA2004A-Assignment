@@ -325,6 +325,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""518f5fdc-a0b6-447a-ac70-ea71cd2b2d6d"",
+                    ""path"": ""<Joystick>/stick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Console"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""f8f005c1-7511-4b4c-966a-85aa04f9f49d"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
