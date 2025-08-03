@@ -1,12 +1,7 @@
-using System;
-using System.Xml.Serialization;
 using TMPro;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
+
 
 public class PlayerMovement : MonoBehaviour
 {
