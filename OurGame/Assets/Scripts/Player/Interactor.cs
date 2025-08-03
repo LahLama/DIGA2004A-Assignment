@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using System.Collections;
+using UnityEditor.ShaderGraph;
 
 public class Interactor : MonoBehaviour
 {
@@ -8,32 +11,85 @@ public class Interactor : MonoBehaviour
 
     public LayerMask interactionsMask;
     public Image CanInteractToolTip;
-    void Start()
-    {
-
-    }
-
+    public GameObject innerDialougePanel;
+    private RaycastHit hitInfo;
+    private bool interactionInput;
+    bool ray;
     void Update()
     {
 
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, 3.5f, interactionsMask))
-        {
-            Debug.Log("hit something");
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.green);
-            CanInteractToolTip.color = new Color(1f, 1, 1f, 1f);
+        HandleInteractions();
+    }
 
+    public void OnInteractions(InputAction.CallbackContext context)
+    {
+        interactionInput = context.ReadValueAsButton();
+    }
+
+
+    void HandleInteractions()
+    {
+        HandleTooltip();
+        ray = Physics.Raycast(transform.position, transform.forward, out hitInfo, 3.5f, interactionsMask);
+
+        if (interactionInput)
+        {
+
+            if (ray)
+            {
+                Debug.Log("hit something");
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.green);
+                StartCoroutine(InnerDialogueContorl());
+            }
+
+            else
+            {
+                Debug.Log("NULL");
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 5f, Color.red);
+            }
         }
 
-        else
-        {
-            Debug.Log("NULL");
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 5f, Color.red);
-            CanInteractToolTip.color = new Color(1f, 1, 1f, 0.5f);
-        }
+
 
 
 
 
     }
+
+
+    private void HandleTooltip()
+    {
+        if (!ray)
+        {
+            CanInteractToolTip.color = new Color(1f, 1, 1f, 0.5f);
+
+        }
+        else
+        {
+            CanInteractToolTip.color = new Color(1f, 1, 1f, 1f);
+
+        }
+    }
+
+
+
+    private IEnumerator InnerDialogueContorl()
+    {
+        innerDialougePanel.GetComponent<Image>().CrossFadeAlpha(1f, 0.2f, true);
+        yield return new WaitForSeconds(0.22f);
+        innerDialougePanel.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+        innerDialougePanel.GetComponent<Image>().CrossFadeAlpha(0f, 0.3f, true);
+
+        yield return new WaitForSeconds(0.32f);
+        innerDialougePanel.SetActive(false);
+
+    }
+
+
+
+
+
 
 }
