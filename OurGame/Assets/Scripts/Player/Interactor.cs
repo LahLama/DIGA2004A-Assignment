@@ -11,6 +11,7 @@ public class Interactor : MonoBehaviour
 
     public LayerMask interactionsMask;
     public Image CanInteractToolTip;
+    public GameObject CanInteractText;
     public GameObject innerDialougePanel;
     private RaycastHit hitInfo;
     private bool interactionInput;
@@ -32,6 +33,7 @@ public class Interactor : MonoBehaviour
         HandleTooltip();
         ray = Physics.Raycast(transform.position, transform.forward, out hitInfo, 3.5f, interactionsMask);
 
+
         if (interactionInput)
         {
 
@@ -40,6 +42,7 @@ public class Interactor : MonoBehaviour
                 Debug.Log("hit something");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.green);
                 StartCoroutine(InnerDialogueContorl());
+
             }
 
             else
@@ -61,12 +64,16 @@ public class Interactor : MonoBehaviour
     {
         if (!ray)
         {
+            //Nothing to interact with 
             CanInteractToolTip.color = new Color(1f, 1, 1f, 0.5f);
+            CanInteractText.SetActive(false);
 
         }
         else
         {
+            //Can interact with something
             CanInteractToolTip.color = new Color(1f, 1, 1f, 1f);
+            CanInteractText.SetActive(true);
 
         }
     }
