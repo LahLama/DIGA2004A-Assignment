@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEditor.ShaderGraph;
+using Unity.VisualScripting;
 
 public class Interactor : MonoBehaviour
 {
@@ -10,38 +11,55 @@ public class Interactor : MonoBehaviour
     // /https://www.youtube.com/watch?v=cUf7FnNqv7U
 
     public LayerMask interactionsMask;
+    public LayerMask pickUpMask;
     public Image CanInteractToolTip;
     public GameObject CanInteractText;
     public GameObject innerDialougePanel;
-    private RaycastHit _hitInfo;
+    public RaycastHit hitInfo;
     private bool _interactionInput;
-    bool _ray;
-    void Update()
-    {
+    bool _isGenericObject;
+    bool _isPickUpObject;
+    void Update() { HandleInteractions(); }
 
-        HandleInteractions();
-    }
-
-    public void OnInteractions(InputAction.CallbackContext context)
-    {
-        _interactionInput = context.ReadValueAsButton();
-    }
+    public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
 
 
     void HandleInteractions()
     {
         HandleTooltip();
-        _ray = Physics.Raycast(transform.position, transform.forward, out _hitInfo, 3.5f, interactionsMask);
+        _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitInfo, 3.5f, interactionsMask);
+        _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitInfo, 3.5f, pickUpMask);
 
 
         if (_interactionInput)
         {
 
-            if (_ray)
+            if (_isGenericObject)
             {
-                Debug.Log("hit something");
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _hitInfo.distance, Color.green);
+                Debug.Log("hit _isGenericObject");
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.green);
                 StartCoroutine(InnerDialogueContorl());
+
+            }
+
+            else if (_isPickUpObject)
+            {
+                Debug.Log("hit _isPickUpObject");
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.blue);
+                StartCoroutine(InnerDialogueContorl());
+
+                GameObject PickUpObj = hitInfo.collider.gameObject;
+                Debug.Log("Name is: " + PickUpObj.name);
+
+                transform.GetChild(0);
+
+                foreach (Transform child in transform.GetChild(0))
+                {
+                    if (PickUpObj.name == child.name)
+                    {
+                        Debug.Log("DING DING DING");
+                    }
+                }
 
             }
 
@@ -62,7 +80,7 @@ public class Interactor : MonoBehaviour
 
     private void HandleTooltip()
     {
-        if (!_ray)
+        if (!_isGenericObject || !_isPickUpObject)
         {
             //Nothing to interact with 
             CanInteractToolTip.color = new Color(1f, 1, 1f, 0.5f);
