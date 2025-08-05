@@ -8,7 +8,10 @@ using Unity.VisualScripting;
 public class Interactor : MonoBehaviour
 {
 
+    //Drop": Look in pickUp parent, look a children tha matches current enabled one on the player, if yes: diabble On player, set pos of 'drop" to be infront(only 1 mili, cause Out of bounds things) of player then enable dropped item
+
     // /https://www.youtube.com/watch?v=cUf7FnNqv7U
+    //https://youtu.be/zEfahR66Pa8
 
     public LayerMask interactionsMask;
     public LayerMask pickUpMask;
@@ -19,6 +22,8 @@ public class Interactor : MonoBehaviour
     private bool _interactionInput;
     bool _isGenericObject;
     bool _isPickUpObject;
+
+    private void Start() { DisableAllOnPlayerItems(); }
     void Update() { HandleInteractions(); }
 
     public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
@@ -46,20 +51,8 @@ public class Interactor : MonoBehaviour
             {
                 Debug.Log("hit _isPickUpObject");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.blue);
-                StartCoroutine(InnerDialogueContorl());
 
-                GameObject PickUpObj = hitInfo.collider.gameObject;
-                Debug.Log("Name is: " + PickUpObj.name);
-
-                transform.GetChild(0);
-
-                foreach (Transform child in transform.GetChild(0))
-                {
-                    if (PickUpObj.name == child.name)
-                    {
-                        Debug.Log("DING DING DING");
-                    }
-                }
+                CheckAndSetPickUpObj();
 
             }
 
@@ -76,6 +69,34 @@ public class Interactor : MonoBehaviour
 
 
     }
+
+    private void CheckAndSetPickUpObj()
+    {
+
+        GameObject PickUpObj = hitInfo.collider.gameObject;
+        Debug.Log("Name is: " + PickUpObj.name);
+
+        transform.GetChild(0);
+
+        foreach (Transform child in transform.GetChild(0))
+        {
+            if (PickUpObj.name == child.name)
+            {
+                PickUpObj.SetActive(false);
+                child.gameObject.SetActive(true);
+            }
+        }
+    }
+
+
+    private void DisableAllOnPlayerItems()
+    {
+        foreach (Transform child in transform.GetChild(0))
+        {
+            child.gameObject.SetActive(false);
+        }
+    }
+
 
 
     private void HandleTooltip()
