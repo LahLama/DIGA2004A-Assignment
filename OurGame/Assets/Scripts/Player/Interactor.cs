@@ -13,9 +13,9 @@ public class Interactor : MonoBehaviour
     public Image CanInteractToolTip;
     public GameObject CanInteractText;
     public GameObject innerDialougePanel;
-    private RaycastHit hitInfo;
-    private bool interactionInput;
-    bool ray;
+    private RaycastHit _hitInfo;
+    private bool _interactionInput;
+    bool _ray;
     void Update()
     {
 
@@ -24,23 +24,23 @@ public class Interactor : MonoBehaviour
 
     public void OnInteractions(InputAction.CallbackContext context)
     {
-        interactionInput = context.ReadValueAsButton();
+        _interactionInput = context.ReadValueAsButton();
     }
 
 
     void HandleInteractions()
     {
         HandleTooltip();
-        ray = Physics.Raycast(transform.position, transform.forward, out hitInfo, 3.5f, interactionsMask);
+        _ray = Physics.Raycast(transform.position, transform.forward, out _hitInfo, 3.5f, interactionsMask);
 
 
-        if (interactionInput)
+        if (_interactionInput)
         {
 
-            if (ray)
+            if (_ray)
             {
                 Debug.Log("hit something");
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.green);
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _hitInfo.distance, Color.green);
                 StartCoroutine(InnerDialogueContorl());
 
             }
@@ -62,7 +62,7 @@ public class Interactor : MonoBehaviour
 
     private void HandleTooltip()
     {
-        if (!ray)
+        if (!_ray)
         {
             //Nothing to interact with 
             CanInteractToolTip.color = new Color(1f, 1, 1f, 0.5f);

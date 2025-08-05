@@ -8,6 +8,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float gravity = -9.81f;
+    private bool _sprintInput;
+    private bool _crouchInput;
+    private Vector3 _velocity;
+    private Vector2 _moveInput;
 
     [Header("Look Settings")]
     public GameObject cameraTransform;
@@ -15,19 +19,14 @@ public class PlayerMovement : MonoBehaviour
     public float verticalLookLimit = 90f;
     public float bobbingAmplitude = 25f; // Sensitivity for camera bobbing
     public float bobbingFrequency = 1f; // Frequency of bobbing
+    private Vector2 _lookInput;
+    private float _verticalRotation = 0f;
+
+    [Header("Other Componets")]
+
 
     private CharacterController controller;
-    private Vector2 moveInput;
-    private Vector2 lookInput;
-
-    private bool sprintInput;
-    private bool crouchInput;
     public TextMeshProUGUI debugText;
-
-
-    private Vector3 velocity;
-    private float verticalRotation = 0f;
-
     public GameObject Hand; // Reference to the hand object for bobbing
 
     private void Awake()
@@ -48,44 +47,44 @@ public class PlayerMovement : MonoBehaviour
     }
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
+        _moveInput = context.ReadValue<Vector2>();
 
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        lookInput = context.ReadValue<Vector2>();
+        _lookInput = context.ReadValue<Vector2>();
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        sprintInput = context.ReadValueAsButton();
+        _sprintInput = context.ReadValueAsButton();
     }
     public void OnCrouch(InputAction.CallbackContext context)
     {
-        crouchInput = context.ReadValueAsButton();
+        _crouchInput = context.ReadValueAsButton();
     }
 
 
     public void HandleMovement()
     {
-        Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
+        Vector3 move = transform.right * _moveInput.x + transform.forward * _moveInput.y;
         controller.Move(move * moveSpeed * Time.deltaTime);
 
 
 
-        if (controller.isGrounded && velocity.y < 0)
+        if (controller.isGrounded && _velocity.y < 0)
         {
-            velocity.y = -2f;
+            _velocity.y = -2f;
         }
-        velocity.y += gravity * Time.deltaTime;
+        _velocity.y += gravity * Time.deltaTime;
 
 
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(_velocity * Time.deltaTime);
 
 
 
-        if (moveInput.magnitude > 0.1f) // Only bob when moving
+        if (_moveInput.magnitude > 0.1f) // Only bob when moving
         {
             BobCamera();
         }
@@ -114,13 +113,13 @@ public class PlayerMovement : MonoBehaviour
     }
     public void HandleLook()
     {
-        float mouseX = lookInput.x * lookSensitivity;
-        float mouseY = lookInput.y * lookSensitivity;
+        float mouseX = _lookInput.x * lookSensitivity;
+        float mouseY = _lookInput.y * lookSensitivity;
 
-        verticalRotation -= mouseY;
-        verticalRotation = Mathf.Clamp(verticalRotation, -verticalLookLimit, verticalLookLimit);
+        _verticalRotation -= mouseY;
+        _verticalRotation = Mathf.Clamp(_verticalRotation, -verticalLookLimit, verticalLookLimit);
 
-        cameraTransform.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, cameraTransform.transform.localRotation.eulerAngles.z);
+        cameraTransform.transform.localRotation = Quaternion.Euler(_verticalRotation, 0f, cameraTransform.transform.localRotation.eulerAngles.z);
         transform.Rotate(Vector3.up * mouseX);
     }
 
@@ -130,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
         int sprintFOV = 70;
 
 
-        if (sprintInput)
+        if (_sprintInput)
         {
             moveSpeed = sprintSpeed; // Sprint speed
             debugText.text = "Sprinting"; // Update debug text
@@ -147,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        if (crouchInput)
+        if (_crouchInput)
         {
             moveSpeed = crouchSpeed; // Sprint speed
             this.transform.localScale = new Vector3(scaleModifer, scaleModifer, scaleModifer); // Adjust player scale for crouching
@@ -174,11 +173,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovementModifiers()
     {
-        if (sprintInput && !crouchInput)
+        if (_sprintInput && !_crouchInput)
         {
             HandleSprint();
         }
-        else if (crouchInput && !sprintInput)
+        else if (_crouchInput && !_sprintInput)
         {
             HandleCrouch();
         }
