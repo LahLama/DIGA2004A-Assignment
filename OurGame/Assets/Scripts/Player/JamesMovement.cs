@@ -127,22 +127,23 @@ public class PlayerMovement : MonoBehaviour
     public void HandleSprint()
     {
         float sprintSpeed = 10f;
+        int sprintFOV = 70;
 
 
         if (sprintInput)
         {
             moveSpeed = sprintSpeed; // Sprint speed
             debugText.text = "Sprinting"; // Update debug text
+            float CurrentFOV = cameraTransform.GetComponent<Camera>().fieldOfView;
+            cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(CurrentFOV, sprintFOV, Time.deltaTime / 0.5f);
         }
-        else
-        {
 
-        }
     }
     public void HandleCrouch()
     {
         float crouchSpeed = 1f;
         float scaleModifer = 0.4f;
+
 
 
 
@@ -152,22 +153,22 @@ public class PlayerMovement : MonoBehaviour
             this.transform.localScale = new Vector3(scaleModifer, scaleModifer, scaleModifer); // Adjust player scale for crouching
             debugText.text = "Crouching"; // Update debug text
         }
-        else
-        {
 
-
-        }
     }
 
     private void HandleWalk()
     {
         float normalScale = 0.7f;
         float normalSpeed = 5f;
+        int normalFOV = 60;
 
 
         moveSpeed = normalSpeed; // Reset to normal speed
         this.transform.localScale = new Vector3(normalScale, normalScale, normalScale); // Adjust player scale for crouching
         debugText.text = "Walking"; // Update debug text
+
+        float CurrentFOV = cameraTransform.GetComponent<Camera>().fieldOfView;
+        cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(CurrentFOV, normalFOV, Time.deltaTime / 0.5f);
 
     }
 
