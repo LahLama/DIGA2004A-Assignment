@@ -33,18 +33,27 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Pickup",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "708dd01e-1bda-4da9-a6e3-dfc4e3cb48d6",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Sprint",
                     "type": "Button",
                     "id": "d348257f-cf80-4b4c-b477-41019fc5b864",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Crouch",
+                    "type": "Button",
+                    "id": "a94c3123-91ef-4599-a7c1-dcca45e92df0",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -230,6 +239,17 @@
                 },
                 {
                     "name": "",
+                    "id": "518f5fdc-a0b6-447a-ac70-ea71cd2b2d6d",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Console",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f8f005c1-7511-4b4c-966a-85aa04f9f49d",
                     "path": "<Mouse>/delta",
                     "interactions": "",
@@ -279,7 +299,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Pickup",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -290,7 +310,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Console",
-                    "action": "Pickup",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c256da7e-3617-4f25-8cd7-7da576bea17f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -313,6 +344,39 @@
                     "processors": "",
                     "groups": ";Console",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "524fcecb-361b-4420-85e4-e08b8959036a",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d65db19f-0bd8-4f27-94a0-4723cde38c2d",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Console",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1fdff9aa-ad87-402a-9d6b-f0923477a7ee",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
