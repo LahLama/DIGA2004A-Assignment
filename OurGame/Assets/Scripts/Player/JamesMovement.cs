@@ -99,7 +99,9 @@ public class PlayerMovement : MonoBehaviour
     private void BobCamera()
     { //Bobbing
 
-        float bobbingAmount = Mathf.Sin(Time.time * (bobbingFrequency + moveSpeed / 2)) * bobbingAmplitude;
+        float bobbingAmountGui = Mathf.Sin(Time.time * (bobbingFrequency + moveSpeed / 2)) * bobbingAmplitude;
+
+        float bobbingAmountItem = Mathf.Sin(Time.time * (bobbingFrequency + moveSpeed / 2));
 
         // print(bobbingAmount);
         /* Vector3 camPos = cameraTransform.transform.localPosition;
@@ -108,10 +110,10 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        cameraTransform.transform.localRotation = Quaternion.Euler(cameraTransform.transform.localRotation.eulerAngles.x, cameraTransform.transform.localRotation.eulerAngles.y, (bobbingAmount / bobbingAmplitude) * 0.1f);
-        HandGui.transform.position = new Vector3(HandGui.transform.position.x, bobbingAmount, HandGui.transform.position.z); // Adjust hand position based on bobbing
+        cameraTransform.transform.localRotation = Quaternion.Euler(cameraTransform.transform.localRotation.eulerAngles.x, cameraTransform.transform.localRotation.eulerAngles.y, (bobbingAmountGui / bobbingAmplitude) * 0.1f);
+        HandGui.transform.position = new Vector3(HandGui.transform.position.x, bobbingAmountGui, HandGui.transform.position.z); // Adjust hand position based on bobbing
 
-        // HandHeldItem.transform.localPosition = new Vector3(HandHeldItem.transform.localPosition.x, Mathf.Abs(HandHeldItem.transform.localPosition.y - ((bobbingAmount / bobbingAmplitude)) * HeldBobCorrectifier) / 2, HandHeldItem.transform.localPosition.z); // Adjust hand position based on bobbing
+        HandHeldItem.transform.localPosition = new Vector3(HandHeldItem.transform.localPosition.x, ((bobbingAmountItem / bobbingAmplitude)), HandHeldItem.transform.localPosition.z); // Adjust hand position based on bobbing
 
 
     }
