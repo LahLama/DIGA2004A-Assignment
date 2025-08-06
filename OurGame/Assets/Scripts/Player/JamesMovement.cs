@@ -22,13 +22,14 @@ public class PlayerMovement : MonoBehaviour
     public float bobbingFrequency = 1f; // Frequency of bobbing
     private Vector2 _lookInput;
     private float _verticalRotation = 0f;
-    public float HeldBobCorrectifier = 0.04f;
+    private float startingYPos = 0;
+
     [Header("Other Componets")]
 
 
     private CharacterController controller;
     public TextMeshProUGUI debugText;
-    public GameObject HandGui; // Reference to the hand object for bobbing
+
     public GameObject HandHeldItem;
 
     private void Awake()
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
+        startingYPos = HandHeldItem.transform.localPosition.y;
     }
 
     private void Update()
@@ -70,50 +72,30 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleMovement()
     {
-        Vector3 move = transform.right * _moveInput.x + transform.forward * _moveInput.y;
-        controller.Move(move * moveSpeed * Time.deltaTime);
-
-
-
+        Vector3 __move = transform.right * _moveInput.x + transform.forward * _moveInput.y;
+        controller.Move(__move * moveSpeed * Time.deltaTime);
         if (controller.isGrounded && _velocity.y < 0)
         {
             _velocity.y = -2f;
         }
         _velocity.y += gravity * Time.deltaTime;
-
-
         controller.Move(_velocity * Time.deltaTime);
-
-
-
         if (_moveInput.magnitude > 0.1f) // Only bob when moving
         {
             BobCamera();
         }
-
-
-
-
     }
 
     private void BobCamera()
     { //Bobbing
 
-        float bobbingAmountGui = Mathf.Sin(Time.time * (bobbingFrequency + moveSpeed / 2)) * bobbingAmplitude;
+        float __bobbingAmount = Mathf.Sin(Time.time * (bobbingFrequency + moveSpeed / 2)) * bobbingAmplitude;
 
-        float bobbingAmountItem = Mathf.Sin(Time.time * (bobbingFrequency + moveSpeed / 2));
-
-        // print(bobbingAmount);
-        /* Vector3 camPos = cameraTransform.transform.localPosition;
-         camPos.y = bobbingAmount;
-         cameraTransform.transform.localPosition = camPos;*/
-
-
-
-        cameraTransform.transform.localRotation = Quaternion.Euler(cameraTransform.transform.localRotation.eulerAngles.x, cameraTransform.transform.localRotation.eulerAngles.y, (bobbingAmountGui / bobbingAmplitude) * 0.1f);
-        HandGui.transform.position = new Vector3(HandGui.transform.position.x, bobbingAmountGui, HandGui.transform.position.z); // Adjust hand position based on bobbing
-
-        HandHeldItem.transform.localPosition = new Vector3(HandHeldItem.transform.localPosition.x, ((bobbingAmountItem / bobbingAmplitude)), HandHeldItem.transform.localPosition.z); // Adjust hand position based on bobbing
+        Debug.Log("Bob Amount: " + __bobbingAmount);
+        Debug.Log("Bob /2" + __bobbingAmount / 2);
+        Debug.Log("bob * 2" + __bobbingAmount * 2);
+        cameraTransform.transform.localRotation = Quaternion.Euler(cameraTransform.transform.localRotation.eulerAngles.x, cameraTransform.transform.localRotation.eulerAngles.y, __bobbingAmount);
+        HandHeldItem.transform.localPosition = new Vector3(HandHeldItem.transform.localPosition.x, startingYPos + __bobbingAmount, HandHeldItem.transform.localPosition.z); // Adjust hand position based on bobbing
 
 
     }
@@ -131,51 +113,46 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleSprint()
     {
-        float sprintSpeed = 10f;
-        int sprintFOV = 70;
+        float __sprintSpeed = 10f;
+        int __sprintFOV = 70;
 
 
         if (_sprintInput)
         {
-            moveSpeed = sprintSpeed; // Sprint speed
+            moveSpeed = __sprintSpeed; // Sprint speed
             debugText.text = "Sprinting"; // Update debug text
-            float CurrentFOV = cameraTransform.GetComponent<Camera>().fieldOfView;
-            cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(CurrentFOV, sprintFOV, Time.deltaTime / 0.5f);
+            float __CurrentFOV = cameraTransform.GetComponent<Camera>().fieldOfView;
+            cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
         }
+
 
     }
     public void HandleCrouch()
     {
-        float crouchSpeed = 1f;
-        float scaleModifer = 0.4f;
-
-
-
-
+        float __crouchSpeed = 1f;
+        float __scaleModifer = 0.4f;
         if (_crouchInput)
         {
-            moveSpeed = crouchSpeed; // Sprint speed
-            this.transform.localScale = new Vector3(scaleModifer, scaleModifer, scaleModifer); // Adjust player scale for crouching
+            moveSpeed = __crouchSpeed; // Sprint speed
+            this.transform.localScale = new Vector3(__scaleModifer, __scaleModifer, __scaleModifer); // Adjust player scale for crouching
             debugText.text = "Crouching"; // Update debug text
-
-
         }
 
     }
 
     private void HandleWalk()
     {
-        float normalScale = 0.7f;
-        float normalSpeed = 5f;
-        int normalFOV = 60;
+        float __normalScale = 0.7f;
+        float __normalSpeed = 5f;
+        int __normalFOV = 60;
 
 
-        moveSpeed = normalSpeed; // Reset to normal speed
-        this.transform.localScale = new Vector3(normalScale, normalScale, normalScale); // Adjust player scale for crouching
+        moveSpeed = __normalSpeed; // Reset to normal speed
+        this.transform.localScale = new Vector3(__normalScale, __normalScale, __normalScale); // Adjust player scale for crouching
         debugText.text = "Walking"; // Update debug text
 
-        float CurrentFOV = cameraTransform.GetComponent<Camera>().fieldOfView;
-        cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(CurrentFOV, normalFOV, Time.deltaTime / 0.5f);
+        float __CurrentFOV = cameraTransform.GetComponent<Camera>().fieldOfView;
+        cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __normalFOV, Time.deltaTime / 0.5f);
 
     }
 
