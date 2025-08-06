@@ -36,10 +36,10 @@ public class Interactor : MonoBehaviour
 
     void HandleInteractions()
     {
-        HandleTooltip();
+
         _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitInfo, 3.5f, interactionsMask);
         _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitInfo, 3.5f, pickUpMask);
-
+        HandleTooltip();
 
         if (_interactionInput)
         {
@@ -141,7 +141,7 @@ public class Interactor : MonoBehaviour
 
     private void HandleTooltip()
     {
-        if (!_isGenericObject || !_isPickUpObject)
+        if (!(_isGenericObject || _isPickUpObject))
         {
             //Nothing to interact with 
             CanInteractToolTip.color = new Color(1f, 1, 1f, 0.5f);
