@@ -19,14 +19,19 @@ public class Interactor : MonoBehaviour
     public GameObject CanInteractText;
     public GameObject innerDialougePanel;
     public RaycastHit hitInfo;
+    public Transform PlayerHands;
+    public Transform PickUpsContatiner;
     private bool _interactionInput;
+    private bool _dropInput;
     bool _isGenericObject;
     bool _isPickUpObject;
 
-    private void Start() { DisableAllOnPlayerItems(); }
+    private Vector3 _equippedItemScale;
+
     void Update() { HandleInteractions(); }
 
     public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
+    public void OnDrop(InputAction.CallbackContext context) { _dropInput = context.ReadValueAsButton(); }
 
 
     void HandleInteractions()
@@ -52,7 +57,7 @@ public class Interactor : MonoBehaviour
                 Debug.Log("hit _isPickUpObject");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.blue);
 
-                CheckAndSetPickUpObj();
+                EquipItem();
 
             }
 
@@ -64,11 +69,46 @@ public class Interactor : MonoBehaviour
         }
 
 
-
-
+        if (_dropInput)
+        {
+            DropItem();
+        }
 
 
     }
+
+    private void EquipItem()
+    {
+        if (PlayerHands.childCount > 0)
+        {
+            DropItem();
+        }
+        GameObject PickUpObj = hitInfo.collider.gameObject;
+        Destroy(PickUpObj.GetComponent<Rigidbody>());
+        PickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
+        PickUpObj.transform.SetParent(PlayerHands, false);
+
+        _equippedItemScale = PickUpObj.gameObject.transform.localScale;
+    }
+
+    private void DropItem()
+    {
+        if (PlayerHands.childCount > 0)
+        {
+            Transform EquipedObj = PlayerHands.GetChild(0);
+            Vector3 EquipObjPos = EquipedObj.transform.localPosition;
+            EquipObjPos = new Vector3(EquipObjPos.x, EquipObjPos.y + 1, EquipObjPos.z);
+            EquipedObj.SetParent(PickUpsContatiner, true);
+            EquipedObj.gameObject.AddComponent<Rigidbody>();
+            EquipedObj.gameObject.transform.localScale = _equippedItemScale;
+
+        }
+
+
+    }
+
+
+    /*
 
     private void CheckAndSetPickUpObj()
     {
@@ -95,7 +135,7 @@ public class Interactor : MonoBehaviour
         {
             child.gameObject.SetActive(false);
         }
-    }
+    }*/
 
 
 
