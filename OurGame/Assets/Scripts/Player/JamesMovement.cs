@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,13 +22,14 @@ public class PlayerMovement : MonoBehaviour
     public float bobbingFrequency = 1f; // Frequency of bobbing
     private Vector2 _lookInput;
     private float _verticalRotation = 0f;
-
+    public float HeldBobCorrectifier = 0.04f;
     [Header("Other Componets")]
 
 
     private CharacterController controller;
     public TextMeshProUGUI debugText;
-    public GameObject Hand; // Reference to the hand object for bobbing
+    public GameObject HandGui; // Reference to the hand object for bobbing
+    public GameObject HandHeldItem;
 
     private void Awake()
     {
@@ -107,7 +109,9 @@ public class PlayerMovement : MonoBehaviour
 
 
         cameraTransform.transform.localRotation = Quaternion.Euler(cameraTransform.transform.localRotation.eulerAngles.x, cameraTransform.transform.localRotation.eulerAngles.y, (bobbingAmount / bobbingAmplitude) * 0.1f);
-        Hand.transform.position = new Vector3(Hand.transform.position.x, bobbingAmount, Hand.transform.position.z); // Adjust hand position based on bobbing
+        HandGui.transform.position = new Vector3(HandGui.transform.position.x, bobbingAmount, HandGui.transform.position.z); // Adjust hand position based on bobbing
+
+        // HandHeldItem.transform.localPosition = new Vector3(HandHeldItem.transform.localPosition.x, Mathf.Abs(HandHeldItem.transform.localPosition.y - ((bobbingAmount / bobbingAmplitude)) * HeldBobCorrectifier) / 2, HandHeldItem.transform.localPosition.z); // Adjust hand position based on bobbing
 
 
     }

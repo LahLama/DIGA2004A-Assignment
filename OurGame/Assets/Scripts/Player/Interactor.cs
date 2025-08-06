@@ -26,7 +26,8 @@ public class Interactor : MonoBehaviour
     bool _isGenericObject;
     bool _isPickUpObject;
 
-    private void Start() { DisableAllOnPlayerItems(); }
+    private Vector3 _equippedItemScale;
+
     void Update() { HandleInteractions(); }
 
     public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
@@ -86,6 +87,8 @@ public class Interactor : MonoBehaviour
         Destroy(PickUpObj.GetComponent<Rigidbody>());
         PickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
         PickUpObj.transform.SetParent(PlayerHands, false);
+
+        _equippedItemScale = PickUpObj.gameObject.transform.localScale;
     }
 
     private void DropItem()
@@ -97,12 +100,15 @@ public class Interactor : MonoBehaviour
             EquipObjPos = new Vector3(EquipObjPos.x, EquipObjPos.y + 1, EquipObjPos.z);
             EquipedObj.SetParent(PickUpsContatiner, true);
             EquipedObj.gameObject.AddComponent<Rigidbody>();
-
+            EquipedObj.gameObject.transform.localScale = _equippedItemScale;
 
         }
 
 
     }
+
+
+    /*
 
     private void CheckAndSetPickUpObj()
     {
@@ -129,7 +135,7 @@ public class Interactor : MonoBehaviour
         {
             child.gameObject.SetActive(false);
         }
-    }
+    }*/
 
 
 
