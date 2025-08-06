@@ -12,9 +12,11 @@ public class Interactor : MonoBehaviour
 
     // /https://www.youtube.com/watch?v=cUf7FnNqv7U
     //https://youtu.be/zEfahR66Pa8
+    //https://www.youtube.com/watch?v=QYpWYZq2I6E
 
     public LayerMask interactionsMask;
     public LayerMask pickUpMask;
+    public LayerMask HoldMask;
     public Image CanInteractToolTip;
     public GameObject CanInteractText;
     public GameObject innerDialougePanel;
@@ -89,6 +91,7 @@ public class Interactor : MonoBehaviour
         PickUpObj.transform.SetParent(PlayerHands, false);
 
         _equippedItemScale = PickUpObj.gameObject.transform.localScale;
+        PickUpObj.layer = LayerMask.NameToLayer("holdingMask");
     }
 
     private void DropItem()
@@ -100,6 +103,8 @@ public class Interactor : MonoBehaviour
             EquipObjPos = new Vector3(EquipObjPos.x, EquipObjPos.y + 1, EquipObjPos.z);
             EquipedObj.SetParent(PickUpsContatiner, true);
             EquipedObj.gameObject.AddComponent<Rigidbody>();
+
+            EquipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask"); ;
             EquipedObj.gameObject.transform.localScale = _equippedItemScale;
 
         }
