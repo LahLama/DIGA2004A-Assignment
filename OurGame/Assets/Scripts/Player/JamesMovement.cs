@@ -91,9 +91,6 @@ public class PlayerMovement : MonoBehaviour
 
         float __bobbingAmount = Mathf.Sin(Time.time * (bobbingFrequency + moveSpeed / 2)) * bobbingAmplitude;
 
-        Debug.Log("Bob Amount: " + __bobbingAmount);
-        Debug.Log("Bob /2" + __bobbingAmount / 2);
-        Debug.Log("bob * 2" + __bobbingAmount * 2);
         cameraTransform.transform.localRotation = Quaternion.Euler(cameraTransform.transform.localRotation.eulerAngles.x, cameraTransform.transform.localRotation.eulerAngles.y, __bobbingAmount);
         HandHeldItem.transform.localPosition = new Vector3(HandHeldItem.transform.localPosition.x, startingYPos + __bobbingAmount, HandHeldItem.transform.localPosition.z); // Adjust hand position based on bobbing
 

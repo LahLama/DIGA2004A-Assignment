@@ -25,7 +25,9 @@ public class Interactor : MonoBehaviour
     public Image CanInteractToolTip;
     public GameObject CanInteractText;
     public GameObject innerDialougePanel;
-    public RaycastHit hitInfo;
+    public RaycastHit hitGeneric;
+    public RaycastHit hitPickUp;
+    public RaycastHit hitHideObj;
     public Transform PlayerHands;
     public Transform PickUpsContatiner;
     private bool _interactionInput;
@@ -46,9 +48,10 @@ public class Interactor : MonoBehaviour
     void HandleInteractions()
     {
 
-        _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitInfo, 3.5f, interactionsMask);
-        _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitInfo, 3.5f, pickUpMask);
-        _isHideObject = Physics.Raycast(transform.position, transform.forward, out hitInfo, 3.5f, HideAwayMask);
+
+        _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitGeneric, 3.5f, interactionsMask);
+        _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitPickUp, 3.5f, pickUpMask);
+
         HandleTooltip();
 
         if (_interactionInput)
@@ -57,7 +60,7 @@ public class Interactor : MonoBehaviour
             if (_isGenericObject)
             {
                 Debug.Log("hit _isGenericObject");
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.green);
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitGeneric.distance, Color.green);
                 StartCoroutine(InnerDialogueContorl());
 
             }
@@ -65,7 +68,7 @@ public class Interactor : MonoBehaviour
             else if (_isPickUpObject)
             {
                 Debug.Log("hit _isPickUpObject");
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.blue);
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitPickUp.distance, Color.blue);
 
                 EquipItem();
 
@@ -98,7 +101,7 @@ public class Interactor : MonoBehaviour
         {
             DropItem();
         }
-        GameObject __pickUpObj = hitInfo.collider.gameObject;
+        GameObject __pickUpObj = hitPickUp.collider.gameObject;
         Destroy(__pickUpObj.GetComponent<Rigidbody>());
         __pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
         __pickUpObj.transform.SetParent(PlayerHands, false);
