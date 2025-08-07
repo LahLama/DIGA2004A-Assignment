@@ -1,9 +1,7 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using System.Collections;
-using UnityEditor.ShaderGraph;
-using Unity.VisualScripting;
+
+
 
 public class Interactor : MonoBehaviour
 {
@@ -22,28 +20,37 @@ public class Interactor : MonoBehaviour
     public LayerMask HideAwayMask;
 
     [Header("Tooltips")]
-    public Image CanInteractToolTip;
-    public GameObject CanInteractText;
-    public GameObject innerDialougePanel;
+
+
+
     public RaycastHit hitGeneric;
     public RaycastHit hitPickUp;
     public RaycastHit hitHideObj;
-    public Transform PlayerHands;
-    public Transform PickUpsContatiner;
+
+
+    public Transform Player;
     private bool _interactionInput;
     private bool _dropInput;
-    bool _isGenericObject;
-    bool _isPickUpObject;
-    bool _isHideObject;
+    public bool _isGenericObject;
+    public bool _isPickUpObject;
+    public bool _isHideObject;
 
-    private Vector3 _equippedItemScale;
-    private Quaternion _equippedItemRotation;
+    [Header("Scripts")]
+    private PickUpSystem pickUpSystem;
+    private ReticleManagement reticleManagement;
+    private InnerDialouge innerDialouge;
+
+    private void Start()
+    {
+        pickUpSystem = GetComponent<PickUpSystem>();
+        reticleManagement = GetComponent<ReticleManagement>();
+        innerDialouge = GetComponent<InnerDialouge>();
+    }
 
     void Update() { HandleInteractions(); }
 
     public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
     public void OnDrop(InputAction.CallbackContext context) { _dropInput = context.ReadValueAsButton(); }
-
 
     void HandleInteractions()
     {
@@ -51,8 +58,9 @@ public class Interactor : MonoBehaviour
 
         _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitGeneric, 3.5f, interactionsMask);
         _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitPickUp, 3.5f, pickUpMask);
+        _isHideObject = Physics.Raycast(transform.position, transform.forward, out hitHideObj, 3.5f, HideAwayMask);
 
-        HandleTooltip();
+        reticleManagement.HandleTooltip();
 
         if (_interactionInput)
         {
@@ -61,7 +69,7 @@ public class Interactor : MonoBehaviour
             {
                 Debug.Log("hit _isGenericObject");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitGeneric.distance, Color.green);
-                StartCoroutine(InnerDialogueContorl());
+                StartCoroutine(innerDialouge.InnerDialogueContorl());
 
             }
 
@@ -70,13 +78,14 @@ public class Interactor : MonoBehaviour
                 Debug.Log("hit _isPickUpObject");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitPickUp.distance, Color.blue);
 
-                EquipItem();
+
+                pickUpSystem.EquipItem();
 
             }
 
             else if (_isHideObject)
             {
-
+                HidePlayer();
             }
 
             else
@@ -89,81 +98,24 @@ public class Interactor : MonoBehaviour
 
         if (_dropInput)
         {
-            DropItem();
+            pickUpSystem.DropItem();
         }
 
 
     }
 
-    private void EquipItem()
-    {
-        if (PlayerHands.childCount > 1)
-        {
-            DropItem();
-        }
-        GameObject __pickUpObj = hitPickUp.collider.gameObject;
-        Destroy(__pickUpObj.GetComponent<Rigidbody>());
-        __pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
-        __pickUpObj.transform.SetParent(PlayerHands, false);
-
-        _equippedItemScale = __pickUpObj.gameObject.transform.localScale;
-        _equippedItemRotation = __pickUpObj.gameObject.transform.rotation;
-        __pickUpObj.layer = LayerMask.NameToLayer("holdingMask");
-    }
-
-    private void DropItem()
-    {
-        if (PlayerHands.childCount > 1)
-        {
-            Transform __equipedObj = PlayerHands.GetChild(1);
-            Vector3 __equipObjPos = __equipedObj.transform.localPosition;
-            __equipObjPos = new Vector3(__equipObjPos.x, __equipObjPos.y + 1, __equipObjPos.z);
-            __equipedObj.SetParent(PickUpsContatiner, true);
-            __equipedObj.gameObject.AddComponent<Rigidbody>();
-
-            __equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
-            __equipedObj.gameObject.transform.localScale = _equippedItemScale;
-            __equipedObj.gameObject.transform.rotation = _equippedItemRotation;
-
-        }
 
 
-    }
 
-    private void HandleTooltip()
-    {
-        if (!(_isGenericObject || _isPickUpObject))
-        {
-            //Nothing to interact with 
-            CanInteractToolTip.color = new Color(1f, 1, 1f, 0.5f);
-            CanInteractText.SetActive(false);
 
-        }
-        else
-        {
-            //Can interact with something
-            CanInteractToolTip.color = new Color(1f, 1, 1f, 1f);
-            CanInteractText.SetActive(true);
-
-        }
-    }
-
-    private IEnumerator InnerDialogueContorl()
-    {
-        innerDialougePanel.GetComponent<Image>().CrossFadeAlpha(1f, 0.2f, true);
-        yield return new WaitForSeconds(0.22f);
-        innerDialougePanel.SetActive(true);
-
-        yield return new WaitForSeconds(2f);
-        innerDialougePanel.GetComponent<Image>().CrossFadeAlpha(0f, 0.3f, true);
-
-        yield return new WaitForSeconds(0.32f);
-        innerDialougePanel.SetActive(false);
-
-    }
 
     public void HidePlayer()
     {
+        Player.SetParent(hitHideObj.collider.gameObject.transform, false);
+
+        print("Players POS: " + Player.position);
+        Player.position = Vector3.zero;
+
 
     }
 

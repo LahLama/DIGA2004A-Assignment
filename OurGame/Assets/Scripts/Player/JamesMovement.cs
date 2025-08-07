@@ -133,6 +133,8 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = __crouchSpeed; // Sprint speed
             this.transform.localScale = new Vector3(__scaleModifer, __scaleModifer, __scaleModifer); // Adjust player scale for crouching
             debugText.text = "Crouching"; // Update debug text
+
+            //Raycast above, if its hitting something, stay in crouch, bool when crouching
         }
 
     }
