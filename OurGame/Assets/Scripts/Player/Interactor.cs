@@ -90,7 +90,7 @@ public class Interactor : MonoBehaviour
 
             else
             {
-                Debug.Log("NULL");
+                //Debug.Log("NULL");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 5f, Color.red);
             }
         }
