@@ -1914,11 +1914,11 @@ GameObject:
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585549}
-  - component: {fileID: 330585548}
-  - component: {fileID: 330585550}
   - component: {fileID: 330585551}
   - component: {fileID: 330585552}
   - component: {fileID: 330585553}
+  - component: {fileID: 330585548}
+  - component: {fileID: 330585550}
   m_Layer: 0
   m_Name: FPCamera
   m_TagString: MainCamera
@@ -1973,7 +1973,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 247
+    m_Bits: 759
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2088,7 +2088,7 @@ MonoBehaviour:
   HideAwayMask:
     serializedVersion: 2
     m_Bits: 512
-  Player: {fileID: 830116209}
+  Player: {fileID: 830116205}
   _isGenericObject: 0
   _isPickUpObject: 0
   _isHideObject: 0
@@ -8077,6 +8077,7 @@ GameObject:
   - component: {fileID: 830116212}
   - component: {fileID: 830116213}
   - component: {fileID: 830116214}
+  - component: {fileID: 830116215}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -8145,14 +8146,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 830116205}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.9477406, z: -0, w: -0.31904194}
-  m_LocalPosition: {x: 40.89, y: 2.07, z: 35.59}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 40.98, y: 2.07, z: 28.7}
   m_LocalScale: {x: 0.70000017, y: 0.7, z: 0.70000017}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -217.21, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &830116212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8196,8 +8197,8 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 830116214}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+      - m_Target: {fileID: 830116215}
+        m_TargetAssemblyTypeName: LookFunction, Assembly-CSharp
         m_MethodName: OnLook
         m_Mode: 0
         m_Arguments:
@@ -8247,6 +8248,18 @@ MonoBehaviour:
       - m_Target: {fileID: 830116214}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: OnCrouch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 330585549}
+        m_TargetAssemblyTypeName: Interactor, Assembly-CSharp
+        m_MethodName: OnHideExit
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8318,13 +8331,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 8
   gravity: -9.81
+  debugText: {fileID: 1968224663}
   cameraTransform: {fileID: 330585543}
+--- !u!114 &830116215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830116205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe308bd0f49e1141b7a1d9c1c904d0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   lookSensitivity: 0.2
   verticalLookLimit: 90
-  bobbingAmplitude: 0.035
-  bobbingFrequency: 5
-  debugText: {fileID: 1968224663}
+  bobbingAmplitude: 0.05
+  bobbingFrequency: 2
   HandHeldItem: {fileID: 1711941727}
+  cameraTransform: {fileID: 330585543}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -9663,7 +9689,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1247, y: -0.00012207031}
+  m_AnchoredPosition: {x: 1247, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: -0.11, y: 1.37}
 --- !u!114 &900217442
@@ -22912,7 +22938,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 256
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

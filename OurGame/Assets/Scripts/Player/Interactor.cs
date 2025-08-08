@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,29 +29,53 @@ public class Interactor : MonoBehaviour
     public RaycastHit hitHideObj;
 
 
-    public Transform Player;
+    public GameObject Player;
     private bool _interactionInput;
     private bool _dropInput;
+    private bool _ExitHideInput;
     public bool _isGenericObject;
     public bool _isPickUpObject;
     public bool _isHideObject;
+    private bool _isPlayerHidden;
+
+    public GameObject HideOverlay;
+
+    private GameObject HideObj;
 
     [Header("Scripts")]
     private PickUpSystem pickUpSystem;
     private ReticleManagement reticleManagement;
     private InnerDialouge innerDialouge;
+    private LookFunction lookFunction;
+
+    private float _interactionDelay = 0f;
 
     private void Start()
     {
         pickUpSystem = GetComponent<PickUpSystem>();
         reticleManagement = GetComponent<ReticleManagement>();
-        innerDialouge = GetComponent<InnerDialouge>();
+        lookFunction = GetComponentInParent<LookFunction>();
     }
 
-    void Update() { HandleInteractions(); }
+    void Update()
+    {
+        HandleInteractions();
+        if (_interactionDelay > 0f)
+        {
+            _interactionDelay -= Time.deltaTime;
+        }
+    }
+
+
+
+
+
+
 
     public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
     public void OnDrop(InputAction.CallbackContext context) { _dropInput = context.ReadValueAsButton(); }
+
+    public void OnHideExit(InputAction.CallbackContext context) { _ExitHideInput = context.ReadValueAsButton(); }
 
     void HandleInteractions()
     {
@@ -62,7 +87,7 @@ public class Interactor : MonoBehaviour
 
         reticleManagement.HandleTooltip();
 
-        if (_interactionInput)
+        if (_interactionInput && _interactionDelay <= 0)
         {
 
             if (_isGenericObject)
@@ -71,13 +96,14 @@ public class Interactor : MonoBehaviour
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitGeneric.distance, Color.green);
                 StartCoroutine(innerDialouge.InnerDialogueContorl());
 
+
             }
 
             else if (_isPickUpObject)
             {
                 Debug.Log("hit _isPickUpObject");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitPickUp.distance, Color.blue);
-
+                _interactionDelay = 1f;
 
                 pickUpSystem.EquipItem();
 
@@ -93,7 +119,13 @@ public class Interactor : MonoBehaviour
                 //Debug.Log("NULL");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 5f, Color.red);
             }
+
+            if (_interactionDelay < 0)
+            {
+                ShowPlayer();
+            }
         }
+
 
 
         if (_dropInput)
@@ -102,8 +134,8 @@ public class Interactor : MonoBehaviour
         }
 
 
-    }
 
+    }
 
 
 
@@ -111,16 +143,31 @@ public class Interactor : MonoBehaviour
 
     public void HidePlayer()
     {
-        Player.SetParent(hitHideObj.collider.gameObject.transform, false);
+        Player.transform.SetParent(hitHideObj.collider.gameObject.transform, true);
 
-        print("Players POS: " + Player.position);
-        Player.position = Vector3.zero;
+        Player.GetComponent<PlayerMovement>().enabled = false;
+        Player.transform.localPosition = Vector3.zero;
+        HideObj = hitHideObj.collider.gameObject;
+        _interactionDelay = 5f;
+        HideOverlay.SetActive(true);
+
+        lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 45;
+        lookFunction.verticalLookLimit = 20;
+
+
 
 
     }
 
     public void ShowPlayer()
     {
+
+        Player.GetComponent<PlayerMovement>().enabled = true;
+        Player.transform.localPosition = HideObj.transform.GetChild(0).localPosition;
+        HideOverlay.SetActive(false);
+        Player.transform.SetParent(null, true);
+        lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 60;
+        lookFunction.verticalLookLimit = 90f;
 
     }
 
