@@ -1,9 +1,8 @@
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
-using System.Collections;
-using UnityEditor.ShaderGraph;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+
 
 public class Interactor : MonoBehaviour
 {
@@ -12,170 +11,165 @@ public class Interactor : MonoBehaviour
 
     // /https://www.youtube.com/watch?v=cUf7FnNqv7U
     //https://youtu.be/zEfahR66Pa8
+    //https://www.youtube.com/watch?v=QYpWYZq2I6E
 
+
+    [Header("Masks")]
     public LayerMask interactionsMask;
     public LayerMask pickUpMask;
-    public Image CanInteractToolTip;
-    public GameObject CanInteractText;
-    public GameObject innerDialougePanel;
-    public RaycastHit hitInfo;
-    public Transform PlayerHands;
-    public Transform PickUpsContatiner;
+    public LayerMask HoldMask;
+    public LayerMask HideAwayMask;
+
+    [Header("Tooltips")]
+
+
+
+    public RaycastHit hitGeneric;
+    public RaycastHit hitPickUp;
+    public RaycastHit hitHideObj;
+
+
+    public GameObject Player;
     private bool _interactionInput;
     private bool _dropInput;
-    bool _isGenericObject;
-    bool _isPickUpObject;
+    private bool _ExitHideInput;
+    public bool _isGenericObject;
+    public bool _isPickUpObject;
+    public bool _isHideObject;
+    private bool _isPlayerHidden;
 
-    private Vector3 _equippedItemScale;
+    public GameObject HideOverlay;
 
-    void Update() { HandleInteractions(); }
+    private GameObject HideObj;
+
+    [Header("Scripts")]
+    private PickUpSystem pickUpSystem;
+    private ReticleManagement reticleManagement;
+    private InnerDialouge innerDialouge;
+    private LookFunction lookFunction;
+
+    private float _interactionDelay = 0f;
+
+    private void Start()
+    {
+        pickUpSystem = GetComponent<PickUpSystem>();
+        reticleManagement = GetComponent<ReticleManagement>();
+        lookFunction = GetComponentInParent<LookFunction>();
+    }
+
+    void Update()
+    {
+        HandleInteractions();
+        if (_interactionDelay > 0f)
+        {
+            _interactionDelay -= Time.deltaTime;
+        }
+    }
+
+
+
+
+
+
 
     public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
     public void OnDrop(InputAction.CallbackContext context) { _dropInput = context.ReadValueAsButton(); }
 
+    public void OnHideExit(InputAction.CallbackContext context) { _ExitHideInput = context.ReadValueAsButton(); }
 
     void HandleInteractions()
     {
 
-        _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitInfo, 3.5f, interactionsMask);
-        _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitInfo, 3.5f, pickUpMask);
-        HandleTooltip();
 
-        if (_interactionInput)
+        _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitGeneric, 3.5f, interactionsMask);
+        _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitPickUp, 3.5f, pickUpMask);
+        _isHideObject = Physics.Raycast(transform.position, transform.forward, out hitHideObj, 3.5f, HideAwayMask);
+
+        reticleManagement.HandleTooltip();
+
+        if (_interactionInput && _interactionDelay <= 0)
         {
 
             if (_isGenericObject)
             {
                 Debug.Log("hit _isGenericObject");
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.green);
-                StartCoroutine(InnerDialogueContorl());
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitGeneric.distance, Color.green);
+                StartCoroutine(innerDialouge.InnerDialogueContorl());
+
 
             }
 
             else if (_isPickUpObject)
             {
                 Debug.Log("hit _isPickUpObject");
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.blue);
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitPickUp.distance, Color.blue);
+                _interactionDelay = 1f;
 
-                EquipItem();
+                pickUpSystem.EquipItem();
 
+            }
+
+            else if (_isHideObject)
+            {
+                HidePlayer();
             }
 
             else
             {
-                Debug.Log("NULL");
+                //Debug.Log("NULL");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 5f, Color.red);
             }
+
+            if (_interactionDelay < 0)
+            {
+                ShowPlayer();
+            }
         }
+
 
 
         if (_dropInput)
         {
-            DropItem();
+            pickUpSystem.DropItem();
         }
 
 
-    }
-
-    private void EquipItem()
-    {
-        if (PlayerHands.childCount > 0)
-        {
-            DropItem();
-        }
-        GameObject PickUpObj = hitInfo.collider.gameObject;
-        Destroy(PickUpObj.GetComponent<Rigidbody>());
-        PickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
-        PickUpObj.transform.SetParent(PlayerHands, false);
-
-        _equippedItemScale = PickUpObj.gameObject.transform.localScale;
-    }
-
-    private void DropItem()
-    {
-        if (PlayerHands.childCount > 0)
-        {
-            Transform EquipedObj = PlayerHands.GetChild(0);
-            Vector3 EquipObjPos = EquipedObj.transform.localPosition;
-            EquipObjPos = new Vector3(EquipObjPos.x, EquipObjPos.y + 1, EquipObjPos.z);
-            EquipedObj.SetParent(PickUpsContatiner, true);
-            EquipedObj.gameObject.AddComponent<Rigidbody>();
-            EquipedObj.gameObject.transform.localScale = _equippedItemScale;
-
-        }
-
-
-    }
-
-
-    /*
-
-    private void CheckAndSetPickUpObj()
-    {
-
-        GameObject PickUpObj = hitInfo.collider.gameObject;
-        Debug.Log("Name is: " + PickUpObj.name);
-
-        transform.GetChild(0);
-
-        foreach (Transform child in transform.GetChild(0))
-        {
-            if (PickUpObj.name == child.name)
-            {
-                PickUpObj.SetActive(false);
-                child.gameObject.SetActive(true);
-            }
-        }
-    }
-
-
-    private void DisableAllOnPlayerItems()
-    {
-        foreach (Transform child in transform.GetChild(0))
-        {
-            child.gameObject.SetActive(false);
-        }
-    }*/
-
-
-
-    private void HandleTooltip()
-    {
-        if (!(_isGenericObject || _isPickUpObject))
-        {
-            //Nothing to interact with 
-            CanInteractToolTip.color = new Color(1f, 1, 1f, 0.5f);
-            CanInteractText.SetActive(false);
-
-        }
-        else
-        {
-            //Can interact with something
-            CanInteractToolTip.color = new Color(1f, 1, 1f, 1f);
-            CanInteractText.SetActive(true);
-
-        }
-    }
-
-
-
-    private IEnumerator InnerDialogueContorl()
-    {
-        innerDialougePanel.GetComponent<Image>().CrossFadeAlpha(1f, 0.2f, true);
-        yield return new WaitForSeconds(0.22f);
-        innerDialougePanel.SetActive(true);
-
-        yield return new WaitForSeconds(2f);
-        innerDialougePanel.GetComponent<Image>().CrossFadeAlpha(0f, 0.3f, true);
-
-        yield return new WaitForSeconds(0.32f);
-        innerDialougePanel.SetActive(false);
 
     }
 
 
 
 
+
+    public void HidePlayer()
+    {
+        Player.transform.SetParent(hitHideObj.collider.gameObject.transform, true);
+
+        Player.GetComponent<PlayerMovement>().enabled = false;
+        Player.transform.localPosition = Vector3.zero;
+        HideObj = hitHideObj.collider.gameObject;
+        _interactionDelay = 5f;
+        HideOverlay.SetActive(true);
+
+        lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 45;
+        lookFunction.verticalLookLimit = 20;
+
+
+
+
+    }
+
+    public void ShowPlayer()
+    {
+
+        Player.GetComponent<PlayerMovement>().enabled = true;
+        Player.transform.localPosition = HideObj.transform.GetChild(0).localPosition;
+        HideOverlay.SetActive(false);
+        Player.transform.SetParent(null, true);
+        lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 60;
+        lookFunction.verticalLookLimit = 90f;
+
+    }
 
 
 }

@@ -1,23 +1,70 @@
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public class PickUpSystem : Interactor
-{
-    public GameObject pickUpObject;
 
+/*
+VARIBLE_NAME = External Var
+_VaribleName = private Var
+varibleName = public/temporary Var
+
+
+*/
+public class PickUpSystem : MonoBehaviour
+{
+
+    private Interactor _interactor;
+    public Transform playerHands;
+    public Transform pickUpsContatiner;
+    private Vector3 _equippedItemScale;
+    private Quaternion _equippedItemRotation;
+    public RaycastHit _hitPickUp;
 
     void Start()
     {
-        pickUpObject.gameObject.SetActive(false);
+        _interactor = GetComponent<Interactor>();
     }
 
-    void Update()
+
+    private void Update()
     {
-        if (hitInfo.collider.gameObject.CompareTag("PickUp"))
-        {
-            print("this is a pick up -able obj");
-        }
+        _hitPickUp = _interactor.hitPickUp;
     }
+    public void EquipItem()
+    {
+        if (playerHands.childCount > 1)
+        {
+            DropItem();
+        }
+        GameObject pickUpObj = _hitPickUp.collider.gameObject;
+        Destroy(pickUpObj.GetComponent<Rigidbody>());
+        pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
+        pickUpObj.transform.SetParent(playerHands, false);
+
+        _equippedItemScale = pickUpObj.transform.localScale;
+        _equippedItemRotation = pickUpObj.transform.rotation;
+        pickUpObj.layer = LayerMask.NameToLayer("holdingMask");
+    }
+
+    public void DropItem()
+    {
+        if (playerHands.childCount > 1)
+        {
+            Transform equipedObj = playerHands.GetChild(1);
+            Vector3 equipObjPos = equipedObj.transform.localPosition;
+            equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
+            equipedObj.SetParent(pickUpsContatiner, true);
+            equipedObj.gameObject.AddComponent<Rigidbody>();
+
+            equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
+            equipedObj.gameObject.transform.localScale = _equippedItemScale;
+            equipedObj.gameObject.transform.rotation = _equippedItemRotation;
+
+        }
+
+
+    }
+
 
 
 }
