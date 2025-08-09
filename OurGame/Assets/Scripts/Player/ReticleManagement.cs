@@ -22,7 +22,7 @@ public class ReticleManagement : MonoBehaviour
     }
     public void HandleTooltip()
     {
-        if (!(_isGenericObject || _isPickUpObject || _isHideObject))
+        if (!(_isGenericObject || _isPickUpObject || _isHideObject) || _interactor._interactionDelay > 0)
         {
             //Nothing to interact with 
             CanInteractToolTip.color = new Color(1f, 1, 1f, 0.5f);

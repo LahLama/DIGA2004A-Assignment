@@ -42,7 +42,9 @@ public class PickUpSystem : MonoBehaviour
         pickUpObj.transform.SetParent(playerHands, false);
 
         _equippedItemScale = pickUpObj.transform.localScale;
+        pickUpObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         _equippedItemRotation = pickUpObj.transform.rotation;
+        _equippedItemRotation = Quaternion.Euler(0, 0, 0);
         pickUpObj.layer = LayerMask.NameToLayer("holdingMask");
     }
 
@@ -59,6 +61,8 @@ public class PickUpSystem : MonoBehaviour
             equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
             equipedObj.gameObject.transform.localScale = _equippedItemScale;
             equipedObj.gameObject.transform.rotation = _equippedItemRotation;
+
+            return;
 
         }
 

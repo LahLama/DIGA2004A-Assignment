@@ -2,6 +2,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -24,12 +25,20 @@ public class PlayerMovement : MonoBehaviour
     public GameObject cameraTransform;
 
     private LookFunction lookFunction;
+    bool _isUnderSomething = false;
+    RaycastHit underSomething;
+    private float _sprintTimer;
+    bool _canSprint = true;
+    private float _sprintDuration = 4f;
+    public Scrollbar sprintBar;
+
+
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         lookFunction = GetComponent<LookFunction>();
-
+        _sprintTimer = 4f;
     }
     private void Update()
     {
@@ -37,6 +46,9 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();
 
         HandleMovementModifiers();
+        HandleUnderAObject();
+
+
 
 
     }
@@ -76,17 +88,28 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleSprint()
     {
-        float __sprintSpeed = 10f;
+        float __sprintSpeed = 7;
         int __sprintFOV = 70;
 
 
-        if (_sprintInput)
+
+
+        if (_sprintTimer >= _sprintDuration) { _canSprint = true; }
+        if (_sprintTimer < 0) { _canSprint = false; }
+
+
+        if (_sprintInput && _canSprint)
         {
             moveSpeed = __sprintSpeed; // Sprint speed
             debugText.text = "Sprinting"; // Update debug text
             float __CurrentFOV = cameraTransform.GetComponent<Camera>().fieldOfView;
             cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
+
+            _sprintTimer -= Time.deltaTime;
+            sprintBar.size = 1 - (_sprintTimer / 4);
+            Debug.Log("--" + (int)_sprintTimer);
         }
+
 
 
     }
@@ -99,6 +122,9 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = __crouchSpeed; // Sprint speed
             this.transform.localScale = new Vector3(__scaleModifer, __scaleModifer, __scaleModifer); // Adjust player scale for crouching
             debugText.text = "Crouching"; // Update debug text
+
+
+
 
             //Raycast above, if its hitting something, stay in crouch, bool when crouching
         }
@@ -121,9 +147,18 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+
+    private void HandleUnderAObject()
+    {
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * underSomething.distance, Color.yellow);
+        _isUnderSomething = Physics.Raycast(transform.position, transform.up, out underSomething, 1f);
+
+        if (_isUnderSomething)
+        { debugText.text = "Stuck Crouching"; }
+    }
     private void HandleMovementModifiers()
     {
-        if (_sprintInput && !_crouchInput)
+        if (_sprintInput && !_crouchInput && !_isUnderSomething)
         {
             HandleSprint();
         }
@@ -131,8 +166,24 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleCrouch();
         }
-        else
+        else if (!_isUnderSomething)
+        {
             HandleWalk();
+        }
+        else if (_isUnderSomething)
+        {
+            HandleCrouch();
+
+        }
+
+
+        if ((_sprintTimer < _sprintDuration && (!_canSprint || !_sprintInput)))
+        {
+            HandleWalk();
+            _sprintTimer += Time.deltaTime;
+            Debug.Log("++" + (int)_sprintTimer);
+            sprintBar.size = 1 - (_sprintTimer / 4);
+        }
     }
 
 
