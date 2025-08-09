@@ -24,6 +24,10 @@ public class PlayerMovement : MonoBehaviour
     public GameObject cameraTransform;
 
     private LookFunction lookFunction;
+    bool _isUnderSomething = false;
+    RaycastHit underSomething;
+
+
 
     private void Awake()
     {
@@ -37,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();
 
         HandleMovementModifiers();
+        HandleUnderAObject();
+
+
 
 
     }
@@ -100,6 +107,9 @@ public class PlayerMovement : MonoBehaviour
             this.transform.localScale = new Vector3(__scaleModifer, __scaleModifer, __scaleModifer); // Adjust player scale for crouching
             debugText.text = "Crouching"; // Update debug text
 
+
+
+
             //Raycast above, if its hitting something, stay in crouch, bool when crouching
         }
 
@@ -121,6 +131,15 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+
+    private void HandleUnderAObject()
+    {
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * underSomething.distance, Color.yellow);
+        _isUnderSomething = Physics.Raycast(transform.position, transform.up, out underSomething, controller.height + 1f);
+
+        if (_isUnderSomething)
+        { debugText.text = "Stuck Crouching"; }
+    }
     private void HandleMovementModifiers()
     {
         if (_sprintInput && !_crouchInput)
@@ -131,8 +150,14 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleCrouch();
         }
-        else
+        else if (!_isUnderSomething)
+        {
             HandleWalk();
+        }
+        else
+        {
+            //HandleCrouch();
+        }
     }
 
 
