@@ -52,9 +52,10 @@ public class ReticleManagement : MonoBehaviour
         }
 
 
-        if (_interactor._PlayerIsHidden && _interactor._interactionDelay < 0.01)
+        if (_interactor._PlayerIsHidden && _interactor._interactionDelay < 0)
         {
             CanInteractText.text = "Press(E) / (LMB) / (West) to Get Out";
+            CanInteractText.gameObject.SetActive(true);
         }
     }
 }

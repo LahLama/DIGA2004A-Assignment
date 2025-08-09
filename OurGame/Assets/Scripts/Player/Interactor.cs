@@ -49,7 +49,7 @@ public class Interactor : MonoBehaviour
     private HideAndShowPlayer hideAndShowPlayer;
 
     public float _interactionDelay = 0f;
-    private float _maxInteractionDelay = 5f;
+    private float _maxInteractionDelay = 0.5f;
 
     private void Awake()
     {
