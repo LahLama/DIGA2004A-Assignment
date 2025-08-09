@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    #region Varibles
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float gravity = -9.81f;
@@ -32,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private float _sprintDuration = 4f;
     public Scrollbar sprintBar;
 
-
+    #endregion
 
     private void Awake()
     {

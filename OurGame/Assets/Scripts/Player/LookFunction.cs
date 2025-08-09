@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class LookFunction : MonoBehaviour
 {
+
+    #region Varibles
     [Header("Look Settings")]
 
     public float lookSensitivity = 2f;
@@ -16,6 +18,8 @@ public class LookFunction : MonoBehaviour
     public GameObject cameraTransform;
 
     private PlayerMovement playerMovement;
+
+    #endregion
 
     private void Awake()
     {

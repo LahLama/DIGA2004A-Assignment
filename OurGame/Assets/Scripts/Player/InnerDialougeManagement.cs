@@ -6,7 +6,11 @@ using UnityEngine.UI;
 public class InnerDialouge : MonoBehaviour
 {
 
+    #region Varibles
     public GameObject innerDialougePanel;
+
+    #endregion
+
     public IEnumerator InnerDialogueContorl()
     {
         innerDialougePanel.GetComponent<Image>().CrossFadeAlpha(1f, 0.2f, true);

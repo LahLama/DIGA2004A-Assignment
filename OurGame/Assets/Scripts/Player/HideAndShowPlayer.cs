@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class HideAndShowPlayer : MonoBehaviour
 {
+    #region Varibles
+
     public GameObject Player;
     private RaycastHit _hitHideObj;
     private Interactor _interactor;
@@ -9,6 +11,11 @@ public class HideAndShowPlayer : MonoBehaviour
     private bool _isPlayerHidden;
     private float _interactionDelay;
     private LookFunction lookFunction;
+
+    #endregion
+
+
+
     void Awake()
     {
         _interactor = GetComponent<Interactor>();

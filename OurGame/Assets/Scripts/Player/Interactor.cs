@@ -15,6 +15,8 @@ public class Interactor : MonoBehaviour
     //https://www.youtube.com/watch?v=QYpWYZq2I6E
 
 
+    #region Varibles
+
     [Header("Masks")]
     public LayerMask interactionsMask;
     public LayerMask pickUpMask;
@@ -50,7 +52,7 @@ public class Interactor : MonoBehaviour
 
     public float _interactionDelay = 0f;
     private float _maxInteractionDelay = 0.5f;
-
+    #endregion
     private void Awake()
     {
         pickUpSystem = GetComponent<PickUpSystem>();

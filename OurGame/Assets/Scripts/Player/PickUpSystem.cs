@@ -12,13 +12,15 @@ varibleName = public/temporary Var
 */
 public class PickUpSystem : MonoBehaviour
 {
-
+    #region  Varibles
     private Interactor _interactor;
     public Transform playerHands;
     public Transform pickUpsContatiner;
     private Vector3 _equippedItemScale;
     private Quaternion _equippedItemRotation;
     public RaycastHit _hitPickUp;
+
+    #endregion
 
     void Awake()
     {
