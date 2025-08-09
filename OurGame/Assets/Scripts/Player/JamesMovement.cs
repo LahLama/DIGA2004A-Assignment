@@ -2,6 +2,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -26,6 +27,10 @@ public class PlayerMovement : MonoBehaviour
     private LookFunction lookFunction;
     bool _isUnderSomething = false;
     RaycastHit underSomething;
+    private float _sprintTimer;
+    bool _canSprint = true;
+    private float _sprintDuration = 4f;
+    public Scrollbar sprintBar;
 
 
 
@@ -33,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         lookFunction = GetComponent<LookFunction>();
-
+        _sprintTimer = 4f;
     }
     private void Update()
     {
@@ -83,17 +88,28 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleSprint()
     {
-        float __sprintSpeed = 10f;
+        float __sprintSpeed = 7;
         int __sprintFOV = 70;
 
 
-        if (_sprintInput)
+
+
+        if (_sprintTimer >= _sprintDuration) { _canSprint = true; }
+        if (_sprintTimer < 0) { _canSprint = false; }
+
+
+        if (_sprintInput && _canSprint)
         {
             moveSpeed = __sprintSpeed; // Sprint speed
             debugText.text = "Sprinting"; // Update debug text
             float __CurrentFOV = cameraTransform.GetComponent<Camera>().fieldOfView;
             cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
+
+            _sprintTimer -= Time.deltaTime;
+            sprintBar.size = 1 - (_sprintTimer / 4);
+            Debug.Log("--" + (int)_sprintTimer);
         }
+
 
 
     }
@@ -135,14 +151,14 @@ public class PlayerMovement : MonoBehaviour
     private void HandleUnderAObject()
     {
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * underSomething.distance, Color.yellow);
-        _isUnderSomething = Physics.Raycast(transform.position, transform.up, out underSomething, controller.height + 1f);
+        _isUnderSomething = Physics.Raycast(transform.position, transform.up, out underSomething, 1f);
 
         if (_isUnderSomething)
         { debugText.text = "Stuck Crouching"; }
     }
     private void HandleMovementModifiers()
     {
-        if (_sprintInput && !_crouchInput)
+        if (_sprintInput && !_crouchInput && !_isUnderSomething)
         {
             HandleSprint();
         }
@@ -154,9 +170,19 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleWalk();
         }
-        else
+        else if (_isUnderSomething)
         {
-            //HandleCrouch();
+            HandleCrouch();
+
+        }
+
+
+        if ((_sprintTimer < _sprintDuration && (!_canSprint || !_sprintInput)))
+        {
+            HandleWalk();
+            _sprintTimer += Time.deltaTime;
+            Debug.Log("++" + (int)_sprintTimer);
+            sprintBar.size = 1 - (_sprintTimer / 4);
         }
     }
 
