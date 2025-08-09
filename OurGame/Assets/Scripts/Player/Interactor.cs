@@ -37,9 +37,6 @@ public class Interactor : MonoBehaviour
     public bool _isPickUpObject;
     public bool _isHideObject;
     private bool _isPlayerHidden;
-
-    public GameObject HideOverlay;
-
     private GameObject HideObj;
 
     [Header("Scripts")]
@@ -48,7 +45,7 @@ public class Interactor : MonoBehaviour
     private InnerDialouge innerDialouge;
     private LookFunction lookFunction;
 
-    private float _interactionDelay = 0f;
+    public float _interactionDelay = 0f;
 
     private void Start()
     {
@@ -103,7 +100,7 @@ public class Interactor : MonoBehaviour
             {
                 Debug.Log("hit _isPickUpObject");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitPickUp.distance, Color.blue);
-                _interactionDelay = 1f;
+                _interactionDelay = 0.7f;
 
                 pickUpSystem.EquipItem();
 
@@ -148,8 +145,8 @@ public class Interactor : MonoBehaviour
         Player.GetComponent<PlayerMovement>().enabled = false;
         Player.transform.localPosition = Vector3.zero;
         HideObj = hitHideObj.collider.gameObject;
-        _interactionDelay = 5f;
-        HideOverlay.SetActive(true);
+        _interactionDelay = 0.5f;
+
 
         lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 45;
         lookFunction.verticalLookLimit = 20;
@@ -161,13 +158,12 @@ public class Interactor : MonoBehaviour
 
     public void ShowPlayer()
     {
-
-        Player.GetComponent<PlayerMovement>().enabled = true;
         Player.transform.localPosition = HideObj.transform.GetChild(0).localPosition;
-        HideOverlay.SetActive(false);
+        Player.transform.localPosition = HideObj.transform.GetChild(0).localPosition;
         Player.transform.SetParent(null, true);
         lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 60;
         lookFunction.verticalLookLimit = 90f;
+        Player.GetComponent<PlayerMovement>().enabled = true;
 
     }
 
