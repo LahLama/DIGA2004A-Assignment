@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,29 +30,33 @@ public class Interactor : MonoBehaviour
     public RaycastHit hitHideObj;
 
 
-    public GameObject Player;
+
     private bool _interactionInput;
     private bool _dropInput;
     private bool _ExitHideInput;
     public bool _isGenericObject;
     public bool _isPickUpObject;
     public bool _isHideObject;
-    private bool _isPlayerHidden;
-    private GameObject HideObj;
+
+    public bool _PlayerIsHidden = false;
+
+
 
     [Header("Scripts")]
     private PickUpSystem pickUpSystem;
     private ReticleManagement reticleManagement;
     private InnerDialouge innerDialouge;
-    private LookFunction lookFunction;
+    private HideAndShowPlayer hideAndShowPlayer;
 
     public float _interactionDelay = 0f;
+    private float _maxInteractionDelay = 5f;
 
-    private void Start()
+    private void Awake()
     {
         pickUpSystem = GetComponent<PickUpSystem>();
         reticleManagement = GetComponent<ReticleManagement>();
-        lookFunction = GetComponentInParent<LookFunction>();
+        hideAndShowPlayer = GetComponent<HideAndShowPlayer>();
+        innerDialouge = GetComponent<InnerDialouge>();
     }
 
     void Update()
@@ -60,6 +65,7 @@ public class Interactor : MonoBehaviour
         if (_interactionDelay > 0f)
         {
             _interactionDelay -= Time.deltaTime;
+            Mathf.RoundToInt(_interactionDelay);
         }
     }
 
@@ -100,7 +106,7 @@ public class Interactor : MonoBehaviour
             {
                 Debug.Log("hit _isPickUpObject");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitPickUp.distance, Color.blue);
-                _interactionDelay = 0.7f;
+                _interactionDelay = _maxInteractionDelay;
 
                 pickUpSystem.EquipItem();
 
@@ -108,7 +114,8 @@ public class Interactor : MonoBehaviour
 
             else if (_isHideObject)
             {
-                HidePlayer();
+                hideAndShowPlayer.HidePlayer();
+                _PlayerIsHidden = true;
             }
 
             else
@@ -117,9 +124,10 @@ public class Interactor : MonoBehaviour
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 5f, Color.red);
             }
 
-            if (_interactionDelay < 0)
+            if (_interactionDelay <= 0 && _PlayerIsHidden)
             {
-                ShowPlayer();
+                hideAndShowPlayer.ShowPlayer();
+                _PlayerIsHidden = false;
             }
         }
 
@@ -138,34 +146,7 @@ public class Interactor : MonoBehaviour
 
 
 
-    public void HidePlayer()
-    {
-        Player.transform.SetParent(hitHideObj.collider.gameObject.transform, true);
 
-        Player.GetComponent<PlayerMovement>().enabled = false;
-        Player.transform.localPosition = Vector3.zero;
-        HideObj = hitHideObj.collider.gameObject;
-        _interactionDelay = 0.5f;
-
-
-        lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 45;
-        lookFunction.verticalLookLimit = 20;
-
-
-
-
-    }
-
-    public void ShowPlayer()
-    {
-        Player.transform.localPosition = HideObj.transform.GetChild(0).localPosition;
-        Player.transform.localPosition = HideObj.transform.GetChild(0).localPosition;
-        Player.transform.SetParent(null, true);
-        lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 60;
-        lookFunction.verticalLookLimit = 90f;
-        Player.GetComponent<PlayerMovement>().enabled = true;
-
-    }
 
 
 }

@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
             _sprintTimer -= Time.deltaTime;
             sprintBar.size = 1 - (_sprintTimer / 4);
-            Debug.Log("--" + (int)_sprintTimer);
+            //Debug.Log("--" + (int)_sprintTimer);
         }
 
 
@@ -181,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleWalk();
             _sprintTimer += Time.deltaTime;
-            Debug.Log("++" + (int)_sprintTimer);
+            // Debug.Log("++" + (int)_sprintTimer);
             sprintBar.size = 1 - (_sprintTimer / 4);
         }
     }

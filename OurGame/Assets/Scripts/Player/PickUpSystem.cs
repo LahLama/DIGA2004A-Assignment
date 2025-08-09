@@ -20,7 +20,7 @@ public class PickUpSystem : MonoBehaviour
     private Quaternion _equippedItemRotation;
     public RaycastHit _hitPickUp;
 
-    void Start()
+    void Awake()
     {
         _interactor = GetComponent<Interactor>();
     }
@@ -36,16 +36,21 @@ public class PickUpSystem : MonoBehaviour
         {
             DropItem();
         }
-        GameObject pickUpObj = _hitPickUp.collider.gameObject;
-        Destroy(pickUpObj.GetComponent<Rigidbody>());
-        pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
-        pickUpObj.transform.SetParent(playerHands, false);
+        if (_hitPickUp.collider)
+        {
+            GameObject pickUpObj = _hitPickUp.collider.gameObject;  //
+            Destroy(pickUpObj.GetComponent<Rigidbody>());
+            pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
+            pickUpObj.transform.SetParent(playerHands, false);
 
-        _equippedItemScale = pickUpObj.transform.localScale;
-        pickUpObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-        _equippedItemRotation = pickUpObj.transform.rotation;
-        _equippedItemRotation = Quaternion.Euler(0, 0, 0);
-        pickUpObj.layer = LayerMask.NameToLayer("holdingMask");
+            _equippedItemScale = pickUpObj.transform.localScale;
+            pickUpObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            _equippedItemRotation = pickUpObj.transform.rotation;
+            _equippedItemRotation = Quaternion.Euler(0, 0, 0);
+            pickUpObj.layer = LayerMask.NameToLayer("holdingMask");
+        }
+        else
+            return;
     }
 
     public void DropItem()

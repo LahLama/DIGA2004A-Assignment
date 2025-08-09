@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ public class ReticleManagement : MonoBehaviour
     bool _isHideObject;
     private Interactor _interactor;
     public Image CanInteractToolTip;
-    public GameObject CanInteractText;
+    public TextMeshProUGUI CanInteractText;
     void Start()
     {
         _interactor = GetComponent<Interactor>();
@@ -26,13 +27,34 @@ public class ReticleManagement : MonoBehaviour
         {
             //Nothing to interact with 
             CanInteractToolTip.color = new Color(1f, 1, 1f, 0.5f);
-            CanInteractText.SetActive(false);
+            CanInteractText.gameObject.SetActive(false);
         }
         else
         {
             //Can interact with something
             CanInteractToolTip.color = new Color(1f, 1, 1f, 1f);
-            CanInteractText.SetActive(true);
+
+
+
+            if (_isGenericObject)
+            {
+                CanInteractText.text = "Press(E) / (LMB) / (West) to Interact";
+            }
+            if (_isPickUpObject)
+            {
+                CanInteractText.text = "Press(E) / (LMB) / (West) to Pick Up";
+            }
+            if (_isHideObject)
+            {
+                CanInteractText.text = "Press(E) / (LMB) / (West) to Hide";
+            }
+            CanInteractText.gameObject.SetActive(true);
+        }
+
+
+        if (_interactor._PlayerIsHidden && _interactor._interactionDelay < 0.01)
+        {
+            CanInteractText.text = "Press(E) / (LMB) / (West) to Get Out";
         }
     }
 }
