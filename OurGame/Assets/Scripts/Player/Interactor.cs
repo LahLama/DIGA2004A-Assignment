@@ -1,7 +1,9 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 
@@ -44,6 +46,7 @@ public class Interactor : MonoBehaviour
 
 
 
+
     [Header("Scripts")]
     private PickUpSystem pickUpSystem;
     private ReticleManagement reticleManagement;
@@ -62,6 +65,7 @@ public class Interactor : MonoBehaviour
         hideAndShowPlayer = GetComponent<HideAndShowPlayer>();
         innerDialouge = GetComponent<InnerDialouge>();
         doorUnlocking = GetComponent<DoorUnlocking>();
+
     }
 
     void Update()
@@ -101,6 +105,7 @@ public class Interactor : MonoBehaviour
             if (_isGenericObject)
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitGeneric.distance, Color.green);
+                innerDialouge.text.text = "This is just an object.";
                 StartCoroutine(innerDialouge.InnerDialogueContorl());
 
 

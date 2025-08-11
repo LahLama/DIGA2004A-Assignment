@@ -9,6 +9,8 @@ public class DoorUnlocking : MonoBehaviour
     private Interactor _interactor;
     private PickUpSystem _pickUpSystem;
     private RaycastHit _hitDoorObj;
+
+    private InnerDialouge _innerDialouge;
     private string[] DoorTags = { "ForGreenDoor", "ForRedDoor", "ForBlueDoor", "ForYellowDoor" };
 
 
@@ -17,6 +19,7 @@ public class DoorUnlocking : MonoBehaviour
     {
         _interactor = GetComponent<Interactor>();
         _pickUpSystem = GetComponent<PickUpSystem>();
+        _innerDialouge = GetComponent<InnerDialouge>();
     }
 
     void Update()
@@ -69,11 +72,15 @@ public class DoorUnlocking : MonoBehaviour
 
             else
             {
+                _innerDialouge.text.text = "I gotta find the key.";
+                StartCoroutine(_innerDialouge.InnerDialogueContorl());
                 print("FIND THE KEY");
             }
         }
         else
         {
+            _innerDialouge.text.text = "The door is locked.";
+            StartCoroutine(_innerDialouge.InnerDialogueContorl());
             print("The door is locked");
         }
 
