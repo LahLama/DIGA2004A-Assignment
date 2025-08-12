@@ -4,7 +4,13 @@
 TagManager:
   serializedVersion: 3
   tags:
+  - GenericObj
+  - PickUpObj
   - PickUp
+  - ForGreenDoor
+  - ForRedDoor
+  - ForBlueDoor
+  - ForYellowDoor
   layers:
   - Default
   - TransparentFX
@@ -14,9 +20,9 @@ TagManager:
   - UI
   - interactionsMask
   - pickUpMask
-  - 
-  - 
-  - 
+  - holdingMask
+  - hidePlacesMask
+  - doorMask
   - 
   - 
   - 

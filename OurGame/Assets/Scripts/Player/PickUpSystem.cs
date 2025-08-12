@@ -1,23 +1,81 @@
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public class PickUpSystem : Interactor
+
+/*
+VARIBLE_NAME = External Var
+_VaribleName = private Var
+varibleName = public/temporary Var
+
+
+*/
+public class PickUpSystem : MonoBehaviour
 {
-    public GameObject pickUpObject;
+    #region  Varibles
+    private Interactor _interactor;
+    public Transform playerHands;
+    public Transform pickUpsContatiner;
+    private Vector3 _equippedItemScale;
+    private Quaternion _equippedItemRotation;
+    public RaycastHit _hitPickUp;
 
+    #endregion
 
-    void Start()
+    void Awake()
     {
-        pickUpObject.gameObject.SetActive(false);
+        _interactor = GetComponent<Interactor>();
     }
 
-    void Update()
+
+    private void Update()
     {
-        if (hitInfo.collider.gameObject.CompareTag("PickUp"))
+        _hitPickUp = _interactor.hitPickUp;
+    }
+    public void EquipItem()
+    {
+        if (playerHands.childCount > 1)
         {
-            print("this is a pick up -able obj");
+            DropItem();
         }
+        if (_hitPickUp.collider)
+        {
+            GameObject pickUpObj = _hitPickUp.collider.gameObject;  //
+            Destroy(pickUpObj.GetComponent<Rigidbody>());
+            pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
+            pickUpObj.transform.SetParent(playerHands, false);
+
+            _equippedItemScale = pickUpObj.transform.localScale;
+            pickUpObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            _equippedItemRotation = pickUpObj.transform.rotation;
+            _equippedItemRotation = Quaternion.Euler(0, 0, 0);
+            pickUpObj.layer = LayerMask.NameToLayer("holdingMask");
+        }
+        else
+            return;
     }
+
+    public void DropItem()
+    {
+        if (playerHands.childCount > 1)
+        {
+            Transform equipedObj = playerHands.GetChild(1);
+            Vector3 equipObjPos = equipedObj.transform.localPosition;
+            equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
+            equipedObj.SetParent(pickUpsContatiner, true);
+            equipedObj.gameObject.AddComponent<Rigidbody>();
+
+            equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
+            equipedObj.gameObject.transform.localScale = _equippedItemScale;
+            equipedObj.gameObject.transform.rotation = _equippedItemRotation;
+
+            return;
+
+        }
+
+
+    }
+
 
 
 }
