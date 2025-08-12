@@ -15,12 +15,12 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 1
-  m_FogColor: {r: 0.63227475, g: 0.7466897, b: 0.9547169, a: 1}
+  m_FogColor: {r: 0.97735846, g: 0, b: 0.93969023, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
   m_LinearFogStart: 5.7
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+  m_AmbientSkyColor: {r: 0.04150939, g: 0.04150939, b: 0.04150939, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -2060,6 +2060,7 @@ MonoBehaviour:
   CanInteractText: {fileID: 380771939}
   innerDialougePanel: {fileID: 2143427248}
   PlayerHands: {fileID: 1711941728}
+  PickUpsContatiner: {fileID: 0}
 --- !u!45 &330585550
 Skybox:
   m_ObjectHideFlags: 0
@@ -8180,10 +8181,6 @@ MonoBehaviour:
     m_ActionId: dc82c0ce-ab8c-4db8-9e21-68701d8d299c
     m_ActionName: 'Gameplay/Look[/Mouse/delta,/Touchscreen/delta,/Pen/delta]'
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 2ef822c6-c597-4bde-a448-5aed61b16b20
-    m_ActionName: 'Gameplay/Jump[/Keyboard/space]'
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 330585549}
         m_TargetAssemblyTypeName: Interactor, Assembly-CSharp
@@ -8296,8 +8293,10 @@ MonoBehaviour:
   verticalLookLimit: 90
   bobbingAmplitude: 25
   bobbingFrequency: 5
+  HeldBobCorrectifier: 0.04
   debugText: {fileID: 1968224663}
-  Hand: {fileID: 1853850856}
+  HandGui: {fileID: 1853850856}
+  HandHeldItem: {fileID: 1711941727}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
