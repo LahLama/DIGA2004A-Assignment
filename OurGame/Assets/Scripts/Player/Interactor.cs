@@ -1,7 +1,9 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 
@@ -15,30 +17,33 @@ public class Interactor : MonoBehaviour
     //https://www.youtube.com/watch?v=QYpWYZq2I6E
 
 
+    #region Varibles
+
     [Header("Masks")]
     public LayerMask interactionsMask;
     public LayerMask pickUpMask;
     public LayerMask HoldMask;
-    public LayerMask HideAwayMask;
+    public LayerMask hideAwayMask;
+    public LayerMask doorMask;
 
-    [Header("Tooltips")]
-
+    [Header("RaycastHits")]
 
 
     public RaycastHit hitGeneric;
     public RaycastHit hitPickUp;
     public RaycastHit hitHideObj;
+    public RaycastHit hitDoorObj;
 
-
-
-    private bool _interactionInput;
-    private bool _dropInput;
-    private bool _ExitHideInput;
+    [Header("Bools")]
     public bool _isGenericObject;
     public bool _isPickUpObject;
     public bool _isHideObject;
+    public bool _isDoorObject;
 
+    private bool _interactionInput;
+    private bool _dropInput;
     public bool _PlayerIsHidden = false;
+
 
 
 
@@ -47,16 +52,20 @@ public class Interactor : MonoBehaviour
     private ReticleManagement reticleManagement;
     private InnerDialouge innerDialouge;
     private HideAndShowPlayer hideAndShowPlayer;
+    private DoorUnlocking doorUnlocking;
 
+    [Header("InteractionDelays")]
     public float _interactionDelay = 0f;
     private float _maxInteractionDelay = 0.5f;
-
+    #endregion
     private void Awake()
     {
         pickUpSystem = GetComponent<PickUpSystem>();
         reticleManagement = GetComponent<ReticleManagement>();
         hideAndShowPlayer = GetComponent<HideAndShowPlayer>();
         innerDialouge = GetComponent<InnerDialouge>();
+        doorUnlocking = GetComponent<DoorUnlocking>();
+
     }
 
     void Update()
@@ -78,7 +87,6 @@ public class Interactor : MonoBehaviour
     public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
     public void OnDrop(InputAction.CallbackContext context) { _dropInput = context.ReadValueAsButton(); }
 
-    public void OnHideExit(InputAction.CallbackContext context) { _ExitHideInput = context.ReadValueAsButton(); }
 
     void HandleInteractions()
     {
@@ -86,7 +94,8 @@ public class Interactor : MonoBehaviour
 
         _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitGeneric, 3.5f, interactionsMask);
         _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitPickUp, 3.5f, pickUpMask);
-        _isHideObject = Physics.Raycast(transform.position, transform.forward, out hitHideObj, 3.5f, HideAwayMask);
+        _isHideObject = Physics.Raycast(transform.position, transform.forward, out hitHideObj, 3.5f, hideAwayMask);
+        _isDoorObject = Physics.Raycast(transform.position, transform.forward, out hitDoorObj, 3.5f, doorMask);
 
         reticleManagement.HandleTooltip();
 
@@ -95,8 +104,8 @@ public class Interactor : MonoBehaviour
 
             if (_isGenericObject)
             {
-                Debug.Log("hit _isGenericObject");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitGeneric.distance, Color.green);
+                innerDialouge.text.text = "This is just an object.";
                 StartCoroutine(innerDialouge.InnerDialogueContorl());
 
 
@@ -104,10 +113,8 @@ public class Interactor : MonoBehaviour
 
             else if (_isPickUpObject)
             {
-                Debug.Log("hit _isPickUpObject");
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitPickUp.distance, Color.blue);
                 _interactionDelay = _maxInteractionDelay;
-
                 pickUpSystem.EquipItem();
 
             }
@@ -118,6 +125,11 @@ public class Interactor : MonoBehaviour
                 _PlayerIsHidden = true;
             }
 
+            else if (_isDoorObject)
+            {
+
+                doorUnlocking.CanPlayerOpenDoor();
+            }
             else
             {
                 //Debug.Log("NULL");

@@ -6,6 +6,11 @@ TagManager:
   tags:
   - GenericObj
   - PickUpObj
+  - PickUp
+  - ForGreenDoor
+  - ForRedDoor
+  - ForBlueDoor
+  - ForYellowDoor
   layers:
   - Default
   - TransparentFX
@@ -17,7 +22,7 @@ TagManager:
   - pickUpMask
   - holdingMask
   - hidePlacesMask
-  - 
+  - doorMask
   - 
   - 
   - 

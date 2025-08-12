@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    #region Varibles
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float gravity = -9.81f;
@@ -32,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private float _sprintDuration = 4f;
     public Scrollbar sprintBar;
 
-
+    #endregion
 
     private void Awake()
     {
@@ -88,8 +90,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleSprint()
     {
-        float __sprintSpeed = 7;
-        int __sprintFOV = 70;
+        float __sprintSpeed = 6;
+        int __sprintFOV = 65;
 
 
 
@@ -143,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
         debugText.text = "Walking"; // Update debug text
 
         float __CurrentFOV = cameraTransform.GetComponent<Camera>().fieldOfView;
-        cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __normalFOV, Time.deltaTime / 0.2f);
+        cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __normalFOV, Time.deltaTime / 0.1f);
 
     }
 
@@ -179,7 +181,14 @@ public class PlayerMovement : MonoBehaviour
 
         if ((_sprintTimer < _sprintDuration && (!_canSprint || !_sprintInput)))
         {
-            HandleWalk();
+            if (_crouchInput)
+            {
+                HandleCrouch();
+            }
+            else
+            {
+                HandleWalk();
+            }
             _sprintTimer += Time.deltaTime;
             // Debug.Log("++" + (int)_sprintTimer);
             sprintBar.size = 1 - (_sprintTimer / 4);

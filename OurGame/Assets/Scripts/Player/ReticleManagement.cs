@@ -7,6 +7,7 @@ public class ReticleManagement : MonoBehaviour
     bool _isGenericObject;
     bool _isPickUpObject;
     bool _isHideObject;
+    bool _isDoorObject;
     private Interactor _interactor;
     public Image CanInteractToolTip;
     public TextMeshProUGUI CanInteractText;
@@ -20,10 +21,11 @@ public class ReticleManagement : MonoBehaviour
         _isGenericObject = _interactor._isGenericObject;
         _isPickUpObject = _interactor._isPickUpObject;
         _isHideObject = _interactor._isHideObject;
+        _isDoorObject = _interactor._isDoorObject;
     }
     public void HandleTooltip()
     {
-        if (!(_isGenericObject || _isPickUpObject || _isHideObject) || _interactor._interactionDelay > 0)
+        if (!(_isGenericObject || _isPickUpObject || _isHideObject || _isDoorObject) || _interactor._interactionDelay > 0)
         {
             //Nothing to interact with 
             CanInteractToolTip.color = new Color(1f, 1, 1f, 0.5f);
@@ -47,6 +49,10 @@ public class ReticleManagement : MonoBehaviour
             if (_isHideObject)
             {
                 CanInteractText.text = "Press(E) / (LMB) / (West) to Hide";
+            }
+            if (_isDoorObject)
+            {
+                CanInteractText.text = "Press(E) / (LMB) / (West) to Open";
             }
             CanInteractText.gameObject.SetActive(true);
         }
