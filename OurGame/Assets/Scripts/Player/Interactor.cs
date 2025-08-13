@@ -54,9 +54,11 @@ public class Interactor : MonoBehaviour
     private HideAndShowPlayer hideAndShowPlayer;
     private DoorUnlocking doorUnlocking;
 
-    [Header("InteractionDelays")]
+    [Header("InteractionVar")]
     public float _interactionDelay = 0f;
     private float _maxInteractionDelay = 0.5f;
+    private float _interactionRange = 3.5f;
+
     #endregion
     private void Awake()
     {
@@ -92,10 +94,10 @@ public class Interactor : MonoBehaviour
     {
 
 
-        _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitGeneric, 3.5f, interactionsMask);
-        _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitPickUp, 3.5f, pickUpMask);
-        _isHideObject = Physics.Raycast(transform.position, transform.forward, out hitHideObj, 3.5f, hideAwayMask);
-        _isDoorObject = Physics.Raycast(transform.position, transform.forward, out hitDoorObj, 3.5f, doorMask);
+        _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitGeneric, _interactionRange, interactionsMask);
+        _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitPickUp, _interactionRange, pickUpMask);
+        _isHideObject = Physics.Raycast(transform.position, transform.forward, out hitHideObj, _interactionRange / 2, hideAwayMask);
+        _isDoorObject = Physics.Raycast(transform.position, transform.forward, out hitDoorObj, _interactionRange, doorMask);
 
         reticleManagement.HandleTooltip();
 
