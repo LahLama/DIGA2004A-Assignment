@@ -115,8 +115,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""708dd01e-1bda-4da9-a6e3-dfc4e3cb48d6"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": true
+                    ""interactions"": ""Press(pressPoint=0.5)"",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Drop"",

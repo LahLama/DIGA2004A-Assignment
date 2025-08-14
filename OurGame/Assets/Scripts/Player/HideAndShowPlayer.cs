@@ -40,16 +40,16 @@ public class HideAndShowPlayer : MonoBehaviour
 
         if (_hitHideObj.collider)
         {
-            _playerOGpos = player.transform.position;
+            _playerOGpos = player.transform.localPosition;
             _playerOGrot = player.transform.rotation;
-            playerHeight = playerHeight / 2;
+
 
             player.gameObject.transform.SetParent(_hitHideObj.collider.gameObject.transform, true); //
 
             player.GetComponent<PlayerMovement>().enabled = false;
             player.transform.localPosition = Vector3.zero;
             _HideObj = _hitHideObj.collider.gameObject;
-            _interactor._interactionDelay = 1f;
+            _interactor._interactionDelay = 0.5f;
 
 
             lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 45;
@@ -64,9 +64,9 @@ public class HideAndShowPlayer : MonoBehaviour
     public void ShowPlayer()
     {
 
-        playerHeight = playerHeight * 2;
+
         player.transform.SetParent(null, true);
-        player.transform.position = _playerOGpos;
+        player.transform.localPosition = _playerOGpos;
         player.transform.rotation = Quaternion.Euler(_playerOGrot.x, _playerOGrot.y + 180f, _playerOGrot.z);
 
         lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 60;
