@@ -1,16 +1,20 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class HideAndShowPlayer : MonoBehaviour
 {
     #region Varibles
 
-    public GameObject Player;
+    private Transform player;
     private RaycastHit _hitHideObj;
     private Interactor _interactor;
+    private Vector3 _playerOGpos;
+    private Quaternion _playerOGrot;
     private GameObject _HideObj;
-    private bool _isPlayerHidden;
+    private bool _isplayerHidden;
     private float _interactionDelay;
     private LookFunction lookFunction;
+    private float playerHeight;
 
     #endregion
 
@@ -18,6 +22,8 @@ public class HideAndShowPlayer : MonoBehaviour
 
     void Awake()
     {
+        player = this.transform.parent;
+        playerHeight = player.GetComponent<CharacterController>().height;
         _interactor = GetComponent<Interactor>();
         lookFunction = GetComponentInParent<LookFunction>();
     }
@@ -34,12 +40,16 @@ public class HideAndShowPlayer : MonoBehaviour
 
         if (_hitHideObj.collider)
         {
-            Player.transform.SetParent(_hitHideObj.collider.gameObject.transform, true); //
+            _playerOGpos = player.transform.localPosition;
+            _playerOGrot = player.transform.rotation;
 
-            Player.GetComponent<PlayerMovement>().enabled = false;
-            Player.transform.localPosition = Vector3.zero;
+
+            player.gameObject.transform.SetParent(_hitHideObj.collider.gameObject.transform, true); //
+
+            player.GetComponent<PlayerMovement>().enabled = false;
+            player.transform.localPosition = Vector3.zero;
             _HideObj = _hitHideObj.collider.gameObject;
-            _interactor._interactionDelay = 1f;
+            _interactor._interactionDelay = 0.5f;
 
 
             lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 45;
@@ -54,11 +64,14 @@ public class HideAndShowPlayer : MonoBehaviour
     public void ShowPlayer()
     {
 
-        Player.transform.localPosition = _HideObj.transform.GetChild(0).localPosition;
-        Player.transform.SetParent(null, true);
+
+        player.transform.SetParent(null, true);
+        player.transform.localPosition = _playerOGpos;
+        player.transform.rotation = Quaternion.Euler(_playerOGrot.x, _playerOGrot.y + 180f, _playerOGrot.z);
+
         lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 60;
         lookFunction.verticalLookLimit = 90f;
-        Player.GetComponent<PlayerMovement>().enabled = true;
+        player.GetComponent<PlayerMovement>().enabled = true;
 
     }
 }

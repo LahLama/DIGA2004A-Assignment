@@ -34,12 +34,14 @@ public class DoorUnlocking : MonoBehaviour
         {
             var currentItem = _pickUpSystem.playerHands.GetChild(1);
 
-
             //Green Door
             if (currentItem.CompareTag(DoorTags[0]) && currentDoor.CompareTag(DoorTags[0]))
             {
-                Destroy(currentItem.gameObject);
                 Destroy(currentDoor.gameObject);
+                Destroy(currentItem.gameObject);
+
+
+
                 Debug.Log(" GREEN DOOR");
             }
 
