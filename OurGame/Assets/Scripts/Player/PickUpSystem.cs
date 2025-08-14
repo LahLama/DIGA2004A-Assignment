@@ -47,8 +47,14 @@ public class PickUpSystem : MonoBehaviour
 
             _equippedItemScale = pickUpObj.transform.localScale;
             pickUpObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+
+
             _equippedItemRotation = pickUpObj.transform.rotation;
+
+            //Animate a slight jiggle when picked up
             _equippedItemRotation = Quaternion.Euler(0, 0, 0);
+
+
             pickUpObj.layer = LayerMask.NameToLayer("holdingMask");
         }
         else
