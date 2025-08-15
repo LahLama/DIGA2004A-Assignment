@@ -1,6 +1,11 @@
 using UnityEngine;
 
-
+/*
+Title: Creating a Horror Game in Unity - Part 6: Hiding System (JavaScript)
+Author: SpeedTutor
+Date:  Jun 10, 2014
+Availability: https://www.youtube.com/watch?v=zEfahR66Pa8
+*/
 
 public class PickUpSystem : MonoBehaviour
 {
@@ -105,9 +110,9 @@ public class PickUpSystem : MonoBehaviour
             Transform equipedObj = playerHands.GetChild(1);
             Vector3 equipObjPos = equipedObj.transform.localPosition;
             equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
-            equipedObj.SetParent(pickUpsContatiner, true);
+            equipedObj.SetParent(_pickUpsContatiner, true);
             Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
-            rb.useGravity =true;;
+            rb.useGravity = true; ;
             rb.AddForce(playerHands.forward * 10f, ForceMode.Impulse);
 
             equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
