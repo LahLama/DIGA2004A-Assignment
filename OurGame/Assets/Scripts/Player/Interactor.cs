@@ -101,13 +101,6 @@ public class Interactor : MonoBehaviour
 
 
     }
-
-
-
-
-
-
-
     public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
     public void OnDrop(InputAction.CallbackContext context) { _dropInput = context.ReadValueAsButton(); }
     public void OnThrow(InputAction.CallbackContext context) { _throwInput = context.ReadValueAsButton(); }
@@ -132,9 +125,6 @@ public class Interactor : MonoBehaviour
 
         if (_interactionInput && _interactionDelay <= 0)
         {
-
-
-
             if (_isGenericObject)
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitGeneric.distance, Color.green);
@@ -178,7 +168,7 @@ public class Interactor : MonoBehaviour
         }
 
 
-        if (_interactionInput && _interactionDelay / 4 < 0)
+        if (_interactionInput && _interactionDelay / 4 < 0 && !_isDoorObject)
         {
             pickUpSystem.DropItem();
         }
