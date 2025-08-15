@@ -11,6 +11,12 @@ TagManager:
   - ForRedDoor
   - ForBlueDoor
   - ForYellowDoor
+  - HoldingPos
+  - HideSlider
+  - SprintSlider
+  - Monolouge
+  - PickUps
+  - Tooltip
   layers:
   - Default
   - TransparentFX
