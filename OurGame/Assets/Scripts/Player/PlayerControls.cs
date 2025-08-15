@@ -144,15 +144,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Throw"",
-                    ""type"": ""Button"",
-                    ""id"": ""0318f6c2-cf8d-4ae7-a846-f8d3ef43a309"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -474,39 +465,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fd5eb82c-fcbc-42f7-af8c-e2c182a8b69a"",
-                    ""path"": ""<Keyboard>/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Throw"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0bc670d1-9041-4c66-b792-793f86266e7e"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Console"",
-                    ""action"": ""Throw"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""19fb46d9-46e7-418b-a1fd-78dbf6d286c7"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Throw"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -554,7 +512,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Throw = m_Gameplay.FindAction("Throw", throwIfNotFound: true);
         m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
         m_Gameplay_Crouch = m_Gameplay.FindAction("Crouch", throwIfNotFound: true);
-        m_Gameplay_Throw = m_Gameplay.FindAction("Throw", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -641,7 +598,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Throw;
     private readonly InputAction m_Gameplay_Sprint;
     private readonly InputAction m_Gameplay_Crouch;
-    //private readonly InputAction m_Gameplay_Throw;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -668,7 +624,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         /// <summary>
         /// Provides access to the underlying input action "Gameplay/Throw".
         /// </summary>
-       // public InputAction @Throw => m_Wrapper.m_Gameplay_Throw;
+        public InputAction @Throw => m_Wrapper.m_Gameplay_Throw;
         /// <summary>
         /// Provides access to the underlying input action "Gameplay/Sprint".
         /// </summary>
@@ -677,10 +633,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/Crouch".
         /// </summary>
         public InputAction @Crouch => m_Wrapper.m_Gameplay_Crouch;
-        /// <summary>
-        /// Provides access to the underlying input action "Gameplay/Throw".
-        /// </summary>
-        public InputAction @Throw => m_Wrapper.m_Gameplay_Throw;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -725,9 +677,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
-            @Throw.started += instance.OnThrow;
-            @Throw.performed += instance.OnThrow;
-            @Throw.canceled += instance.OnThrow;
         }
 
         /// <summary>
@@ -757,9 +706,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
-            @Throw.started -= instance.OnThrow;
-            @Throw.performed -= instance.OnThrow;
-            @Throw.canceled -= instance.OnThrow;
         }
 
         /// <summary>
@@ -868,12 +814,5 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCrouch(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Throw" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        //void OnThrow(InputAction.CallbackContext context);
     }
 }
