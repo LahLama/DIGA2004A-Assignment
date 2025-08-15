@@ -72,7 +72,7 @@ using UnityEngine.InputSystem.Utilities;
 /// }
 /// </code>
 /// </example>
-public partial class @PlayerControls : IInputActionCollection2, IDisposable
+public partial class @PlayerControls: IInputActionCollection2, IDisposable
 {
     /// <summary>
     /// Provides access to the underlying asset instance.
@@ -339,7 +339,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""be7c3da0-623f-4bbe-a1fc-a60c8e441d90"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": ""ScaleVector2(x=15,y=15)"",
+                    ""processors"": ""ScaleVector2(x=7.5,y=7.5)"",
                     ""groups"": "";Console"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
