@@ -641,7 +641,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Throw;
     private readonly InputAction m_Gameplay_Sprint;
     private readonly InputAction m_Gameplay_Crouch;
-    private readonly InputAction m_Gameplay_Throw;
+    //private readonly InputAction m_Gameplay_Throw;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -668,7 +668,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         /// <summary>
         /// Provides access to the underlying input action "Gameplay/Throw".
         /// </summary>
-        public InputAction @Throw => m_Wrapper.m_Gameplay_Throw;
+       // public InputAction @Throw => m_Wrapper.m_Gameplay_Throw;
         /// <summary>
         /// Provides access to the underlying input action "Gameplay/Sprint".
         /// </summary>
@@ -874,6 +874,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnThrow(InputAction.CallbackContext context);
+        //void OnThrow(InputAction.CallbackContext context);
     }
 }
