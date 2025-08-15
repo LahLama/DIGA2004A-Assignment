@@ -1,8 +1,10 @@
+using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.UI;
 
 
@@ -58,13 +60,14 @@ public class Interactor : MonoBehaviour
     public float _interactionDelay = 0f;
     private float _maxInteractionDelay = 0.5f;
     private float _interactionRange = 3.5f;
+    public float hideDuration = 5f;
+    private Collider _currentHideObj;
 
     #endregion
     private void Awake()
     {
         pickUpSystem = GetComponent<PickUpSystem>();
         reticleManagement = GetComponent<ReticleManagement>();
-        hideAndShowPlayer = GetComponent<HideAndShowPlayer>();
         innerDialouge = GetComponent<InnerDialouge>();
         doorUnlocking = GetComponent<DoorUnlocking>();
 
@@ -78,6 +81,14 @@ public class Interactor : MonoBehaviour
             _interactionDelay -= Time.deltaTime;
             Mathf.RoundToInt(_interactionDelay);
         }
+
+        if (hideDuration > 0f)
+        {
+            hideDuration -= Time.deltaTime;
+            Mathf.RoundToInt(hideDuration);
+        }
+
+
     }
 
 
@@ -96,21 +107,27 @@ public class Interactor : MonoBehaviour
 
         _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitGeneric, _interactionRange, interactionsMask);
         _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitPickUp, _interactionRange, pickUpMask);
-        _isHideObject = Physics.Raycast(transform.position, transform.forward, out hitHideObj, _interactionRange / 2, hideAwayMask);
+
         _isDoorObject = Physics.Raycast(transform.position, transform.forward, out hitDoorObj, _interactionRange, doorMask);
 
         reticleManagement.HandleTooltip();
 
+        if (!_PlayerIsHidden)
+        {
+            _isHideObject = Physics.Raycast(transform.position, transform.forward, out hitHideObj, _interactionRange / 2, hideAwayMask);
+        }
+
+
         if (_interactionInput && _interactionDelay <= 0)
         {
+
+
 
             if (_isGenericObject)
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitGeneric.distance, Color.green);
                 innerDialouge.text.text = "This is just an object.";
                 StartCoroutine(innerDialouge.InnerDialogueContorl());
-
-
             }
 
             else if (_isPickUpObject)
@@ -118,13 +135,14 @@ public class Interactor : MonoBehaviour
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitPickUp.distance, Color.blue);
                 _interactionDelay = _maxInteractionDelay;
                 pickUpSystem.EquipItem();
-
             }
 
             else if (_isHideObject)
             {
-                hideAndShowPlayer.HidePlayer();
+                hitHideObj.collider.gameObject.GetComponent<HideAndShowPlayer>().HidePlayer();
                 _PlayerIsHidden = true;
+                hideDuration = 5f;
+                _interactionDelay = 1f;
             }
 
             else if (_isDoorObject)
@@ -132,19 +150,20 @@ public class Interactor : MonoBehaviour
 
                 doorUnlocking.CanPlayerOpenDoor();
             }
-            else
-            {
-                //Debug.Log("NULL");
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 5f, Color.red);
-            }
 
-            if (_interactionDelay <= 0 && _PlayerIsHidden)
-            {
-                hideAndShowPlayer.ShowPlayer();
-                _PlayerIsHidden = false;
-            }
         }
 
+        //Show player after 5seconds, the limit of hiding
+        if (hideDuration <= 0 && _PlayerIsHidden)
+        {
+            hitHideObj.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
+            _PlayerIsHidden = false;
+        }
+        // Wait for 1 second, then check if interaction input and player is hidden
+        if (_PlayerIsHidden)
+        {
+            StartCoroutine(WaitAndCheckHide());
+        }
 
 
         if (_dropInput)
@@ -157,6 +176,15 @@ public class Interactor : MonoBehaviour
     }
 
 
+    private IEnumerator WaitAndCheckHide()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (_interactionInput && _PlayerIsHidden)
+        {
+            hitHideObj.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
+            _PlayerIsHidden = false;
+        }
+    }
 
 
 

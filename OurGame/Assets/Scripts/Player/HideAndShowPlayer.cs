@@ -1,83 +1,68 @@
 using System.Runtime.CompilerServices;
+using Unity.Burst.Intrinsics;
+using UnityEngine.InputSystem;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HideAndShowPlayer : MonoBehaviour
 {
     #region Varibles
 
-    private Transform player;
-    private RaycastHit _hitHideObj;
-    private Interactor _interactor;
-    private Vector3 _playerOGpos;
-    private Quaternion _playerOGrot;
-    private GameObject _HideObj;
+    private GameObject player;
+    public Interactor interactor;
+    GameObject holdingContainer;
     private bool _isplayerHidden;
-    private float _interactionDelay;
-    private LookFunction lookFunction;
-    private float playerHeight;
-
+    private Scrollbar _hideSlider;
+    private float _hideDuration;
     #endregion
-
 
 
     void Awake()
     {
-        player = this.transform.parent;
-        playerHeight = player.GetComponent<CharacterController>().height;
-        _interactor = GetComponent<Interactor>();
-        lookFunction = GetComponentInParent<LookFunction>();
-
+        player = GameObject.FindWithTag("Player");
+        holdingContainer = GameObject.FindWithTag("HoldingPos");
+        _hideSlider = GameObject.FindWithTag("HideSlider").GetComponent<Scrollbar>();
     }
 
     void Update()
     {
-        _hitHideObj = _interactor.hitHideObj;
-        _interactionDelay = _interactor._interactionDelay;
-    }
+        _hideDuration = interactor.hideDuration;
+        if (_isplayerHidden)
+        {
 
+            _hideDuration -= Time.deltaTime;
+            // Debug.Log("++" + (int)_sprintTimer);
+            _hideSlider.size = 1 - (_hideDuration / 4);
+        }
+    }
 
     public void HidePlayer()
     {
 
-        if (_hitHideObj.collider)
-        {
-            _playerOGpos = player.transform.localPosition;
-            _playerOGrot = player.transform.rotation;
+        Debug.Log("THIS IS THE NAME OF THE BOX: " + this.name);
 
 
-            player.gameObject.transform.SetParent(_hitHideObj.collider.gameObject.transform, true); //
+        transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = true;
+        player.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        player.gameObject.GetComponent<PlayerMovement>().enabled = false;
+        player.gameObject.GetComponent<LookFunction>().enabled = false;
 
-            player.GetComponent<PlayerMovement>().enabled = false;
-            // player.GetComponent<CharacterController>().detectCollisions = false;
+        if (holdingContainer.activeSelf) { holdingContainer.SetActive(false); }
 
-            player.transform.localPosition = Vector3.zero;
-            _HideObj = _hitHideObj.collider.gameObject;
-            _interactor._interactionDelay = 0.5f;
-
-
-            lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 45;
-            lookFunction.verticalLookLimit = 20;
-
-        }
-        else return;
+        _isplayerHidden = true;
 
 
     }
 
     public void ShowPlayer()
     {
-        player.transform.SetParent(null, true);
-        player.GetComponent<PlayerMovement>().enabled = true;
-        player.transform.rotation = Quaternion.Euler(_playerOGrot.x, _playerOGrot.y + 180f, _playerOGrot.z);
-        player.transform.localPosition = _playerOGpos;
-
-
-        // player.GetComponent<CharacterController>().detectCollisions = true;
-
-
-        lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 60;
-        lookFunction.verticalLookLimit = 90f;
-
+        _hideSlider.size = 0;
+        transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = false;
+        player.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        player.gameObject.GetComponent<PlayerMovement>().enabled = true;
+        player.gameObject.GetComponent<LookFunction>().enabled = true;
+        if (!holdingContainer.activeSelf) { holdingContainer.SetActive(true); }
+        _isplayerHidden = false;
 
     }
 }

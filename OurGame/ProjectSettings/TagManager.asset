@@ -11,6 +11,7 @@ TagManager:
   - ForRedDoor
   - ForBlueDoor
   - ForYellowDoor
+  - HoldingPos
   layers:
   - Default
   - TransparentFX

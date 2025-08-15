@@ -14,16 +14,14 @@ public class LookFunction : MonoBehaviour
     private float _verticalRotation = 0f;
     private float startingYPos = 0;
     public GameObject HandHeldItem;
-    private CharacterController controller;
     public GameObject cameraTransform;
-
     private PlayerMovement playerMovement;
 
     #endregion
 
     private void Awake()
     {
-        controller = GetComponent<CharacterController>();
+
         playerMovement = GetComponent<PlayerMovement>();
         Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
