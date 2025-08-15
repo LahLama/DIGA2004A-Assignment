@@ -15,6 +15,7 @@ TagManager:
   - HideSlider
   - SprintSlider
   - Monolouge
+  - PickUps
   layers:
   - Default
   - TransparentFX

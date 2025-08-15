@@ -1,28 +1,25 @@
 using UnityEngine;
 
 
-/*
-VARIBLE_NAME = External Var
-_VaribleName = private Var
-varibleName = public/temporary Var
 
-
-*/
 public class PickUpSystem : MonoBehaviour
 {
     #region  Varibles
-    private Interactor _interactor;
     public Transform playerHands;
-    public Transform pickUpsContatiner;
+    private Interactor _interactor;
+    private Transform _pickUpsContatiner;
     private Vector3 _equippedItemScale;
     private Quaternion _equippedItemRotation;
-    public RaycastHit _hitPickUp;
+    private RaycastHit _hitPickUp;
 
     #endregion
 
+    #region UnityFunctions
     void Awake()
     {
         _interactor = GetComponent<Interactor>();
+        playerHands = GameObject.FindWithTag("HoldingPos").transform;
+        _pickUpsContatiner = GameObject.FindWithTag("PickUps").transform;
     }
 
 
@@ -30,29 +27,39 @@ public class PickUpSystem : MonoBehaviour
     {
         _hitPickUp = _interactor.hitPickUp;
     }
+    #endregion
+
     public void EquipItem()
     {
+
+        //If the player has an item, drop that item
+        //Only if the player has an open slot then reparent the object to the player
         if (playerHands.childCount > 1)
         {
             DropItem();
         }
         if (_hitPickUp.collider)
         {
-            GameObject pickUpObj = _hitPickUp.collider.gameObject;  //
-            Destroy(pickUpObj.GetComponent<Rigidbody>());
-            pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
-            pickUpObj.transform.SetParent(playerHands, false);
+            //Get the obj that will be picked up
+            GameObject pickUpObj = _hitPickUp.collider.gameObject;
 
+            //Switch off the gravity
+            Destroy(pickUpObj.GetComponent<Rigidbody>());
+            //Get the Orignal scale and rotation
+            _equippedItemRotation = pickUpObj.transform.rotation;
             _equippedItemScale = pickUpObj.transform.localScale;
+
+            //Reset scale and postion         
+            pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
             pickUpObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 
-
-            _equippedItemRotation = pickUpObj.transform.rotation;
+            //Set the parent to the player
+            pickUpObj.transform.SetParent(playerHands, false);
 
             //Animate a slight jiggle when picked up
-            _equippedItemRotation = Quaternion.Euler(0, 0, 0);
 
 
+            //To ensure the object doesnt visually clip through walls
             pickUpObj.layer = LayerMask.NameToLayer("holdingMask");
         }
         else
@@ -61,15 +68,26 @@ public class PickUpSystem : MonoBehaviour
 
     public void DropItem()
     {
+        //Only if the player has something it thier hands
         if (playerHands.childCount > 1)
         {
+            //Get the obj that is in the hands
             Transform equipedObj = playerHands.GetChild(1);
+
+            // Place object infront of player
             Vector3 equipObjPos = equipedObj.transform.localPosition;
             equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
-            equipedObj.SetParent(pickUpsContatiner, true);
+
+            //Reset the player to the pickups element
+            equipedObj.SetParent(_pickUpsContatiner, true);
+
+            //Enable the grabity
             equipedObj.gameObject.AddComponent<Rigidbody>();
 
+            //Reset so that the player cant see the objects through walls
             equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
+
+            //Reset the scale and postion to its originals
             equipedObj.gameObject.transform.localScale = _equippedItemScale;
             equipedObj.gameObject.transform.rotation = _equippedItemRotation;
 
