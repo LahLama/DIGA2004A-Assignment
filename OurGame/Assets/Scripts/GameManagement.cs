@@ -1,16 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManagement : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private bool EscapeButton;
+    public void OnExitGame(InputAction.CallbackContext context) { Application.Quit(); }
+
+
+
 }

@@ -60,9 +60,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Throw",
+                    "name": "ExitGame",
                     "type": "Button",
-                    "id": "0318f6c2-cf8d-4ae7-a846-f8d3ef43a309",
+                    "id": "4bead182-eaeb-4014-b2c0-f5edfb7255c9",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -262,7 +262,7 @@
                     "id": "be7c3da0-623f-4bbe-a1fc-a60c8e441d90",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "ScaleVector2(x=15,y=15)",
+                    "processors": "ScaleVector2(x=7.5,y=7.5)",
                     "groups": ";Console",
                     "action": "Look",
                     "isComposite": false,
@@ -391,34 +391,12 @@
                 },
                 {
                     "name": "",
-                    "id": "fd5eb82c-fcbc-42f7-af8c-e2c182a8b69a",
-                    "path": "<Keyboard>/x",
+                    "id": "c50b6796-70b8-4833-bf8b-db8b28a48eab",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Throw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0bc670d1-9041-4c66-b792-793f86266e7e",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Console",
-                    "action": "Throw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "19fb46d9-46e7-418b-a1fd-78dbf6d286c7",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Throw",
+                    "action": "ExitGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
