@@ -82,6 +82,26 @@ public class PickUpSystem : MonoBehaviour
 
     }
 
+    public void ThrowItem()
+    {
+        if (playerHands.childCount > 1)
+        {
+            Transform equipedObj = playerHands.GetChild(1);
+            Vector3 equipObjPos = equipedObj.transform.localPosition;
+            equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
+            equipedObj.SetParent(pickUpsContatiner, true);
+            Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
+            rb.useGravity =true;;
+            rb.AddForce(playerHands.forward * 10f, ForceMode.Impulse);
+
+            equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
+            equipedObj.gameObject.transform.localScale = _equippedItemScale;
+            equipedObj.gameObject.transform.rotation = _equippedItemRotation;
+
+            return;
+
+        }
+    }
 
 
 }
