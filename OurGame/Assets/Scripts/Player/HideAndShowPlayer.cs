@@ -1,77 +1,75 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HideAndShowPlayer : MonoBehaviour
 {
+    /*
+    Title: Creating a Horror Game in Unity - Part 6: Hiding System (JavaScript)
+    Author: SpeedTutor
+    Date:  Jun 10, 2014
+    Availability: https://youtu.be/GTtW57u_cfg?si=NqfWBUk5yLfmXfn-
+    */
+
     #region Varibles
 
-    private Transform player;
-    private RaycastHit _hitHideObj;
+    private GameObject _player;
+    private GameObject _holdingContainer;
     private Interactor _interactor;
-    private Vector3 _playerOGpos;
-    private Quaternion _playerOGrot;
-    private GameObject _HideObj;
+    private Scrollbar _hideSlider;
     private bool _isplayerHidden;
-    private float _interactionDelay;
-    private LookFunction lookFunction;
-    private float playerHeight;
-
+    private float _hideDuration;
     #endregion
 
 
-
+    #region UnityFunctions
     void Awake()
     {
-        player = this.transform.parent;
-        playerHeight = player.GetComponent<CharacterController>().height;
-        _interactor = GetComponent<Interactor>();
-        lookFunction = GetComponentInParent<LookFunction>();
+        _player = GameObject.FindWithTag("Player");
+        _holdingContainer = GameObject.FindWithTag("HoldingPos");
+        _hideSlider = GameObject.FindWithTag("HideSlider").GetComponent<Scrollbar>();
+        _interactor = GameObject.FindWithTag("MainCamera").GetComponent<Interactor>();
     }
 
     void Update()
     {
-        _hitHideObj = _interactor.hitHideObj;
-        _interactionDelay = _interactor._interactionDelay;
+        // Updates the hide timer
+        _hideDuration = _interactor.hideDuration;
+        if (_isplayerHidden)
+        {
+            _hideDuration -= Time.deltaTime;
+            _hideSlider.size = 1 - (_hideDuration / 4);
+        }
     }
 
+    #endregion
 
     public void HidePlayer()
     {
+        //Enables hiding spot camera
+        //Disables player visually
+        transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = true;
+        _player.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        _player.gameObject.GetComponent<PlayerMovement>().enabled = false;
+        _player.gameObject.GetComponent<LookFunction>().enabled = false;
 
-        if (_hitHideObj.collider)
-        {
-            _playerOGpos = player.transform.localPosition;
-            _playerOGrot = player.transform.rotation;
+        if (_holdingContainer.activeSelf) { _holdingContainer.SetActive(false); }
 
-
-            player.gameObject.transform.SetParent(_hitHideObj.collider.gameObject.transform, true); //
-
-            player.GetComponent<PlayerMovement>().enabled = false;
-            player.transform.localPosition = Vector3.zero;
-            _HideObj = _hitHideObj.collider.gameObject;
-            _interactor._interactionDelay = 0.5f;
-
-
-            lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 45;
-            lookFunction.verticalLookLimit = 20;
-
-        }
-        else return;
+        _isplayerHidden = true;
 
 
     }
 
     public void ShowPlayer()
     {
-
-
-        player.transform.SetParent(null, true);
-        player.transform.localPosition = _playerOGpos;
-        player.transform.rotation = Quaternion.Euler(_playerOGrot.x, _playerOGrot.y + 180f, _playerOGrot.z);
-
-        lookFunction.cameraTransform.GetComponent<Camera>().fieldOfView = 60;
-        lookFunction.verticalLookLimit = 90f;
-        player.GetComponent<PlayerMovement>().enabled = true;
+        //Disables hiding spot camera
+        //Enables player visually
+        _hideSlider.size = 0;
+        transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = false;
+        _player.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        _player.gameObject.GetComponent<PlayerMovement>().enabled = true;
+        _player.gameObject.GetComponent<LookFunction>().enabled = true;
+        if (!_holdingContainer.activeSelf) { _holdingContainer.SetActive(true); }
+        _isplayerHidden = false;
 
     }
 }
