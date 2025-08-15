@@ -1,20 +1,22 @@
-using System.Runtime.CompilerServices;
-using Unity.Burst.Intrinsics;
-using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HideAndShowPlayer : MonoBehaviour
 {
-    // https://youtu.be/GTtW57u_cfg?si=NqfWBUk5yLfmXfn-
+    /*
+    Title: Creating a Horror Game in Unity - Part 6: Hiding System (JavaScript)
+    Author: SpeedTutor
+    Date:  Jun 10, 2014
+    Availability: https://youtu.be/GTtW57u_cfg?si=NqfWBUk5yLfmXfn-
+    */
 
     #region Varibles
 
     private GameObject player;
-    public Interactor interactor;
-    GameObject holdingContainer;
-    private bool _isplayerHidden;
+    private Interactor _interactor;
+    private GameObject holdingContainer;
     private Scrollbar _hideSlider;
+    private bool _isplayerHidden;
     private float _hideDuration;
     #endregion
 
@@ -24,11 +26,12 @@ public class HideAndShowPlayer : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         holdingContainer = GameObject.FindWithTag("HoldingPos");
         _hideSlider = GameObject.FindWithTag("HideSlider").GetComponent<Scrollbar>();
+        _interactor = GameObject.FindWithTag("MainCamera").GetComponent<Interactor>();
     }
 
     void Update()
     {
-        _hideDuration = interactor.hideDuration;
+        _hideDuration = _interactor.hideDuration;
         if (_isplayerHidden)
         {
 
