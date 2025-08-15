@@ -12,47 +12,47 @@ public class HideAndShowPlayer : MonoBehaviour
 
     #region Varibles
 
-    private GameObject player;
+    private GameObject _player;
+    private GameObject _holdingContainer;
     private Interactor _interactor;
-    private GameObject holdingContainer;
     private Scrollbar _hideSlider;
     private bool _isplayerHidden;
     private float _hideDuration;
     #endregion
 
 
+    #region UnityFunctions
     void Awake()
     {
-        player = GameObject.FindWithTag("Player");
-        holdingContainer = GameObject.FindWithTag("HoldingPos");
+        _player = GameObject.FindWithTag("Player");
+        _holdingContainer = GameObject.FindWithTag("HoldingPos");
         _hideSlider = GameObject.FindWithTag("HideSlider").GetComponent<Scrollbar>();
         _interactor = GameObject.FindWithTag("MainCamera").GetComponent<Interactor>();
     }
 
     void Update()
     {
+        // Updates the hide timer
         _hideDuration = _interactor.hideDuration;
         if (_isplayerHidden)
         {
-
             _hideDuration -= Time.deltaTime;
-            // Debug.Log("++" + (int)_sprintTimer);
             _hideSlider.size = 1 - (_hideDuration / 4);
         }
     }
 
+    #endregion
+
     public void HidePlayer()
     {
-
-        Debug.Log("THIS IS THE NAME OF THE BOX: " + this.name);
-
-
+        //Enables hiding spot camera
+        //Disables player visually
         transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = true;
-        player.gameObject.GetComponent<MeshRenderer>().enabled = false;
-        player.gameObject.GetComponent<PlayerMovement>().enabled = false;
-        player.gameObject.GetComponent<LookFunction>().enabled = false;
+        _player.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        _player.gameObject.GetComponent<PlayerMovement>().enabled = false;
+        _player.gameObject.GetComponent<LookFunction>().enabled = false;
 
-        if (holdingContainer.activeSelf) { holdingContainer.SetActive(false); }
+        if (_holdingContainer.activeSelf) { _holdingContainer.SetActive(false); }
 
         _isplayerHidden = true;
 
@@ -61,12 +61,14 @@ public class HideAndShowPlayer : MonoBehaviour
 
     public void ShowPlayer()
     {
+        //Disables hiding spot camera
+        //Enables player visually
         _hideSlider.size = 0;
         transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = false;
-        player.gameObject.GetComponent<MeshRenderer>().enabled = true;
-        player.gameObject.GetComponent<PlayerMovement>().enabled = true;
-        player.gameObject.GetComponent<LookFunction>().enabled = true;
-        if (!holdingContainer.activeSelf) { holdingContainer.SetActive(true); }
+        _player.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        _player.gameObject.GetComponent<PlayerMovement>().enabled = true;
+        _player.gameObject.GetComponent<LookFunction>().enabled = true;
+        if (!_holdingContainer.activeSelf) { _holdingContainer.SetActive(true); }
         _isplayerHidden = false;
 
     }
