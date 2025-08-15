@@ -10,8 +10,22 @@ public class Interactor : MonoBehaviour
 
     //Drop": Look in pickUp parent, look a children tha matches current enabled one on the player, if yes: diabble On player, set pos of 'drop" to be infront(only 1 mili, cause Out of bounds things) of player then enable dropped item
 
+
+    /*
+    Title: Creating a Horror Game in Unity - Part 6: Hiding System (JavaScript)
+    Author: SpeedTutor
+    Date:  Jun 10, 2014
+    Availability: https://youtu.be/GTtW57u_cfg?si=NqfWBUk5yLfmXfn-
+    */
+
+    /*
+    Title: Creating a Horror Game in Unity - Part 6: Hiding System (JavaScript)
+    Author: SpeedTutor
+    Date:  Jun 10, 2014
+    Availability: https://youtu.be/GTtW57u_cfg?si=NqfWBUk5yLfmXfn-
+    */
     // /https://www.youtube.com/watch?v=cUf7FnNqv7U
-    //https://youtu.be/zEfahR66Pa8
+    //
     //https://www.youtube.com/watch?v=QYpWYZq2I6E
 
 
@@ -40,6 +54,7 @@ public class Interactor : MonoBehaviour
 
     private bool _interactionInput;
     private bool _dropInput;
+    private bool _throwInput;
     public bool _PlayerIsHidden = false;
 
 
@@ -95,6 +110,7 @@ public class Interactor : MonoBehaviour
 
     public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
     public void OnDrop(InputAction.CallbackContext context) { _dropInput = context.ReadValueAsButton(); }
+    public void OnThrow(InputAction.CallbackContext context) { _throwInput = context.ReadValueAsButton(); }
 
 
     void HandleInteractions()
@@ -162,9 +178,13 @@ public class Interactor : MonoBehaviour
         }
 
 
-        if (_dropInput)
+        if (_interactionInput && _interactionDelay / 4 < 0)
         {
             pickUpSystem.DropItem();
+        }
+        if (_throwInput)
+        {
+            pickUpSystem.ThrowItem();
         }
 
 
