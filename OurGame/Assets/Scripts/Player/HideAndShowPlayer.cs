@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class HideAndShowPlayer : MonoBehaviour
 {
+    // https://youtu.be/GTtW57u_cfg?si=NqfWBUk5yLfmXfn-
+
     #region Varibles
 
     private GameObject player;

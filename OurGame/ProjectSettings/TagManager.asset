@@ -12,6 +12,8 @@ TagManager:
   - ForBlueDoor
   - ForYellowDoor
   - HoldingPos
+  - HideSlider
+  - SprintSlider
   layers:
   - Default
   - TransparentFX
