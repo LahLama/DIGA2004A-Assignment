@@ -16,6 +16,7 @@ TagManager:
   - SprintSlider
   - Monolouge
   - PickUps
+  - Tooltip
   layers:
   - Default
   - TransparentFX
