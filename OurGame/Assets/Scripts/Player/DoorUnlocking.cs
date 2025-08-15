@@ -1,20 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
-using UnityEngine.Rendering;
+
 
 public class DoorUnlocking : MonoBehaviour
 {
+    #region Varibles
+
     private Interactor _interactor;
     private PickUpSystem _pickUpSystem;
     private RaycastHit _hitDoorObj;
-
     private InnerDialouge _innerDialouge;
-    private string[] DoorTags = { "ForGreenDoor", "ForRedDoor", "ForBlueDoor", "ForYellowDoor" };
+    private string[] _doorTags = { "ForGreenDoor", "ForRedDoor", "ForBlueDoor", "ForYellowDoor" };
 
+    #endregion
 
-
+    #region UnityFunctions
     void Awake()
     {
         _interactor = GetComponent<Interactor>();
@@ -26,64 +25,60 @@ public class DoorUnlocking : MonoBehaviour
     {
         _hitDoorObj = _interactor.hitDoorObj;
     }
+    #endregion
+
     public void CanPlayerOpenDoor()
     {
+        //Getting the door the player is looking at
+        // and gets the item the player is holding
         var currentDoor = _hitDoorObj.collider;
         var playerHands = _pickUpSystem.playerHands;
+
         if (playerHands.childCount > 1)
         {
             var currentItem = _pickUpSystem.playerHands.GetChild(1);
+            //Compares if the door and handheld item matches tags
 
             //Green Door
-            if (currentItem.CompareTag(DoorTags[0]) && currentDoor.CompareTag(DoorTags[0]))
+            if (currentItem.CompareTag(_doorTags[0]) && currentDoor.CompareTag(_doorTags[0]))
             {
                 Destroy(currentDoor.gameObject);
                 Destroy(currentItem.gameObject);
-
-
-
-                Debug.Log(" GREEN DOOR");
             }
 
             //Red Door
-            else if (currentItem.CompareTag(DoorTags[1]) && currentDoor.CompareTag(DoorTags[1]))
+            else if (currentItem.CompareTag(_doorTags[1]) && currentDoor.CompareTag(_doorTags[1]))
             {
                 Destroy(currentItem.gameObject);
                 Destroy(currentDoor.transform.parent.gameObject);
-
-                Debug.Log(" RED DOOR");
             }
 
             //Blue Door
-            else if (currentItem.CompareTag(DoorTags[2]) && currentDoor.CompareTag(DoorTags[2]))
+            else if (currentItem.CompareTag(_doorTags[2]) && currentDoor.CompareTag(_doorTags[2]))
             {
                 Destroy(currentItem.gameObject);
                 Destroy(currentDoor.gameObject);
-                Debug.Log(" BLUE DOOR");
             }
 
             //Yellow Door
-            else if (currentItem.CompareTag(DoorTags[3]) && currentDoor.CompareTag(DoorTags[3]))
+            else if (currentItem.CompareTag(_doorTags[3]) && currentDoor.CompareTag(_doorTags[3]))
             {
                 Destroy(currentItem.gameObject);
                 Destroy(currentDoor.gameObject);
-                Debug.Log(" YELLOW DOOR");
             }
 
-
-
+            //If its not the key
             else
             {
                 _innerDialouge.text.text = "I gotta find the key.";
                 StartCoroutine(_innerDialouge.InnerDialogueContorl());
-                print("FIND THE KEY");
             }
         }
         else
         {
+            //If the player doesnt have anything in hand
             _innerDialouge.text.text = "The door is locked.";
             StartCoroutine(_innerDialouge.InnerDialogueContorl());
-            print("The door is locked");
         }
 
 
