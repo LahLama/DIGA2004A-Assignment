@@ -7,26 +7,20 @@ using UnityEngine.InputSystem;
 
 public class Interactor : MonoBehaviour
 {
-
-    //Drop": Look in pickUp parent, look a children tha matches current enabled one on the player, if yes: diabble On player, set pos of 'drop" to be infront(only 1 mili, cause Out of bounds things) of player then enable dropped item
-
-
     /*
-    Title: Creating a Horror Game in Unity - Part 6: Hiding System (JavaScript)
-    Author: SpeedTutor
-    Date:  Jun 10, 2014
-    Availability: https://youtu.be/GTtW57u_cfg?si=NqfWBUk5yLfmXfn-
+    Title: Raycast Unity 3d - unity raycast tutorial
+    Author: Pixelbug Studio
+    Date:  Sep 9, 2021
+    Availability: https://www.youtube.com/watch?v=cUf7FnNqv7U
     */
 
     /*
-    Title: Creating a Horror Game in Unity - Part 6: Hiding System (JavaScript)
-    Author: SpeedTutor
-    Date:  Jun 10, 2014
-    Availability: https://youtu.be/GTtW57u_cfg?si=NqfWBUk5yLfmXfn-
+    Title: (URP) How to fix Gun Clipping in Unity | Unity3D Tutorial | 
+    Author: Podd Studios
+    Date:  Dec 3, 2022
+    Availability: https://www.youtube.com/watch?v=QYpWYZq2I6E
     */
-    // /https://www.youtube.com/watch?v=cUf7FnNqv7U
-    //
-    //https://www.youtube.com/watch?v=QYpWYZq2I6E
+
 
 
     #region Varibles
@@ -39,7 +33,6 @@ public class Interactor : MonoBehaviour
     public LayerMask doorMask;
 
     [Header("RaycastHits")]
-
 
     public RaycastHit hitGeneric;
     public RaycastHit hitPickUp;
@@ -57,9 +50,6 @@ public class Interactor : MonoBehaviour
     private bool _throwInput;
     public bool _PlayerIsHidden = false;
 
-
-
-
     [Header("Scripts")]
     private PickUpSystem pickUpSystem;
     private ReticleManagement reticleManagement;
@@ -75,13 +65,13 @@ public class Interactor : MonoBehaviour
     private Collider _currentHideObj;
 
     #endregion
+    #region UnityFunctions
     private void Awake()
     {
         pickUpSystem = GetComponent<PickUpSystem>();
         reticleManagement = GetComponent<ReticleManagement>();
         innerDialouge = GetComponent<InnerDialouge>();
         doorUnlocking = GetComponent<DoorUnlocking>();
-
     }
 
     void Update()
@@ -98,43 +88,35 @@ public class Interactor : MonoBehaviour
             hideDuration -= Time.deltaTime;
             Mathf.RoundToInt(hideDuration);
         }
-
-
     }
+    #endregion
 
-
-
-
-
-
-
+    #region NewInputSystem
     public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
-    public void OnDrop(InputAction.CallbackContext context) { _dropInput = context.ReadValueAsButton(); }
     public void OnThrow(InputAction.CallbackContext context) { _throwInput = context.ReadValueAsButton(); }
 
+    #endregion
 
     void HandleInteractions()
     {
-
-
+        //Get depending on the ray and mask
         _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitGeneric, _interactionRange, interactionsMask);
         _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitPickUp, _interactionRange, pickUpMask);
-
         _isDoorObject = Physics.Raycast(transform.position, transform.forward, out hitDoorObj, _interactionRange, doorMask);
+
 
         reticleManagement.HandleTooltip();
 
+        //Only if the player is not hidden then check for a hiding spot
         if (!_PlayerIsHidden)
         {
             _isHideObject = Physics.Raycast(transform.position, transform.forward, out hitHideObj, _interactionRange / 2, hideAwayMask);
         }
 
-
+        //Only when the player uses the interaction button and the cooldown is finished
         if (_interactionInput && _interactionDelay <= 0)
         {
-
-
-
+            //If the object is a generic object then display a dialouge box
             if (_isGenericObject)
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitGeneric.distance, Color.green);
@@ -142,6 +124,7 @@ public class Interactor : MonoBehaviour
                 StartCoroutine(innerDialouge.InnerDialogueContorl());
             }
 
+            //If the object is a pickup object, pick it up
             else if (_isPickUpObject)
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitPickUp.distance, Color.blue);
@@ -149,6 +132,7 @@ public class Interactor : MonoBehaviour
                 pickUpSystem.EquipItem();
             }
 
+            //If the object is a hiding spot, hide the player and reset the hiding spot time
             else if (_isHideObject)
             {
                 hitHideObj.collider.gameObject.GetComponent<HideAndShowPlayer>().HidePlayer();
@@ -156,13 +140,11 @@ public class Interactor : MonoBehaviour
                 hideDuration = 5f;
                 _interactionDelay = 1f;
             }
-
+            //If it is a door, check if the player can open the door or not
             else if (_isDoorObject)
             {
-
                 doorUnlocking.CanPlayerOpenDoor();
             }
-
         }
 
         //Show player after 5seconds, the limit of hiding
@@ -177,8 +159,8 @@ public class Interactor : MonoBehaviour
             StartCoroutine(WaitAndCheckHide());
         }
 
-
-        if (_interactionInput && _interactionDelay / 4 < 0)
+        //Drop the item if the player presses interaction and is not facing a door
+        if (_interactionInput && _interactionDelay / 4 < 0 && !_isDoorObject)
         {
             pickUpSystem.DropItem();
         }
@@ -186,12 +168,7 @@ public class Interactor : MonoBehaviour
         {
             pickUpSystem.ThrowItem();
         }
-
-
-
     }
-
-
     private IEnumerator WaitAndCheckHide()
     {
         yield return new WaitForSeconds(0.5f);
@@ -201,10 +178,4 @@ public class Interactor : MonoBehaviour
             _PlayerIsHidden = false;
         }
     }
-
-
-
-
-
-
 }
