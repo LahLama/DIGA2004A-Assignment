@@ -67,6 +67,8 @@ public class Interactor : MonoBehaviour
     private HideAndShowPlayer hideAndShowPlayer;
     private DoorUnlocking doorUnlocking;
 
+    private HighlightObject highlightObject;
+
     [Header("InteractionVar")]
     public float _interactionDelay = 0f;
     private float _maxInteractionDelay = 0.5f;
@@ -81,6 +83,7 @@ public class Interactor : MonoBehaviour
         reticleManagement = GetComponent<ReticleManagement>();
         innerDialouge = GetComponent<InnerDialouge>();
         doorUnlocking = GetComponent<DoorUnlocking>();
+
 
     }
 
@@ -119,7 +122,6 @@ public class Interactor : MonoBehaviour
 
         _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitGeneric, _interactionRange, interactionsMask);
         _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitPickUp, _interactionRange, pickUpMask);
-
         _isDoorObject = Physics.Raycast(transform.position, transform.forward, out hitDoorObj, _interactionRange, doorMask);
 
         reticleManagement.HandleTooltip();
@@ -147,6 +149,7 @@ public class Interactor : MonoBehaviour
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitPickUp.distance, Color.blue);
                 _interactionDelay = _maxInteractionDelay;
                 pickUpSystem.EquipItem();
+
             }
 
             else if (_isHideObject)
@@ -187,8 +190,14 @@ public class Interactor : MonoBehaviour
             pickUpSystem.ThrowItem();
         }
 
-
-
+        if (_isPickUpObject)
+        {
+            hitPickUp.collider.gameObject.GetComponent<HighlightObject>().ChangeMaterial();
+        }
+        else
+        {
+            //   hitPickUp.collider.gameObject.GetComponent<HighlightObject>().ResetMaterial();
+        }
     }
 
 

@@ -17,6 +17,7 @@ public class PickUpSystem : MonoBehaviour
     private Quaternion _equippedItemRotation;
     private RaycastHit _hitPickUp;
 
+
     #endregion
 
     #region UnityFunctions
