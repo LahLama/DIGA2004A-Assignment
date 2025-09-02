@@ -160,7 +160,7 @@ public class Interactor : MonoBehaviour
         }
 
         //Drop the item if the player presses interaction and is not facing a door
-        if (_interactionInput && _interactionDelay / 4 < 0 && !_isDoorObject)
+        if (_interactionInput && _interactionDelay / 4 < 0 && !_isDoorObject && !_isGenericObject)
         {
             pickUpSystem.DropItem();
         }
