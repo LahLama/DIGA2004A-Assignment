@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 9385c140d48bd8041a70e9ae8d1947e2
+<<<<<<<< HEAD:OurGame/Assets/Scenes/Tsire/LevelLayout.unity.meta
+guid: 958c62ff0745e514eac1d4e803091bed
+========
+guid: 87456639d38f3da4ea42dd9fd9822380
+>>>>>>>> James:OurGame/Assets/Scenes/James/MicrophoneTesting.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

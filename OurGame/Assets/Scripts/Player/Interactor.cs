@@ -57,6 +57,8 @@ public class Interactor : MonoBehaviour
     private HideAndShowPlayer hideAndShowPlayer;
     private DoorUnlocking doorUnlocking;
 
+    private HighlightObject highlightObject;
+
     [Header("InteractionVar")]
     public float _interactionDelay = 0f;
     private float _maxInteractionDelay = 0.5f;
@@ -72,6 +74,11 @@ public class Interactor : MonoBehaviour
         reticleManagement = GetComponent<ReticleManagement>();
         innerDialouge = GetComponent<InnerDialouge>();
         doorUnlocking = GetComponent<DoorUnlocking>();
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> James
     }
 
     void Update()
@@ -130,6 +137,7 @@ public class Interactor : MonoBehaviour
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitPickUp.distance, Color.blue);
                 _interactionDelay = _maxInteractionDelay;
                 pickUpSystem.EquipItem();
+
             }
 
             //If the object is a hiding spot, hide the player and reset the hiding spot time
@@ -168,6 +176,18 @@ public class Interactor : MonoBehaviour
         {
             pickUpSystem.ThrowItem();
         }
+<<<<<<< HEAD
+=======
+
+        if (_isPickUpObject)
+        {
+            hitPickUp.collider.gameObject.GetComponent<HighlightObject>().ChangeMaterial();
+        }
+        else
+        {
+            //   hitPickUp.collider.gameObject.GetComponent<HighlightObject>().ResetMaterial();
+        }
+>>>>>>> James
     }
     private IEnumerator WaitAndCheckHide()
     {
