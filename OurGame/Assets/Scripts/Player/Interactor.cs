@@ -37,6 +37,7 @@ public class Interactor : MonoBehaviour
     public LayerMask HoldMask;
     public LayerMask hideAwayMask;
     public LayerMask doorMask;
+    public LayerMask DefaultMask;
 
     [Header("RaycastHits")]
 
@@ -45,9 +46,12 @@ public class Interactor : MonoBehaviour
     public RaycastHit hitPickUp;
     public RaycastHit hitHideObj;
     public RaycastHit hitDoorObj;
+    public RaycastHit hitObstacleObj;
 
     [Header("Bools")]
     public bool _isGenericObject;
+
+    public bool _isObstacleObject;
     public bool _isPickUpObject;
     public bool _isHideObject;
     public bool _isDoorObject;
@@ -72,7 +76,7 @@ public class Interactor : MonoBehaviour
     [Header("InteractionVar")]
     public float _interactionDelay = 0f;
     private float _maxInteractionDelay = 0.5f;
-    private float _interactionRange = 3.5f;
+    private float _interactionRange = 1.5f;
     public float hideDuration = 5f;
     private Collider _currentHideObj;
 
@@ -89,6 +93,7 @@ public class Interactor : MonoBehaviour
 
     void Update()
     {
+        Debug.DrawLine(transform.position, transform.forward * _interactionRange);
         HandleInteractions();
         if (_interactionDelay > 0f)
         {
@@ -118,7 +123,7 @@ public class Interactor : MonoBehaviour
 
     void HandleInteractions()
     {
-
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _interactionRange, Color.yellow);
 
         _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitGeneric, _interactionRange, interactionsMask);
         _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitPickUp, _interactionRange, pickUpMask);
@@ -135,18 +140,17 @@ public class Interactor : MonoBehaviour
         if (_interactionInput && _interactionDelay <= 0)
         {
 
+            _isObstacleObject = Physics.Raycast(transform.position, transform.forward, out hitObstacleObj, _interactionRange, DefaultMask);
 
 
             if (_isGenericObject)
             {
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitGeneric.distance, Color.green);
                 innerDialouge.text.text = "This is just an object.";
                 StartCoroutine(innerDialouge.InnerDialogueContorl());
             }
 
             else if (_isPickUpObject)
             {
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitPickUp.distance, Color.blue);
                 _interactionDelay = _maxInteractionDelay;
                 pickUpSystem.EquipItem();
 
@@ -165,8 +169,8 @@ public class Interactor : MonoBehaviour
 
                 doorUnlocking.CanPlayerOpenDoor();
             }
-
         }
+
 
         //Show player after 5seconds, the limit of hiding
         if (hideDuration <= 0 && _PlayerIsHidden)
