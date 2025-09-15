@@ -10,12 +10,20 @@ public class ReticleManagement : MonoBehaviour
     private bool _isDoorObject;
     private Interactor _interactor;
     private Image _toolTip;
+    LayerMask specifiedLayer;
     private TextMeshProUGUI _tooltipText;
     void Start()
     {
         _interactor = GetComponent<Interactor>();
         _toolTip = GameObject.FindWithTag("Tooltip").GetComponent<Image>();
         _tooltipText = _toolTip.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+    }
+
+    //TEMPORRAITLY
+    void Update()
+    {
+        if (_interactor.hitObj)
+            specifiedLayer = _interactor.raycastHit.transform.gameObject.layer;
     }
 
 
@@ -32,7 +40,7 @@ public class ReticleManagement : MonoBehaviour
             //Can interact with something
             _toolTip.color = new Color(1f, 1, 1f, 1f);
 
-            LayerMask specifiedLayer = _interactor.raycastHit.transform.gameObject.layer;
+
             string layerName = LayerMask.LayerToName(specifiedLayer.value);
 
             //Depending on the object, present a different tooltip
@@ -42,7 +50,7 @@ public class ReticleManagement : MonoBehaviour
                     _tooltipText.text = "Press(E) / (LMB) / (West) to Interact";
                     break;
 
-                case "hideAwayMask":
+                case "hidePlacesMask":
                     _tooltipText.text = "Press(E) / (LMB) / (West) to Hide";
                     break;
 
@@ -54,6 +62,8 @@ public class ReticleManagement : MonoBehaviour
                     _tooltipText.text = "Press(E) / (LMB) / (West) to Pick Up";
                     break;
                 default:
+                    _tooltipText.text = "";
+
                     break;
             }
 

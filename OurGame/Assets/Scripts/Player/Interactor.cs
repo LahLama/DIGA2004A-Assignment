@@ -108,7 +108,7 @@ public class Interactor : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.forward) * _interactionRange);
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _interactionRange, Color.yellow);
-
+        reticleManagement.HandleTooltip();
 
         hitObj = Physics.Raycast(transform.position, transform.forward, out raycastHit, _interactionRange);
         string LayerName = "";
@@ -116,11 +116,12 @@ public class Interactor : MonoBehaviour
         if (hitObj)
         {
             LayerMask specifiedLayer = raycastHit.transform.gameObject.layer;
-            string layerName = LayerMask.LayerToName(specifiedLayer.value);
-            Debug.Log(LayerName);
+            LayerName = LayerMask.LayerToName(specifiedLayer.value);
+
+
         }
 
-        reticleManagement.HandleTooltip();
+
 
         /* if (!_PlayerIsHidden)
          {
@@ -139,7 +140,7 @@ public class Interactor : MonoBehaviour
 
                     break;
 
-                case "hideAwayMask":
+                case "hidePlacesMask":
                     raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().HidePlayer();
                     _PlayerIsHidden = true;
                     hideDuration = 5f;
