@@ -23,7 +23,7 @@ public class DoorUnlocking : MonoBehaviour
 
     void Update()
     {
-        _hitDoorObj = _interactor.hitDoorObj;
+        _hitDoorObj = _interactor.raycastHit;
     }
     #endregion
 

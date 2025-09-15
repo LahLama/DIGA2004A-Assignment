@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 
 
@@ -30,36 +32,16 @@ public class Interactor : MonoBehaviour
 
 
     #region Varibles
+    public RaycastHit raycastHit;
 
-    [Header("Masks")]
-    public LayerMask interactionsMask;
-    public LayerMask pickUpMask;
-    public LayerMask HoldMask;
-    public LayerMask hideAwayMask;
-    public LayerMask doorMask;
-    public LayerMask DefaultMask;
-
-    [Header("RaycastHits")]
-
-
-    public RaycastHit hitGeneric;
-    public RaycastHit hitPickUp;
-    public RaycastHit hitHideObj;
-    public RaycastHit hitDoorObj;
-    public RaycastHit hitObstacleObj;
 
     [Header("Bools")]
-    public bool _isGenericObject;
-
-    public bool _isObstacleObject;
-    public bool _isPickUpObject;
-    public bool _isHideObject;
-    public bool _isDoorObject;
 
     private bool _interactionInput;
     private bool _dropInput;
     private bool _throwInput;
     public bool _PlayerIsHidden = false;
+    public bool hitObj = false;
 
 
 
@@ -78,6 +60,7 @@ public class Interactor : MonoBehaviour
     private float _maxInteractionDelay = 0.5f;
     private float _interactionRange = 1.5f;
     public float hideDuration = 5f;
+    [SerializeField] private int _interactNumber = 0;
     private Collider _currentHideObj;
 
     #endregion
@@ -123,59 +106,70 @@ public class Interactor : MonoBehaviour
 
     void HandleInteractions()
     {
+        Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.forward) * _interactionRange);
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _interactionRange, Color.yellow);
 
-        _isGenericObject = Physics.Raycast(transform.position, transform.forward, out hitGeneric, _interactionRange, interactionsMask);
-        _isPickUpObject = Physics.Raycast(transform.position, transform.forward, out hitPickUp, _interactionRange, pickUpMask);
-        _isDoorObject = Physics.Raycast(transform.position, transform.forward, out hitDoorObj, _interactionRange, doorMask);
+
+        hitObj = Physics.Raycast(transform.position, transform.forward, out raycastHit, _interactionRange);
+        string LayerName = "";
+
+        if (hitObj)
+        {
+            LayerMask specifiedLayer = raycastHit.transform.gameObject.layer;
+            string layerName = LayerMask.LayerToName(specifiedLayer.value);
+            Debug.Log(LayerName);
+        }
 
         reticleManagement.HandleTooltip();
 
-        if (!_PlayerIsHidden)
-        {
-            _isHideObject = Physics.Raycast(transform.position, transform.forward, out hitHideObj, _interactionRange / 2, hideAwayMask);
-        }
+        /* if (!_PlayerIsHidden)
+         {
+             _isHideObject = Physics.Raycast(transform.position, transform.forward, out hitHideObj, _interactionRange / 2, hideAwayMask);
+         }*/
 
 
         if (_interactionInput && _interactionDelay <= 0)
         {
 
-            _isObstacleObject = Physics.Raycast(transform.position, transform.forward, out hitObstacleObj, _interactionRange, DefaultMask);
-
-
-            if (_isGenericObject)
+            switch (LayerName)
             {
-                innerDialouge.text.text = "This is just an object.";
-                StartCoroutine(innerDialouge.InnerDialogueContorl());
+                case "interactionsMask":
+                    innerDialouge.text.text = "This is just an object.";
+                    StartCoroutine(innerDialouge.InnerDialogueContorl());
+
+                    break;
+
+                case "hideAwayMask":
+                    raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().HidePlayer();
+                    _PlayerIsHidden = true;
+                    hideDuration = 5f;
+                    _interactionDelay = 1f;
+
+                    break;
+
+                case "doorMask":
+                    doorUnlocking.CanPlayerOpenDoor();
+                    break;
+
+                case "pickUpMask":
+                    _interactionDelay = _maxInteractionDelay;
+                    pickUpSystem.EquipItem();
+                    _interactNumber++;
+                    break;
+
+
+                default:
+                    break;
             }
 
-            else if (_isPickUpObject)
-            {
-                _interactionDelay = _maxInteractionDelay;
-                pickUpSystem.EquipItem();
-
-            }
-
-            else if (_isHideObject)
-            {
-                hitHideObj.collider.gameObject.GetComponent<HideAndShowPlayer>().HidePlayer();
-                _PlayerIsHidden = true;
-                hideDuration = 5f;
-                _interactionDelay = 1f;
-            }
-
-            else if (_isDoorObject)
-            {
-
-                doorUnlocking.CanPlayerOpenDoor();
-            }
         }
+
 
 
         //Show player after 5seconds, the limit of hiding
         if (hideDuration <= 0 && _PlayerIsHidden)
         {
-            hitHideObj.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
+            raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
             _PlayerIsHidden = false;
         }
         // Wait for 1 second, then check if interaction input and player is hidden
@@ -194,13 +188,13 @@ public class Interactor : MonoBehaviour
             pickUpSystem.ThrowItem();
         }
 
-        if (_isPickUpObject)
+        if (LayerName == "interactionsMask")
         {
-            hitPickUp.collider.gameObject.GetComponent<HighlightObject>().ChangeMaterial();
+            // raycastHit.collider.gameObject.GetComponent<HighlightObject>().ChangeMaterial();
         }
         else
         {
-            //   hitPickUp.collider.gameObject.GetComponent<HighlightObject>().ResetMaterial();
+            //   raycastHit.collider.gameObject.GetComponent<HighlightObject>().ResetMaterial();
         }
     }
 
@@ -210,7 +204,7 @@ public class Interactor : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (_interactionInput && _PlayerIsHidden)
         {
-            hitHideObj.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
+            raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
             _PlayerIsHidden = false;
         }
     }

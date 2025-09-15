@@ -31,7 +31,7 @@ public class PickUpSystem : MonoBehaviour
 
     private void Update()
     {
-        _hitPickUp = _interactor.hitPickUp;
+        _hitPickUp = _interactor.raycastHit;
     }
     #endregion
 

@@ -18,17 +18,10 @@ public class ReticleManagement : MonoBehaviour
         _tooltipText = _toolTip.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
-    void Update()
-    {
-        //Gets what the player is interacting with
-        _isGenericObject = _interactor._isGenericObject;
-        _isPickUpObject = _interactor._isPickUpObject;
-        _isHideObject = _interactor._isHideObject;
-        _isDoorObject = _interactor._isDoorObject;
-    }
+
     public void HandleTooltip()
     {
-        if (!(_isGenericObject || _isPickUpObject || _isHideObject || _isDoorObject) || _interactor._interactionDelay > 0)
+        if (!_interactor.hitObj || _interactor._interactionDelay > 0)
         {
             //Nothing to interact with 
             _toolTip.color = new Color(1f, 1, 1f, 0.5f);
@@ -39,25 +32,33 @@ public class ReticleManagement : MonoBehaviour
             //Can interact with something
             _toolTip.color = new Color(1f, 1, 1f, 1f);
 
+            LayerMask specifiedLayer = _interactor.raycastHit.transform.gameObject.layer;
+            string layerName = LayerMask.LayerToName(specifiedLayer.value);
 
             //Depending on the object, present a different tooltip
-            if (_isGenericObject)
+            switch (layerName)
             {
-                _tooltipText.text = "Press(E) / (LMB) / (West) to Interact";
+                case "interactionsMask":
+                    _tooltipText.text = "Press(E) / (LMB) / (West) to Interact";
+                    break;
+
+                case "hideAwayMask":
+                    _tooltipText.text = "Press(E) / (LMB) / (West) to Hide";
+                    break;
+
+                case "doorMask":
+                    _tooltipText.text = "Press(E) / (LMB) / (West) to Open";
+                    break;
+
+                case "pickUpMask":
+                    _tooltipText.text = "Press(E) / (LMB) / (West) to Pick Up";
+                    break;
+                default:
+                    break;
             }
-            if (_isPickUpObject)
-            {
-                _tooltipText.text = "Press(E) / (LMB) / (West) to Pick Up";
-            }
-            if (_isHideObject)
-            {
-                _tooltipText.text = "Press(E) / (LMB) / (West) to Hide";
-            }
-            if (_isDoorObject)
-            {
-                _tooltipText.text = "Press(E) / (LMB) / (West) to Open";
-            }
+
             _tooltipText.gameObject.SetActive(true);
+
         }
 
         //Handle when player can leave when hiding
