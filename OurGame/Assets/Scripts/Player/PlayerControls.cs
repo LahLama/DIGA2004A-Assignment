@@ -72,7 +72,7 @@ using UnityEngine.InputSystem.Utilities;
 /// }
 /// </code>
 /// </example>
-public partial class @PlayerControls : IInputActionCollection2, IDisposable
+public partial class @PlayerControls: IInputActionCollection2, IDisposable
 {
     /// <summary>
     /// Provides access to the underlying asset instance.
@@ -144,6 +144,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ExitGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""4bead182-eaeb-4014-b2c0-f5edfb7255c9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -339,7 +348,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""be7c3da0-623f-4bbe-a1fc-a60c8e441d90"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": ""ScaleVector2(x=15,y=15)"",
+                    ""processors"": ""ScaleVector2(x=7.5,y=7.5)"",
                     ""groups"": "";Console"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
@@ -465,6 +474,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c50b6796-70b8-4833-bf8b-db8b28a48eab"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ExitGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -512,6 +532,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Throw = m_Gameplay.FindAction("Throw", throwIfNotFound: true);
         m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
         m_Gameplay_Crouch = m_Gameplay.FindAction("Crouch", throwIfNotFound: true);
+        m_Gameplay_ExitGame = m_Gameplay.FindAction("ExitGame", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -598,6 +619,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Throw;
     private readonly InputAction m_Gameplay_Sprint;
     private readonly InputAction m_Gameplay_Crouch;
+    private readonly InputAction m_Gameplay_ExitGame;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -633,6 +655,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/Crouch".
         /// </summary>
         public InputAction @Crouch => m_Wrapper.m_Gameplay_Crouch;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/ExitGame".
+        /// </summary>
+        public InputAction @ExitGame => m_Wrapper.m_Gameplay_ExitGame;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -677,6 +703,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
+            @ExitGame.started += instance.OnExitGame;
+            @ExitGame.performed += instance.OnExitGame;
+            @ExitGame.canceled += instance.OnExitGame;
         }
 
         /// <summary>
@@ -706,6 +735,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
+            @ExitGame.started -= instance.OnExitGame;
+            @ExitGame.performed -= instance.OnExitGame;
+            @ExitGame.canceled -= instance.OnExitGame;
         }
 
         /// <summary>
@@ -814,5 +846,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCrouch(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ExitGame" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnExitGame(InputAction.CallbackContext context);
     }
 }
