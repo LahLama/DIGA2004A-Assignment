@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: 01cdd6edc60dcf84a9d5bbcac65da358
+guid: c167ffe5ab88dda49ad326c8c9392994
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bed_frame
+    second: {fileID: 2100000, guid: 676afad401e5d334e94f3060c9e9f95a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blanket
+    second: {fileID: 2100000, guid: a86ddb62dc0c9f144aed706c384b94bf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: matress
+    second: {fileID: 2100000, guid: 46d53cd147af35e4b95149be608e58ed, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pillow
+    second: {fileID: 2100000, guid: b10647919f7eee848b630c6e1d805ed5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
