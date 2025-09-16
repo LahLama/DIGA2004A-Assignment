@@ -2,20 +2,20 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-
+//https://www.youtube.com/watch?v=vS6lyX2QidE
 public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
-    public LayerMask ground;
     public LayerMask playerLayer;
     public LayerMask StopLayer;
 
 
     //Patrolling
-    public Vector3 walkPoint;
-    private bool _walkPointSet;
-    public float walkPointRange;
+    public int currentWayPointIndex = 0;
+    //Waypoints
+    public List<Transform> waypoints;
+
 
 
 
@@ -53,38 +53,30 @@ public class EnemyAI : MonoBehaviour
     }
     private void Patrol()
     {
-        if (!_walkPointSet) SearchForWalkPoint();
 
-        if (_walkPointSet)
-
-            agent.SetDestination(walkPoint);
-
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        if (distanceToWalkPoint.magnitude < 5)
-            _walkPointSet = false;
+        float distanceToWayPoint = 0f;
 
 
 
 
-    }
-
-    private void SearchForWalkPoint()
-    {
-        float randomZ = Random.Range(-walkPointRange, +walkPointRange);
-        float randomX = Random.Range(-walkPointRange, +walkPointRange);
-
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-
-
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, ground) && !Physics.Raycast(transform.position, transform.forward, 10f, StopLayer))
-            _walkPointSet = true;
-
+        if (currentWayPointIndex <= waypoints.Count - 1)
+            distanceToWayPoint = Vector3.Distance(waypoints[currentWayPointIndex].position, transform.position);
         else
-            _walkPointSet = false;
+        {
+            currentWayPointIndex = 0;
+            return;
+        }
 
+
+        if (distanceToWayPoint <= 1)
+        {
+            currentWayPointIndex++;
+            return;
+        }
+
+        agent.SetDestination(waypoints[currentWayPointIndex].position);
     }
+
 
 
     private void CatchPlayer()
