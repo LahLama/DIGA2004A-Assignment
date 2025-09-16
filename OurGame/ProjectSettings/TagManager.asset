@@ -21,7 +21,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - interactionsMask
@@ -29,8 +29,8 @@ TagManager:
   - holdingMask
   - hidePlacesMask
   - doorMask
-  - 
-  - 
+  - groundMask
+  - barrierMask
   - 
   - 
   - 
