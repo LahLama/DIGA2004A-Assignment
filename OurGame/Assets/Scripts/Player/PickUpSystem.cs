@@ -58,6 +58,7 @@ public class PickUpSystem : MonoBehaviour
             //Reset scale and postion         
             pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
             pickUpObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            pickUpObj.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
             //Set the parent to the player
             pickUpObj.transform.SetParent(playerHands, false);
@@ -74,11 +75,18 @@ public class PickUpSystem : MonoBehaviour
 
     public void DropItem()
     {
+
         //Only if the player has something it thier hands
         if (playerHands.childCount > 1)
         {
             //Get the obj that is in the hands
             Transform equipedObj = playerHands.GetChild(1);
+
+            //Enable the grabity
+            equipedObj.gameObject.AddComponent<Rigidbody>();
+
+            //Reset so that the player cant see the objects through walls
+            equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
 
             // Place object infront of player
             Vector3 equipObjPos = equipedObj.transform.localPosition;
@@ -86,12 +94,6 @@ public class PickUpSystem : MonoBehaviour
 
             //Reset the player to the pickups element
             equipedObj.SetParent(_pickUpsContatiner, true);
-
-            //Enable the grabity
-            equipedObj.gameObject.AddComponent<Rigidbody>();
-
-            //Reset so that the player cant see the objects through walls
-            equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
 
             //Reset the scale and postion to its originals
             equipedObj.gameObject.transform.localScale = _equippedItemScale;
@@ -110,20 +112,22 @@ public class PickUpSystem : MonoBehaviour
     {
         if (playerHands.childCount > 1)
         {
+
             Transform equipedObj = playerHands.GetChild(1);
-            Vector3 equipObjPos = equipedObj.transform.localPosition;
-            equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
-            equipedObj.SetParent(_pickUpsContatiner, true);
             Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
             rb.useGravity = true; ;
 
+            Vector3 equipObjPos = equipedObj.transform.localPosition;
+            equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
+            equipedObj.SetParent(_pickUpsContatiner, true);
+
             equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
 
-            rb.AddForce(playerHands.forward * 10f, ForceMode.Impulse);
+
             equipedObj.gameObject.transform.localScale = _equippedItemScale;
             equipedObj.gameObject.transform.rotation = _equippedItemRotation;
 
-
+            rb.AddForce(playerHands.forward * 5f, ForceMode.Impulse);
 
             return;
 
