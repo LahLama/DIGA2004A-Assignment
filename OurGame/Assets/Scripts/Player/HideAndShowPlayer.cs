@@ -18,6 +18,9 @@ public class HideAndShowPlayer : MonoBehaviour
     private Scrollbar _hideSlider;
     private bool _isplayerHidden;
     private float _hideDuration;
+
+    private VignetteControl vignetteControl;
+
     #endregion
 
 
@@ -29,16 +32,26 @@ public class HideAndShowPlayer : MonoBehaviour
         _hideSlider = GameObject.FindWithTag("HideSlider").GetComponent<Scrollbar>();
         _interactor = GameObject.FindWithTag("MainCamera").GetComponent<Interactor>();
 
+        vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
+
     }
 
     void Update()
     {
+
         // Updates the hide timer
         _hideDuration = _interactor.hideDuration;
-        if (_isplayerHidden)
+        if (_interactor._PlayerIsHidden)
         {
             _hideDuration -= Time.deltaTime;
             _hideSlider.size = 1 - (_hideDuration / 4);
+            vignetteControl.HiddenApplyVignette(0.5f);
+        }
+        else if (!_interactor._PlayerIsHidden)
+        {
+            vignetteControl.HiddenRemoveVignette(2);
+
+            Debug.Log("AAAAAAAAAAaaa");
         }
     }
 
@@ -46,6 +59,7 @@ public class HideAndShowPlayer : MonoBehaviour
 
     public void HidePlayer()
     {
+        _interactor._PlayerIsHidden = true;
         //Enables hiding spot camera
         //Disables player visually
         transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = true;
@@ -55,15 +69,17 @@ public class HideAndShowPlayer : MonoBehaviour
 
         if (_holdingContainer.activeSelf) { _holdingContainer.SetActive(false); }
 
-        _isplayerHidden = true;
 
         _player.layer = LayerMask.NameToLayer("hidePlacesMask");
+
+
 
 
     }
 
     public void ShowPlayer()
     {
+        _interactor._PlayerIsHidden = false;
         //Disables hiding spot camera
         //Enables player visually
         _hideSlider.size = 0;
@@ -72,7 +88,7 @@ public class HideAndShowPlayer : MonoBehaviour
         _player.gameObject.GetComponent<PlayerMovement>().enabled = true;
         _player.gameObject.GetComponent<LookFunction>().enabled = true;
         if (!_holdingContainer.activeSelf) { _holdingContainer.SetActive(true); }
-        _isplayerHidden = false;
+
 
         _player.layer = LayerMask.NameToLayer("Player");
 

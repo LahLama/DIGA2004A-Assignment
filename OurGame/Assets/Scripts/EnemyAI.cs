@@ -64,7 +64,7 @@ public class EnemyAI : MonoBehaviour
     private void Patrol()
     {
 
-        vignetteControl.RemoveVignette();
+        vignetteControl.RemoveVignette(2);
 
         agent.SetDestination(waypoints[currentWayPointIndex].position);
         float distanceToWayPoint = 0f;
@@ -131,7 +131,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void ChasePlayer()
     {
-        vignetteControl.ApplyVignette();
+        vignetteControl.ApplyVignette(2);
         //stops the agent
         agent.SetDestination(transform.position);
         agent.SetDestination(player.position);

@@ -174,6 +174,7 @@ public class Interactor : MonoBehaviour
             raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
             _PlayerIsHidden = false;
         }
+
         // Wait for 1 second, then check if interaction input and player is hidden
         if (_PlayerIsHidden)
         {
