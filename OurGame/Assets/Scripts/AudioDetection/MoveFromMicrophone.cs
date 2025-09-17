@@ -13,6 +13,7 @@ public class MoveFromMicrophone : MonoBehaviour
     private Slider slider;
     [SerializeField] double _loudRange;
     Image _barColorbg;
+    public bool isLoud = false;
     void Awake()
     {
         slider = GetComponent<Slider>();
@@ -32,10 +33,15 @@ public class MoveFromMicrophone : MonoBehaviour
             slider.value = loudness - threshold;
 
         if (slider.value > _loudRange)
+        {
             _barColorbg.color = Color.red;
+            isLoud = true;
+        }
         else
+        {
             _barColorbg.color = Color.blue;
-
+            isLoud = false;
+        }
 
 
 

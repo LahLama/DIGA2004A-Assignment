@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
     public LayerMask playerLayer;
     public LayerMask StopLayer;
+    private MoveFromMicrophone microphoneInput;
 
 
     //Patrolling
@@ -23,14 +24,19 @@ public class EnemyAI : MonoBehaviour
 
 
 
+
     //states
     public float sightRange, catchRange;
-    public bool playerInSightRange, playerInCatchRange;
+    public bool playerInSightRange, playerInCatchRange, playerinLOS;
+    bool isWaitingAtWaypoint = false;
+    RaycastHit isPlayer;
+
 
     void Awake()
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        microphoneInput = GameObject.Find("Microphone").GetComponent<MoveFromMicrophone>();
 
     }
 
@@ -38,11 +44,13 @@ public class EnemyAI : MonoBehaviour
     {
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         playerInCatchRange = Physics.CheckSphere(transform.position, catchRange, playerLayer);
+        playerinLOS = Physics.Raycast(transform.position, transform.forward, out isPlayer, sightRange * 2, playerLayer);
 
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10f, Color.magenta);
+
+        Debug.DrawRay(transform.position, transform.forward * sightRange * 2, Color.magenta);
 
         if (!playerInSightRange && !playerInCatchRange) Patrol();
-        if (playerInSightRange && !playerInCatchRange) ChasePlayer();
+        if ((playerInSightRange || playerinLOS && !playerInCatchRange) || (microphoneInput.isLoud)) ChasePlayer();
         if (playerInSightRange && playerInCatchRange) CatchPlayer();
     }
 
@@ -56,6 +64,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void Patrol()
     {
+        agent.SetDestination(waypoints[currentWayPointIndex].position);
         float distanceToWayPoint = 0f;
         if (currentWayPointIndex <= waypoints.Count - 1)
             distanceToWayPoint = Vector3.Distance(waypoints[currentWayPointIndex].position, transform.position);
@@ -68,7 +77,11 @@ public class EnemyAI : MonoBehaviour
 
         if (distanceToWayPoint <= 1)
         {
-            currentWayPointIndex++;
+            if (!isWaitingAtWaypoint)
+            {
+                isWaitingAtWaypoint = true;
+                StartCoroutine(WaitToGoToNextPoint(2f));
+            }
             return;
         }
 
@@ -99,11 +112,17 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(delay);
         hitObj.SetActive(true);
     }
+    IEnumerator WaitToGoToNextPoint(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        currentWayPointIndex++;
+        isWaitingAtWaypoint = false;
+    }
 
 
     private void CatchPlayer()
     {
-        agent.SetDestination(player.position);
+        agent.SetDestination(transform.position);
 
         Debug.Log("CAUGHT THE PLAYER");
 
@@ -111,6 +130,7 @@ public class EnemyAI : MonoBehaviour
     private void ChasePlayer()
     {
         //stops the agent
+        agent.SetDestination(transform.position);
         agent.SetDestination(player.position);
 
         //looks at player

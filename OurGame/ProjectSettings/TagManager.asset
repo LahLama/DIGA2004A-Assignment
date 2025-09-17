@@ -17,6 +17,9 @@ TagManager:
   - Monolouge
   - PickUps
   - Tooltip
+  - NunEmemy
+  - NunEnemy
+  - Microphone
   layers:
   - Default
   - TransparentFX

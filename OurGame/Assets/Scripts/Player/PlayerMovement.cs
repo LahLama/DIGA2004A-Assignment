@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     bool _isUnderSomething = false;
     RaycastHit underSomething;
 
+    bool _sightDecreased = false;
+
     [Header("Sprint Controls")]
     private float _sprintTimer;
     bool _canSprint = true;
@@ -33,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     public TextMeshProUGUI debugText;
     private GameObject _cameraTransform;
     private LookFunction lookFunction;
+    private EnemyAI enemyAI;
 
     #endregion
 
@@ -42,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         lookFunction = GetComponent<LookFunction>();
         _cameraTransform = GameObject.FindWithTag("MainCamera");
+        enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<EnemyAI>();
         _sprintTimer = 4f;
     }
     private void Update()
@@ -121,6 +125,14 @@ public class PlayerMovement : MonoBehaviour
             this.transform.localScale = new Vector3(__scaleModifer, __scaleModifer, __scaleModifer); // Adjust player scale for crouching
             debugText.text = "Crouching"; // Update debug text 
         }
+
+
+        //Decrease the sight when crounching
+        if (!_sightDecreased)
+        {
+            enemyAI.sightRange = enemyAI.sightRange / 2;
+            _sightDecreased = true;
+        }
     }
 
     private void HandleWalk()
@@ -138,6 +150,12 @@ public class PlayerMovement : MonoBehaviour
         float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
         _cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __normalFOV, Time.deltaTime / 0.1f);
 
+        //Increase the sight when crounching
+        if (_sightDecreased)
+        {
+            enemyAI.sightRange = enemyAI.sightRange * 2;
+            _sightDecreased = false;
+        }
     }
 
 
