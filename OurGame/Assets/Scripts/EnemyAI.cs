@@ -1,11 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 //https://www.youtube.com/watch?v=vS6lyX2QidE
+//https://discussions.unity.com/t/how-to-change-the-color-of-the-vignette-through-script/326332
 public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
@@ -13,15 +13,15 @@ public class EnemyAI : MonoBehaviour
     public LayerMask playerLayer;
     public LayerMask StopLayer;
     private MoveFromMicrophone microphoneInput;
-
-
     //Patrolling
     public int currentWayPointIndex = 0;
     //Waypoints
     public List<Transform> waypoints;
+    public Material fullscreenEffectMaterial;
 
-
-
+    private float currentIntensity = 0f;
+    private float targetIntensity = 0f;
+    public float lerpSpeed = 2f; // Adjust for faster/slower transitions
 
 
 
@@ -37,7 +37,6 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         microphoneInput = GameObject.Find("Microphone").GetComponent<MoveFromMicrophone>();
-
     }
 
     void Update()
@@ -52,6 +51,10 @@ public class EnemyAI : MonoBehaviour
         if (!playerInSightRange && !playerInCatchRange) Patrol();
         if ((playerInSightRange || playerinLOS && !playerInCatchRange) || (microphoneInput.isLoud)) ChasePlayer();
         if (playerInSightRange && playerInCatchRange) CatchPlayer();
+
+
+
+
     }
 
 
@@ -64,6 +67,15 @@ public class EnemyAI : MonoBehaviour
     }
     private void Patrol()
     {
+
+        ///UN Dramatic Mode
+       //Dramatic Mode
+
+        targetIntensity = 0f;
+        currentIntensity = Mathf.Lerp(currentIntensity, targetIntensity, Time.deltaTime * lerpSpeed);
+        fullscreenEffectMaterial.SetFloat("_FullscreenIntensity", currentIntensity);
+        ///
+
         agent.SetDestination(waypoints[currentWayPointIndex].position);
         float distanceToWayPoint = 0f;
         if (currentWayPointIndex <= waypoints.Count - 1)
@@ -135,6 +147,13 @@ public class EnemyAI : MonoBehaviour
 
         //looks at player
         transform.LookAt(player);
+
+        //Dramatic Mode
+
+        targetIntensity = 1f;
+        currentIntensity = Mathf.Lerp(currentIntensity, targetIntensity, Time.deltaTime * lerpSpeed);
+        fullscreenEffectMaterial.SetFloat("_FullscreenIntensity", currentIntensity);
+
 
     }
 

@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Crouch Checking")]
     bool _isUnderSomething = false;
     RaycastHit underSomething;
+    float sightFraction = 2;
 
     bool _sightDecreased = false;
 
@@ -138,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
         //Decrease the sight when crounching
         if (!_sightDecreased)
         {
-            enemyAI.sightRange = enemyAI.sightRange * (2 / 3);
+            enemyAI.sightRange /= sightFraction;
             _sightDecreased = true;
         }
     }
@@ -161,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
         //Increase the sight when crounching
         if (_sightDecreased)
         {
-            enemyAI.sightRange = enemyAI.sightRange * 2;
+            enemyAI.sightRange *= sightFraction;
             _sightDecreased = false;
         }
     }
