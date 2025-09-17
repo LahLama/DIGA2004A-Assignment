@@ -104,7 +104,7 @@ public class EnemyAI : MonoBehaviour
                 hitObj = hit.collider.gameObject;
 
             hitObj.SetActive(false);
-            StartCoroutine(ActivateDoorAfterDelay(hitObj, 1.5f));
+            StartCoroutine(ActivateDoorAfterDelay(hitObj, 10f));
         }
 
     }

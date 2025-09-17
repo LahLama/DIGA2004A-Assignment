@@ -185,10 +185,12 @@ public class Interactor : MonoBehaviour
         if (_interactionInput && _interactionDelay / 4 < 0)
         {
             pickUpSystem.DropItem();
+            //Play sound
         }
         if (_throwInput)
         {
             pickUpSystem.ThrowItem();
+            //Play sound
         }
 
         if (LayerName == "interactionsMask")

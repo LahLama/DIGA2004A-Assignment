@@ -97,6 +97,8 @@ public class PickUpSystem : MonoBehaviour
             equipedObj.gameObject.transform.localScale = _equippedItemScale;
             equipedObj.gameObject.transform.rotation = _equippedItemRotation;
 
+
+
             return;
 
         }
