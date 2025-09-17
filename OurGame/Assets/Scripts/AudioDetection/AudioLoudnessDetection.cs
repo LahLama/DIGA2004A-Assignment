@@ -4,7 +4,7 @@ public class AudioLoudnessDetection : MonoBehaviour
 {
 
     public int sampleWindow = 32;
-    public float[] visualSegments;
+    // public float[] visualSegments;
     private AudioClip MicrophoneClip;
 
     void Start()
@@ -32,14 +32,14 @@ public class AudioLoudnessDetection : MonoBehaviour
         int startPosition = clipPositon - sampleWindow;
         if (startPosition < 0) return 0;
         float[] waveData = new float[sampleWindow];
-        visualSegments = new float[sampleWindow];
+        // visualSegments = new float[sampleWindow];
 
 
         //takes two parameters:
         // array for the data
         // postion to start getting data
         clip.GetData(waveData, startPosition);
-        clip.GetData(visualSegments, startPosition);
+        // clip.GetData(visualSegments, startPosition);
 
 
         //Get loudness
