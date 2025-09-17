@@ -13,17 +13,12 @@ public class EnemyAI : MonoBehaviour
     public LayerMask playerLayer;
     public LayerMask StopLayer;
     private MoveFromMicrophone microphoneInput;
-    //Patrolling
+    //Patrolling +  //Waypoints
     public int currentWayPointIndex = 0;
-    //Waypoints
     public List<Transform> waypoints;
-    public Material fullscreenEffectMaterial;
-
-    private float currentIntensity = 0f;
-    private float targetIntensity = 0f;
-    public float lerpSpeed = 2f; // Adjust for faster/slower transitions
 
 
+    private VignetteControl vignetteControl;
 
     //states
     public float sightRange, catchRange;
@@ -37,6 +32,7 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         microphoneInput = GameObject.Find("Microphone").GetComponent<MoveFromMicrophone>();
+        vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
     }
 
     void Update()
@@ -68,13 +64,7 @@ public class EnemyAI : MonoBehaviour
     private void Patrol()
     {
 
-        ///UN Dramatic Mode
-       //Dramatic Mode
-
-        targetIntensity = 0f;
-        currentIntensity = Mathf.Lerp(currentIntensity, targetIntensity, Time.deltaTime * lerpSpeed);
-        fullscreenEffectMaterial.SetFloat("_FullscreenIntensity", currentIntensity);
-        ///
+        vignetteControl.RemoveVignette();
 
         agent.SetDestination(waypoints[currentWayPointIndex].position);
         float distanceToWayPoint = 0f;
@@ -141,18 +131,13 @@ public class EnemyAI : MonoBehaviour
     }
     private void ChasePlayer()
     {
+        vignetteControl.ApplyVignette();
         //stops the agent
         agent.SetDestination(transform.position);
         agent.SetDestination(player.position);
 
         //looks at player
         transform.LookAt(player);
-
-        //Dramatic Mode
-
-        targetIntensity = 1f;
-        currentIntensity = Mathf.Lerp(currentIntensity, targetIntensity, Time.deltaTime * lerpSpeed);
-        fullscreenEffectMaterial.SetFloat("_FullscreenIntensity", currentIntensity);
 
 
     }
