@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -53,12 +56,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void Patrol()
     {
-
         float distanceToWayPoint = 0f;
-
-
-
-
         if (currentWayPointIndex <= waypoints.Count - 1)
             distanceToWayPoint = Vector3.Distance(waypoints[currentWayPointIndex].position, transform.position);
         else
@@ -75,8 +73,32 @@ public class EnemyAI : MonoBehaviour
         }
 
         agent.SetDestination(waypoints[currentWayPointIndex].position);
+
+        DoorInteractions();
     }
 
+    private void DoorInteractions()
+    {
+
+        if (Physics.Raycast(transform.position, transform.forward, 1f, StopLayer))
+        {
+            RaycastHit hit;
+            GameObject hitObj = null;
+
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f, StopLayer))
+                hitObj = hit.collider.gameObject;
+
+            hitObj.SetActive(false);
+            StartCoroutine(ActivateDoorAfterDelay(hitObj, 1.5f));
+        }
+
+    }
+
+    IEnumerator ActivateDoorAfterDelay(GameObject hitObj, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        hitObj.SetActive(true);
+    }
 
 
     private void CatchPlayer()
