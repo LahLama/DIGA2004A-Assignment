@@ -28,6 +28,7 @@ public class HideAndShowPlayer : MonoBehaviour
         _holdingContainer = GameObject.FindWithTag("HoldingPos");
         _hideSlider = GameObject.FindWithTag("HideSlider").GetComponent<Scrollbar>();
         _interactor = GameObject.FindWithTag("MainCamera").GetComponent<Interactor>();
+
     }
 
     void Update()
@@ -56,6 +57,8 @@ public class HideAndShowPlayer : MonoBehaviour
 
         _isplayerHidden = true;
 
+        _player.layer = LayerMask.NameToLayer("hidePlacesMask");
+
 
     }
 
@@ -70,6 +73,8 @@ public class HideAndShowPlayer : MonoBehaviour
         _player.gameObject.GetComponent<LookFunction>().enabled = true;
         if (!_holdingContainer.activeSelf) { _holdingContainer.SetActive(true); }
         _isplayerHidden = false;
+
+        _player.layer = LayerMask.NameToLayer("Player");
 
     }
 }

@@ -34,6 +34,8 @@ public class Interactor : MonoBehaviour
     #region Varibles
     public RaycastHit raycastHit;
 
+    public LayerMask ResponsiveMasks;
+
 
     [Header("Bools")]
 
@@ -106,11 +108,9 @@ public class Interactor : MonoBehaviour
 
     void HandleInteractions()
     {
-        Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.forward) * _interactionRange);
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _interactionRange, Color.yellow);
         reticleManagement.HandleTooltip();
 
-        hitObj = Physics.Raycast(transform.position, transform.forward, out raycastHit, _interactionRange);
+        hitObj = Physics.Raycast(transform.position, transform.forward, out raycastHit, _interactionRange, ResponsiveMasks);
         string LayerName = "";
 
         if (hitObj)
@@ -160,7 +160,8 @@ public class Interactor : MonoBehaviour
 
 
                 default:
-                    break;
+                    return;
+
             }
 
         }
