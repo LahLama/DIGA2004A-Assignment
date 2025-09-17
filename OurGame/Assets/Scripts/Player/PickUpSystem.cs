@@ -116,11 +116,14 @@ public class PickUpSystem : MonoBehaviour
             equipedObj.SetParent(_pickUpsContatiner, true);
             Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
             rb.useGravity = true; ;
-            rb.AddForce(playerHands.forward * 10f, ForceMode.Impulse);
 
             equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
+
+            rb.AddForce(playerHands.forward * 10f, ForceMode.Impulse);
             equipedObj.gameObject.transform.localScale = _equippedItemScale;
             equipedObj.gameObject.transform.rotation = _equippedItemRotation;
+
+
 
             return;
 

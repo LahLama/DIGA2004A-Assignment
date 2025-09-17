@@ -160,13 +160,18 @@ public class Interactor : MonoBehaviour
 
 
                 default:
+                    pickUpSystem.EquipItem();
+
                     return;
 
             }
 
         }
-
-
+        if (_throwInput)
+        {
+            pickUpSystem.ThrowItem();
+            //Play sound
+        }
 
         //Show player after 5seconds, the limit of hiding
         if (hideDuration <= 0 && _PlayerIsHidden)
@@ -182,25 +187,9 @@ public class Interactor : MonoBehaviour
         }
 
 
-        if (_interactionInput && _interactionDelay / 4 < 0)
-        {
-            pickUpSystem.DropItem();
-            //Play sound
-        }
-        if (_throwInput)
-        {
-            pickUpSystem.ThrowItem();
-            //Play sound
-        }
 
-        if (LayerName == "interactionsMask")
-        {
-            // raycastHit.collider.gameObject.GetComponent<HighlightObject>().ChangeMaterial();
-        }
-        else
-        {
-            //   raycastHit.collider.gameObject.GetComponent<HighlightObject>().ResetMaterial();
-        }
+
+
     }
 
 
