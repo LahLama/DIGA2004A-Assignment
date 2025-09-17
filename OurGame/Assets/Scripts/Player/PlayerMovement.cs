@@ -83,6 +83,10 @@ public class PlayerMovement : MonoBehaviour
         {
             _velocity.y = -2f;
         }
+        else if (_velocity.y > 10)
+        {
+            _velocity.y = 0f;
+        }
         _velocity.y += gravity * Time.deltaTime;
         controller.Move(_velocity * Time.deltaTime);
 
@@ -100,6 +104,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_sprintTimer >= _sprintDuration) { _canSprint = true; }
         if (_sprintTimer < 0) { _canSprint = false; }
+
         if (_sprintInput && _canSprint)
         {
             moveSpeed = __sprintSpeed; // Sprint speed
@@ -107,11 +112,14 @@ public class PlayerMovement : MonoBehaviour
             float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
             _cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
 
-            _sprintTimer -= Time.deltaTime;
-            sprintBar.size = 1 - (_sprintTimer / 4);
-            //Debug.Log("--" + (int)_sprintTimer);
-        }
+            if (_moveInput.magnitude > 0.1f)
+            {
+                _sprintTimer -= Time.deltaTime;
+                sprintBar.size = 1 - (_sprintTimer / 4);
+                //Debug.Log("--" + (int)_   sprint}Timer);
+            }
 
+        }
 
     }
     public void HandleCrouch()
@@ -130,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
         //Decrease the sight when crounching
         if (!_sightDecreased)
         {
-            enemyAI.sightRange = enemyAI.sightRange / 2;
+            enemyAI.sightRange = enemyAI.sightRange * (2 / 3);
             _sightDecreased = true;
         }
     }
