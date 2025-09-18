@@ -25,6 +25,7 @@ public class EnemyAI : MonoBehaviour
     public bool playerInSightRange, playerInCatchRange, playerinLOS;
     bool isWaitingAtWaypoint = false;
     RaycastHit isPlayer;
+    public float WaitPointDelay = 5;
 
 
     void Awake()
@@ -49,7 +50,7 @@ public class EnemyAI : MonoBehaviour
         if (playerInSightRange && playerInCatchRange) CatchPlayer();
 
 
-
+        agent.updateUpAxis = false;
 
     }
 
@@ -64,17 +65,14 @@ public class EnemyAI : MonoBehaviour
     private void Patrol()
     {
 
+        DoorInteractions();
         vignetteControl.RemoveVignette(2);
 
-        agent.SetDestination(waypoints[currentWayPointIndex].position);
+
         float distanceToWayPoint = 0f;
-        if (currentWayPointIndex <= waypoints.Count - 1)
-            distanceToWayPoint = Vector3.Distance(waypoints[currentWayPointIndex].position, transform.position);
-        else
-        {
-            currentWayPointIndex = 0;
-            return;
-        }
+
+        distanceToWayPoint = Vector3.Distance(waypoints[currentWayPointIndex].position, transform.position);
+
 
 
         if (distanceToWayPoint <= 1)
@@ -82,14 +80,16 @@ public class EnemyAI : MonoBehaviour
             if (!isWaitingAtWaypoint)
             {
                 isWaitingAtWaypoint = true;
-                StartCoroutine(WaitToGoToNextPoint(2f));
+                StartCoroutine(WaitToGoToNextPoint(WaitPointDelay));
             }
             return;
         }
 
         agent.SetDestination(waypoints[currentWayPointIndex].position);
 
-        DoorInteractions();
+
+
+
     }
 
     private void DoorInteractions()
@@ -104,7 +104,7 @@ public class EnemyAI : MonoBehaviour
                 hitObj = hit.collider.gameObject;
 
             hitObj.SetActive(false);
-            StartCoroutine(ActivateDoorAfterDelay(hitObj, 10f));
+            StartCoroutine(ActivateDoorAfterDelay(hitObj, 2f));
         }
 
     }
@@ -118,6 +118,8 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         currentWayPointIndex++;
+        if (currentWayPointIndex >= waypoints.Count)
+            currentWayPointIndex = 0;
         isWaitingAtWaypoint = false;
     }
 
@@ -131,13 +133,15 @@ public class EnemyAI : MonoBehaviour
     }
     private void ChasePlayer()
     {
+
+        DoorInteractions();
         vignetteControl.ApplyVignette(2);
         //stops the agent
         agent.SetDestination(transform.position);
         agent.SetDestination(player.position);
 
         //looks at player
-        transform.LookAt(player);
+        //transform.LookAt(player);
 
 
     }

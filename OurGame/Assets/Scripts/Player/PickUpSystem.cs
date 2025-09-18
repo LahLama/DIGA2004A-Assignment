@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.AI;
 
 /*
 Title: Creating a Horror Game in Unity - Part 6: Hiding System (JavaScript)
@@ -12,10 +14,12 @@ public class PickUpSystem : MonoBehaviour
     #region  Varibles
     public Transform playerHands;
     private Interactor _interactor;
+    private EnemyAI _enemyAI;
     private Transform _pickUpsContatiner;
     private Vector3 _equippedItemScale;
     private Quaternion _equippedItemRotation;
     private RaycastHit _hitPickUp;
+    public bool objHasBeenThrown = false;
 
 
     #endregion
@@ -26,12 +30,14 @@ public class PickUpSystem : MonoBehaviour
         _interactor = GetComponent<Interactor>();
         playerHands = GameObject.FindWithTag("HoldingPos").transform;
         _pickUpsContatiner = GameObject.FindWithTag("PickUps").transform;
+        _enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<EnemyAI>();
     }
 
 
     private void Update()
     {
         _hitPickUp = _interactor.raycastHit;
+
     }
     #endregion
 
@@ -135,10 +141,28 @@ public class PickUpSystem : MonoBehaviour
 
             rb.AddForce(playerHands.forward * 5f, ForceMode.Impulse);
 
-            return;
+            objHasBeenThrown = true;
+            StartCoroutine(ThrowCooldown());
 
         }
+
+        return;
+
     }
 
-
+    private IEnumerator ThrowCooldown()
+    {
+        float timer = 5f;
+        while (timer > 0f)
+        {
+            _enemyAI.agent.SetDestination(transform.position);
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        objHasBeenThrown = false;
+    }
 }
+
+
+
+
