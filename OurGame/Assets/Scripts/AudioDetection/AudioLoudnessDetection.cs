@@ -60,13 +60,4 @@ public class AudioLoudnessDetection : MonoBehaviour
     }
 
 
-    public float GetAverageLoudness(int numSamples)
-    {
-        float sum = 0f;
-        for (int i = 0; i < numSamples; i++)
-        {
-            sum += GetLoudnessFromMicrophone();
-        }
-        return sum / numSamples;
-    }
 }

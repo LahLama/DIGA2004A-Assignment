@@ -23,9 +23,10 @@ public class EnemyAI : MonoBehaviour
     //states
     public float sightRange, catchRange;
     public bool playerInSightRange, playerInCatchRange, playerinLOS;
-    bool isWaitingAtWaypoint = false;
+    bool isWaitingAtWaypoint = false, isLoud;
     RaycastHit isPlayer;
     public float WaitPointDelay = 5;
+    public float NunlookTime = 6;
 
 
     void Awake()
@@ -38,6 +39,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        isLoud = microphoneInput.isLoud;
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         playerInCatchRange = Physics.CheckSphere(transform.position, catchRange, playerLayer);
         playerinLOS = Physics.Raycast(transform.position, transform.forward, out isPlayer, sightRange * 2, playerLayer);
@@ -50,7 +52,7 @@ public class EnemyAI : MonoBehaviour
         if (playerInSightRange && playerInCatchRange) CatchPlayer();
 
 
-        agent.updateUpAxis = false;
+
 
     }
 
