@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -20,6 +21,8 @@ public class EnemyAI : MonoBehaviour
 
     private VignetteControl vignetteControl;
 
+    private ControllerRumble rumbler;
+
     //states
     public float sightRange, catchRange;
     public bool playerInSightRange, playerInCatchRange, playerinLOS;
@@ -35,10 +38,12 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         microphoneInput = GameObject.Find("Microphone").GetComponent<MoveFromMicrophone>();
         vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
+        rumbler = GameObject.FindGameObjectWithTag("Player").GetComponent<ControllerRumble>();
     }
 
     void Update()
     {
+
         isLoud = microphoneInput.isLoud;
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         playerInCatchRange = Physics.CheckSphere(transform.position, catchRange, playerLayer);
@@ -46,6 +51,18 @@ public class EnemyAI : MonoBehaviour
 
 
         Debug.DrawRay(transform.position, transform.forward * sightRange * 2, Color.magenta);
+
+        bool isChasing = (playerInSightRange || playerinLOS && !playerInCatchRange);
+
+        // Rumble logic
+        if (isLoud || isChasing)
+        {
+            rumbler.RumbleStream(0.25f, 0.50f, 0.25f);
+        }
+        else if (!isLoud && !isChasing)
+        {
+            rumbler.StopRumbleSteam();
+        }
 
         if (!playerInSightRange && !playerInCatchRange) Patrol();
         if ((playerInSightRange || playerinLOS && !playerInCatchRange) || (microphoneInput.isLoud)) ChasePlayer();
