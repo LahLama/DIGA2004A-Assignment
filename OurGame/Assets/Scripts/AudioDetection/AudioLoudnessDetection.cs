@@ -4,7 +4,7 @@ public class AudioLoudnessDetection : MonoBehaviour
 {
 
     public int sampleWindow = 32;
-    // public float[] visualSegments;
+    public float[] AverageSamples;
     private AudioClip MicrophoneClip;
 
     void Start()
@@ -32,7 +32,7 @@ public class AudioLoudnessDetection : MonoBehaviour
         int startPosition = clipPositon - sampleWindow;
         if (startPosition < 0) return 0;
         float[] waveData = new float[sampleWindow];
-        // visualSegments = new float[sampleWindow];
+        AverageSamples = new float[sampleWindow];
 
 
         //takes two parameters:
@@ -58,4 +58,6 @@ public class AudioLoudnessDetection : MonoBehaviour
         return totalLoudness / sampleWindow;
 
     }
+
+
 }

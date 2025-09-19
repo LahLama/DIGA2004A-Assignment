@@ -34,6 +34,8 @@ public class Interactor : MonoBehaviour
     #region Varibles
     public RaycastHit raycastHit;
 
+    public LayerMask ResponsiveMasks;
+
 
     [Header("Bools")]
 
@@ -105,12 +107,12 @@ public class Interactor : MonoBehaviour
 
 
     void HandleInteractions()
+
+
     {
-        Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.forward) * _interactionRange);
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _interactionRange, Color.yellow);
         reticleManagement.HandleTooltip();
 
-        hitObj = Physics.Raycast(transform.position, transform.forward, out raycastHit, _interactionRange);
+        hitObj = Physics.Raycast(transform.position, transform.forward, out raycastHit, _interactionRange, ResponsiveMasks);
         string LayerName = "";
 
         if (hitObj)
@@ -160,12 +162,18 @@ public class Interactor : MonoBehaviour
 
 
                 default:
-                    break;
+                    pickUpSystem.EquipItem();
+
+                    return;
+
             }
 
         }
-
-
+        if (_throwInput)
+        {
+            pickUpSystem.ThrowItem();
+            //Play sound
+        }
 
         //Show player after 5seconds, the limit of hiding
         if (hideDuration <= 0 && _PlayerIsHidden)
@@ -173,6 +181,7 @@ public class Interactor : MonoBehaviour
             raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
             _PlayerIsHidden = false;
         }
+
         // Wait for 1 second, then check if interaction input and player is hidden
         if (_PlayerIsHidden)
         {
@@ -180,23 +189,9 @@ public class Interactor : MonoBehaviour
         }
 
 
-        if (_interactionInput && _interactionDelay / 4 < 0)
-        {
-            pickUpSystem.DropItem();
-        }
-        if (_throwInput)
-        {
-            pickUpSystem.ThrowItem();
-        }
 
-        if (LayerName == "interactionsMask")
-        {
-            // raycastHit.collider.gameObject.GetComponent<HighlightObject>().ChangeMaterial();
-        }
-        else
-        {
-            //   raycastHit.collider.gameObject.GetComponent<HighlightObject>().ResetMaterial();
-        }
+
+
     }
 
 

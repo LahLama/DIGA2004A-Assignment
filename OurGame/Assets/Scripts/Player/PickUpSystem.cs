@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.AI;
 
 /*
 Title: Creating a Horror Game in Unity - Part 6: Hiding System (JavaScript)
@@ -12,10 +14,12 @@ public class PickUpSystem : MonoBehaviour
     #region  Varibles
     public Transform playerHands;
     private Interactor _interactor;
+    private EnemyAI _enemyAI;
     private Transform _pickUpsContatiner;
     private Vector3 _equippedItemScale;
     private Quaternion _equippedItemRotation;
     private RaycastHit _hitPickUp;
+    public bool objHasBeenThrown = false;
 
 
     #endregion
@@ -26,12 +30,14 @@ public class PickUpSystem : MonoBehaviour
         _interactor = GetComponent<Interactor>();
         playerHands = GameObject.FindWithTag("HoldingPos").transform;
         _pickUpsContatiner = GameObject.FindWithTag("PickUps").transform;
+        _enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<EnemyAI>();
     }
 
 
     private void Update()
     {
         _hitPickUp = _interactor.raycastHit;
+
     }
     #endregion
 
@@ -49,6 +55,12 @@ public class PickUpSystem : MonoBehaviour
             //Get the obj that will be picked up
             GameObject pickUpObj = _hitPickUp.collider.gameObject;
 
+            ParticleSystem particles = pickUpObj.GetComponent<ParticleSystem>();
+            ParticleSystem.MainModule particles_main = particles.main;
+            particles_main.startColor = new Color(1f, 0.078f, 0.576f, 1f); // Specific pink (hex #FF1493)
+            particles.Play();
+
+
             //Switch off the gravity
             Destroy(pickUpObj.GetComponent<Rigidbody>());
             //Get the Orignal scale and rotation
@@ -58,6 +70,7 @@ public class PickUpSystem : MonoBehaviour
             //Reset scale and postion         
             pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
             pickUpObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            pickUpObj.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
             //Set the parent to the player
             pickUpObj.transform.SetParent(playerHands, false);
@@ -74,11 +87,18 @@ public class PickUpSystem : MonoBehaviour
 
     public void DropItem()
     {
+
         //Only if the player has something it thier hands
         if (playerHands.childCount > 1)
         {
             //Get the obj that is in the hands
             Transform equipedObj = playerHands.GetChild(1);
+
+            //Enable the grabity
+            equipedObj.gameObject.AddComponent<Rigidbody>();
+
+            //Reset so that the player cant see the objects through walls
+            equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
 
             // Place object infront of player
             Vector3 equipObjPos = equipedObj.transform.localPosition;
@@ -87,15 +107,11 @@ public class PickUpSystem : MonoBehaviour
             //Reset the player to the pickups element
             equipedObj.SetParent(_pickUpsContatiner, true);
 
-            //Enable the grabity
-            equipedObj.gameObject.AddComponent<Rigidbody>();
-
-            //Reset so that the player cant see the objects through walls
-            equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
-
             //Reset the scale and postion to its originals
             equipedObj.gameObject.transform.localScale = _equippedItemScale;
             equipedObj.gameObject.transform.rotation = _equippedItemRotation;
+
+
 
             return;
 
@@ -108,22 +124,45 @@ public class PickUpSystem : MonoBehaviour
     {
         if (playerHands.childCount > 1)
         {
+
             Transform equipedObj = playerHands.GetChild(1);
+            Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
+            rb.useGravity = true; ;
+
             Vector3 equipObjPos = equipedObj.transform.localPosition;
             equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
             equipedObj.SetParent(_pickUpsContatiner, true);
-            Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
-            rb.useGravity = true; ;
-            rb.AddForce(playerHands.forward * 10f, ForceMode.Impulse);
 
             equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
+
+
             equipedObj.gameObject.transform.localScale = _equippedItemScale;
             equipedObj.gameObject.transform.rotation = _equippedItemRotation;
 
-            return;
+            rb.AddForce(playerHands.forward * 5f, ForceMode.Impulse);
+
+            objHasBeenThrown = true;
+            StartCoroutine(ThrowCooldown());
 
         }
+
+        return;
+
     }
 
-
+    private IEnumerator ThrowCooldown()
+    {
+        float timer = 5f;
+        while (timer > 0f)
+        {
+            _enemyAI.agent.SetDestination(transform.position);
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        objHasBeenThrown = false;
+    }
 }
+
+
+
+
