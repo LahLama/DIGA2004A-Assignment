@@ -21,6 +21,8 @@ public class HideAndShowPlayer : MonoBehaviour
 
     private VignetteControl vignetteControl;
 
+
+
     #endregion
 
 

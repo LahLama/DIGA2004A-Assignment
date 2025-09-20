@@ -14,7 +14,7 @@ public class PickUpSystem : MonoBehaviour
     #region  Varibles
     public Transform playerHands;
     private Interactor _interactor;
-    private EnemyAI _enemyAI;
+    private NunAi _enemyAI;
     private Transform _pickUpsContatiner;
     private Vector3 _equippedItemScale;
     private Quaternion _equippedItemRotation;
@@ -30,7 +30,7 @@ public class PickUpSystem : MonoBehaviour
         _interactor = GetComponent<Interactor>();
         playerHands = GameObject.FindWithTag("HoldingPos").transform;
         _pickUpsContatiner = GameObject.FindWithTag("PickUps").transform;
-        _enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<EnemyAI>();
+        _enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<NunAi>();
     }
 
 
