@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -56,6 +57,7 @@ public class Interactor : MonoBehaviour
     private DoorUnlocking doorUnlocking;
 
     private HighlightObject highlightObject;
+    private EndDemo endDemoScript;
 
     [Header("InteractionVar")]
     public float _interactionDelay = 0f;
@@ -139,6 +141,12 @@ public class Interactor : MonoBehaviour
                 case "interactionsMask":
                     innerDialouge.text.text = "This is just an object.";
                     StartCoroutine(innerDialouge.InnerDialogueContorl());
+
+                    if (raycastHit.collider.gameObject.TryGetComponent<EndDemo>(out endDemoScript))
+                    {
+                        innerDialouge.text.text = "You have found your brother that you lost!";
+
+                    }
 
                     break;
 
