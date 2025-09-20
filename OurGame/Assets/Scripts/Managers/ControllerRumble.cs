@@ -19,6 +19,21 @@ public class ControllerRumble : MonoBehaviour
             StopRumbleSteam();
         }
     }
+
+    public void RumblePusle(float low, float high, float duration)
+    {
+        if (VibrationsEnabled)
+        {
+            gamepad = Gamepad.current;
+            if (gamepad != null)
+            {
+
+                gamepad.SetMotorSpeeds(low, high);
+                Invoke("StopRumblePusle", duration);
+            }
+        }
+        else return;
+    }
     public void RumbleStream(float low, float high, float duration)
     {
 
@@ -46,6 +61,11 @@ public class ControllerRumble : MonoBehaviour
             StopAllCoroutines();
         }
 
+    }
+
+    private void StopRumblePusle()
+    {
+        gamepad.SetMotorSpeeds(0, 0);
     }
 
     private IEnumerator RumbleLoop(float low, float high, float rumbleDuration, float pauseDuration)
