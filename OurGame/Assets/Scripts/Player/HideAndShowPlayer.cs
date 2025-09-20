@@ -21,6 +21,8 @@ public class HideAndShowPlayer : MonoBehaviour
 
     private VignetteControl vignetteControl;
 
+
+
     #endregion
 
 
@@ -50,8 +52,6 @@ public class HideAndShowPlayer : MonoBehaviour
         else if (!_interactor._PlayerIsHidden)
         {
             vignetteControl.HiddenRemoveVignette(2);
-
-            Debug.Log("AAAAAAAAAAaaa");
         }
     }
 

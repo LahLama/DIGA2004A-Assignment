@@ -20,6 +20,9 @@ TagManager:
   - NunEmemy
   - NunEnemy
   - Microphone
+  - PlayerStats
+  - Tutorial
+  - ControllerManager
   layers:
   - Default
   - TransparentFX
@@ -34,7 +37,7 @@ TagManager:
   - doorMask
   - groundMask
   - barrierMask
-  - 
+  - Invisible
   - 
   - 
   - 

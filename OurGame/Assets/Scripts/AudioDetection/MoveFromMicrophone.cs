@@ -13,7 +13,7 @@ public class MoveFromMicrophone : MonoBehaviour
     public float threshold = 0.3f;
     private float Prevloudness;
     private float loudness;
-    private EnemyAI enemyAI;
+    private NunAi enemyAI;
     private float NunlookTime;
     public AudioLoudnessDetection detector;
     private Slider slider;
@@ -27,7 +27,7 @@ public class MoveFromMicrophone : MonoBehaviour
 
         _loudRange = (slider.maxValue - threshold) * (60.0f / 100.0f);
         slider.value = 0;
-        enemyAI = GameObject.FindGameObjectWithTag("NunEnemy").GetComponent<EnemyAI>();
+        enemyAI = GameObject.FindGameObjectWithTag("NunEnemy").GetComponent<NunAi>();
     }
 
 
