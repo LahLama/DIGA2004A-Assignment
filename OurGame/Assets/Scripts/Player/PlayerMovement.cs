@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     public TextMeshProUGUI debugText;
     private GameObject _cameraTransform;
     private LookFunction lookFunction;
-    private EnemyAI enemyAI;
+    private NunAi enemyAI;
 
     #endregion
 
@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         lookFunction = GetComponent<LookFunction>();
         _cameraTransform = GameObject.FindWithTag("MainCamera");
-        enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<EnemyAI>();
+        enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<NunAi>();
         _sprintTimer = 4f;
     }
     private void Update()
