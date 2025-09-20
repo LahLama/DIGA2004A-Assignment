@@ -1168,10 +1168,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7395282135152766525, guid: e3660671e7e53834583618a5863ace6c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c35924f8ecbe76448b36652b6f19de9b, type: 2}
+    - target: {fileID: -784412928878185617, guid: e3660671e7e53834583618a5863ace6c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c35924f8ecbe76448b36652b6f19de9b, type: 2}
+    - target: {fileID: -72319546218078981, guid: e3660671e7e53834583618a5863ace6c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c35924f8ecbe76448b36652b6f19de9b, type: 2}
+    - target: {fileID: 707229742536047839, guid: e3660671e7e53834583618a5863ace6c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c35924f8ecbe76448b36652b6f19de9b, type: 2}
     - target: {fileID: 919132149155446097, guid: e3660671e7e53834583618a5863ace6c, type: 3}
       propertyPath: m_Name
       value: 'long table '
       objectReference: {fileID: 0}
+    - target: {fileID: 2831065782900121813, guid: e3660671e7e53834583618a5863ace6c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c35924f8ecbe76448b36652b6f19de9b, type: 2}
+    - target: {fileID: 3024457486108365965, guid: e3660671e7e53834583618a5863ace6c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c35924f8ecbe76448b36652b6f19de9b, type: 2}
+    - target: {fileID: 7168954782228967514, guid: e3660671e7e53834583618a5863ace6c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c35924f8ecbe76448b36652b6f19de9b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
