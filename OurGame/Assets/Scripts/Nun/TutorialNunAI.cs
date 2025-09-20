@@ -11,6 +11,7 @@ public class TutorialNunAI : MonoBehaviour
     private Tutorial tutorial;
     private Transform player;
     public Vector3 OriginalPos;
+    private bool TutEnd = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -45,11 +46,12 @@ public class TutorialNunAI : MonoBehaviour
             vignetteControl.ApplyVignette(1);
         }
 
-        if (Mathf.Abs(player.localPosition.magnitude - agent.transform.localPosition.magnitude) <= agent.stoppingDistance)
+        if (!TutEnd && Mathf.Abs(player.localPosition.magnitude - agent.transform.localPosition.magnitude) <= agent.stoppingDistance)
         {
 
             //wait for black screen/Animation
             Invoke("EndTut", 7);
+            TutEnd = true;
         }
 
     }
@@ -57,6 +59,7 @@ public class TutorialNunAI : MonoBehaviour
     {
 
         tutorial.EndTutorial();
+
     }
     public void SpawnNunOnPlayer()
     {

@@ -23,7 +23,7 @@ public class Tutorial : MonoBehaviour
         VC = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
 
 
-        OGplayerPos = player.transform.position;
+        OGplayerPos = player.transform.localPosition;
     }
     public void EndTutorial()
     {
@@ -38,10 +38,14 @@ public class Tutorial : MonoBehaviour
         }
         tutorialNun.gameObject.transform.position = tutorialNun.OriginalPos;
 
-        CharacterController CC = player.gameObject.GetComponent<CharacterController>();
-        CC.enabled = false;
-        player.position = new Vector3(OGplayerPos.x, OGplayerPos.y + 1, OGplayerPos.z);
-        CC.enabled = true;
+        CharacterController cc = player.gameObject.GetComponent<CharacterController>();
+
+
+
+        cc.enabled = false;
+        player.position = OGplayerPos + Vector3.up;
+        cc.enabled = true;
+
 
         player.GetComponent<PlayerMovement>().enabled = true;
         player.GetComponent<LookFunction>().enabled = true;
@@ -49,5 +53,6 @@ public class Tutorial : MonoBehaviour
         VC.RemoveVignette(0);
 
         TutorialBranch.SetActive(false);
+        return;
     }
 }
