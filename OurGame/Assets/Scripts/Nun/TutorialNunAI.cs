@@ -41,7 +41,7 @@ public class TutorialNunAI : MonoBehaviour
                          )
 
                         );
-            agent.transform.LookAt(player);
+            agent.transform.LookAt(player.position);
 
             vignetteControl.ApplyVignette(1);
         }
