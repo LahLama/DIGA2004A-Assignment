@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:OurGame/Assets/Scenes/Tsire/placement - Tsire 1.unity.meta
+guid: 3caa28b4ca2429e4ca931ccfdc3235a8
+========
 guid: 4b0eeb315da0d4b4abbb4bf691934b45
+>>>>>>>> Alex:OurGame/Assets/Scenes/Alex/FinalScene.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

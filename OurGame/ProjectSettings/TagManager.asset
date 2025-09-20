@@ -17,11 +17,14 @@ TagManager:
   - Monolouge
   - PickUps
   - Tooltip
+  - NunEmemy
+  - NunEnemy
+  - Microphone
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - interactionsMask
@@ -29,6 +32,8 @@ TagManager:
   - holdingMask
   - hidePlacesMask
   - doorMask
+  - groundMask
+  - barrierMask
   - 
   - 
   - 
@@ -36,9 +41,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - HideAwayOverlay
   - 
   - 
   - 

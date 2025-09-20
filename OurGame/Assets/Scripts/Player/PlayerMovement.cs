@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Crouch Checking")]
     bool _isUnderSomething = false;
     RaycastHit underSomething;
+    float sightFraction = 2;
+
+    bool _sightDecreased = false;
 
     [Header("Sprint Controls")]
     private float _sprintTimer;
@@ -33,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     public TextMeshProUGUI debugText;
     private GameObject _cameraTransform;
     private LookFunction lookFunction;
+    private EnemyAI enemyAI;
 
     #endregion
 
@@ -42,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         lookFunction = GetComponent<LookFunction>();
         _cameraTransform = GameObject.FindWithTag("MainCamera");
+        enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<EnemyAI>();
         _sprintTimer = 4f;
     }
     private void Update()
@@ -79,6 +84,10 @@ public class PlayerMovement : MonoBehaviour
         {
             _velocity.y = -2f;
         }
+        else if (_velocity.y > 10)
+        {
+            _velocity.y = 0f;
+        }
         _velocity.y += gravity * Time.deltaTime;
         controller.Move(_velocity * Time.deltaTime);
 
@@ -96,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_sprintTimer >= _sprintDuration) { _canSprint = true; }
         if (_sprintTimer < 0) { _canSprint = false; }
+
         if (_sprintInput && _canSprint)
         {
             moveSpeed = __sprintSpeed; // Sprint speed
@@ -103,11 +113,14 @@ public class PlayerMovement : MonoBehaviour
             float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
             _cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
 
-            _sprintTimer -= Time.deltaTime;
-            sprintBar.size = 1 - (_sprintTimer / 4);
-            //Debug.Log("--" + (int)_sprintTimer);
-        }
+            if (_moveInput.magnitude > 0.1f)
+            {
+                _sprintTimer -= Time.deltaTime;
+                sprintBar.size = 1 - (_sprintTimer / 4);
+                //Debug.Log("--" + (int)_   sprint}Timer);
+            }
 
+        }
 
     }
     public void HandleCrouch()
@@ -120,6 +133,14 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = __crouchSpeed; // Sprint speed
             this.transform.localScale = new Vector3(__scaleModifer, __scaleModifer, __scaleModifer); // Adjust player scale for crouching
             debugText.text = "Crouching"; // Update debug text 
+        }
+
+
+        //Decrease the sight when crounching
+        if (!_sightDecreased)
+        {
+            enemyAI.sightRange /= sightFraction;
+            _sightDecreased = true;
         }
     }
 
@@ -138,6 +159,12 @@ public class PlayerMovement : MonoBehaviour
         float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
         _cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __normalFOV, Time.deltaTime / 0.1f);
 
+        //Increase the sight when crounching
+        if (_sightDecreased)
+        {
+            enemyAI.sightRange *= sightFraction;
+            _sightDecreased = false;
+        }
     }
 
 
