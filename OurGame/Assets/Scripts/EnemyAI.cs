@@ -57,7 +57,7 @@ public class EnemyAI : MonoBehaviour
         // Rumble logic
         if (isLoud || isChasing)
         {
-            rumbler.RumbleStream(0.25f, 0.50f, 0.25f);
+            rumbler.RumbleStream(0.2f, 0.5f, 0.25f);
         }
         else if (!isLoud && !isChasing)
         {
@@ -94,7 +94,7 @@ public class EnemyAI : MonoBehaviour
 
 
 
-        if (distanceToWayPoint <= 1)
+        if (distanceToWayPoint <= agent.stoppingDistance)
         {
             if (!isWaitingAtWaypoint)
             {

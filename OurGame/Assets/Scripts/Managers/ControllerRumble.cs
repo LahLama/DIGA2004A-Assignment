@@ -7,44 +7,47 @@ public class ControllerRumble : MonoBehaviour
 {
 
     //https://youtu.be/SmmBC-yCJ28
-    private float _rumbleDuration;
-    private float _lowfreq;
-    private float _highfreq;
-    private bool isMotiveActive = false;
     private Gamepad gamepad;
+    private bool isRumbling = false;
 
     public void RumbleStream(float low, float high, float duration)
     {
-        //Get the current gamepad
         gamepad = Gamepad.current;
-
-        if (gamepad != null)
+        if (!isRumbling && gamepad != null)
         {
-            //Start rumble
+            isRumbling = true;
             gamepad.SetMotorSpeeds(low, high);
-
+            StartCoroutine(RumbleLoop(low, high, duration, duration));
         }
     }
 
     public void StopRumbleSteam()
     {
-        if (gamepad != null)
+        if (gamepad != null && isRumbling)
         {
-            //Start rumble
+            isRumbling = false;
             gamepad.SetMotorSpeeds(0, 0);
-
+            StopAllCoroutines();
         }
     }
-    private IEnumerator stopRumble(float duration, Gamepad pad)
-    {
-        float timeElapsed = 0f;
-        while (timeElapsed < duration)
-        {
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
 
-        //now duration is done
-        pad.SetMotorSpeeds(0, 0);
+    private IEnumerator RumbleLoop(float low, float high, float rumbleDuration, float pauseDuration)
+    {
+        gamepad = Gamepad.current;
+        while (true)
+        {
+            if (gamepad != null)
+            {
+                gamepad.SetMotorSpeeds(low, high);
+                yield return new WaitForSeconds(rumbleDuration);
+
+                gamepad.SetMotorSpeeds(0, 0);
+                yield return new WaitForSeconds(pauseDuration);
+            }
+            else
+            {
+                yield return null;
+            }
+        }
     }
 }
