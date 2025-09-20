@@ -14,13 +14,13 @@ public class PickUpSystem : MonoBehaviour
     #region  Varibles
     public Transform playerHands;
     private Interactor _interactor;
-    private EnemyAI _enemyAI;
+    private NunAi _enemyAI;
     private Transform _pickUpsContatiner;
     private Vector3 _equippedItemScale;
     private Quaternion _equippedItemRotation;
     private RaycastHit _hitPickUp;
     public bool objHasBeenThrown = false;
-
+    private ControllerRumble controller;
 
     #endregion
 
@@ -30,7 +30,8 @@ public class PickUpSystem : MonoBehaviour
         _interactor = GetComponent<Interactor>();
         playerHands = GameObject.FindWithTag("HoldingPos").transform;
         _pickUpsContatiner = GameObject.FindWithTag("PickUps").transform;
-        _enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<EnemyAI>();
+        controller = GameObject.FindGameObjectWithTag("ControllerManager").GetComponent<ControllerRumble>();
+        _enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<NunAi>();
     }
 
 
@@ -80,6 +81,7 @@ public class PickUpSystem : MonoBehaviour
 
             //To ensure the object doesnt visually clip through walls
             pickUpObj.layer = LayerMask.NameToLayer("holdingMask");
+            controller.RumblePusle(0.2f, 0.2f, 0.2f);
         }
         else
             return;
