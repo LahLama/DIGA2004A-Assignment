@@ -2,15 +2,29 @@ using UnityEngine;
 
 public class Tutorial : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private NunAi nunBaseScript;
+    private VignetteControl VC;
+    private Transform player;
+
+
+
     void Start()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+    public void EndTutorial()
     {
-        
+        if (GameObject.FindGameObjectWithTag("NunEnemy").TryGetComponent<NunAi>(out nunBaseScript))
+        {
+            nunBaseScript.enabled = true;
+        }
+
+
+        player.GetComponent<PlayerMovement>().enabled = true;
+        player.GetComponent<LookFunction>().enabled = true;
+
+        VC.RemoveVignette(0);
     }
 }
