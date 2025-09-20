@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: brick
-    second: {fileID: 2100000, guid: 2a95e119bcf7291468a90293259363be, type: 2}
+    second: {fileID: 2100000, guid: ee8d819227c1c2840987ca5e4d884470, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
