@@ -12,6 +12,7 @@ public class NunAi : MonoBehaviour
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask playerLayer;
+    public LayerMask DoorLayer;
     public LayerMask StopLayer;
     private MoveFromMicrophone microphoneInput;
     //Patrolling +  //Waypoints
@@ -28,6 +29,7 @@ public class NunAi : MonoBehaviour
     public bool playerInSightRange, playerInCatchRange, playerinLOS;
     bool isWaitingAtWaypoint = false, isLoud;
     RaycastHit isPlayer;
+
     public float WaitPointDelay = 5;
     public float NunlookTime = 6;
 
@@ -47,12 +49,15 @@ public class NunAi : MonoBehaviour
         isLoud = microphoneInput.isLoud;
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         playerInCatchRange = Physics.CheckSphere(transform.position, catchRange, playerLayer);
-        playerinLOS = Physics.Raycast(transform.position, transform.forward, out isPlayer, sightRange * 2, playerLayer);
 
 
-        Debug.DrawRay(transform.position, transform.forward * sightRange * 2, Color.magenta);
+        /*   Vector3 directionToPlayer = (player.position - transform.position).normalized;
+           float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+          // playerinLOS = !Physics.Raycast(transform.position, directionToPlayer, distanceToPlayer, StopLayer);
 
-        bool isChasing = (playerInSightRange || playerinLOS && !playerInCatchRange);
+           Debug.DrawLine(transform.position, directionToPlayer);*/
+
+        bool isChasing = (playerInSightRange && !playerInCatchRange);
 
         // Rumble logic
         if (isLoud || isChasing)
@@ -65,7 +70,7 @@ public class NunAi : MonoBehaviour
         }
 
         if (!playerInSightRange && !playerInCatchRange) Patrol();
-        if ((playerInSightRange || playerinLOS && !playerInCatchRange) || (microphoneInput.isLoud)) ChasePlayer();
+        if (isChasing || microphoneInput.isLoud) ChasePlayer();
         if (playerInSightRange && playerInCatchRange) CatchPlayer();
 
 
@@ -114,12 +119,12 @@ public class NunAi : MonoBehaviour
     private void DoorInteractions()
     {
 
-        if (Physics.Raycast(transform.position, transform.forward, 1f, StopLayer))
+        if (Physics.Raycast(transform.position, transform.forward, 1f, DoorLayer))
         {
             RaycastHit hit;
             GameObject hitObj = null;
 
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f, StopLayer))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f, DoorLayer))
                 hitObj = hit.collider.gameObject;
 
             hitObj.SetActive(false);
@@ -155,9 +160,14 @@ public class NunAi : MonoBehaviour
 
         DoorInteractions();
         vignetteControl.ApplyVignette(2);
-        //stops the agent
-        agent.SetDestination(transform.position);
-        agent.SetDestination(player.position);
+        agent.transform.LookAt(player);
+
+        if (!Physics.Raycast(transform.position, transform.forward * sightRange, 1f, StopLayer))
+        {
+            //stops the agent
+            agent.SetDestination(transform.position);
+            agent.SetDestination(player.position);
+        }
 
         //looks at player
         //transform.LookAt(player);

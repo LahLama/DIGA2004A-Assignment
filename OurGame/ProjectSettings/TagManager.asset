@@ -21,6 +21,8 @@ TagManager:
   - NunEnemy
   - Microphone
   - PlayerStats
+  - Tutorial
+  - ControllerManager
   layers:
   - Default
   - TransparentFX
