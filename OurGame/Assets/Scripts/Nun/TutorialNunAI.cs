@@ -16,6 +16,7 @@ public class TutorialNunAI : MonoBehaviour
         vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
         if (TryGetComponent<NunAi>(out nunBaseScript))
         {
             nunBaseScript.enabled = false;
@@ -28,13 +29,20 @@ public class TutorialNunAI : MonoBehaviour
     {
         if (nunSpawned)
         {
-            player.GetComponentInChildren<Camera>().transform.LookAt(new Vector3(agent.gameObject.transform.position.x, agent.gameObject.transform.position.y + (agent.height / 2), agent.gameObject.transform.position.z));
+            player.GetComponentInChildren<Camera>().transform.LookAt(
+                    new Vector3(
+                        this.gameObject.transform.position.x,
+                        this.gameObject.transform.position.y + agent.height,
+                         this.gameObject.transform.position.z
+                         )
+                        );
         }
+
     }
 
     public void SpawnNunOnPlayer()
     {
-        vignetteControl.ApplyVignette(2);
+        vignetteControl.ApplyVignette(1);
 
 
 
