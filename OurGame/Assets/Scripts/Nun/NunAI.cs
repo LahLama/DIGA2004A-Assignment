@@ -38,7 +38,7 @@ public class NunAi : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         microphoneInput = GameObject.Find("Microphone").GetComponent<MoveFromMicrophone>();
         vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
-        rumbler = GameObject.FindGameObjectWithTag("Player").GetComponent<ControllerRumble>();
+        rumbler = GameObject.FindGameObjectWithTag("ControllerManager").GetComponent<ControllerRumble>();
     }
 
     void Update()

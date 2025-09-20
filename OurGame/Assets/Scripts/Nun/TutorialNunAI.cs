@@ -45,11 +45,11 @@ public class TutorialNunAI : MonoBehaviour
             vignetteControl.ApplyVignette(1);
         }
 
-        if (Mathf.Abs(player.position.magnitude - agent.transform.position.magnitude) <= agent.stoppingDistance)
+        if (Mathf.Abs(player.localPosition.magnitude - agent.transform.localPosition.magnitude) <= agent.stoppingDistance)
         {
 
-            //wait for black screen
-            Invoke("EndTut", 2);
+            //wait for black screen/Animation
+            Invoke("EndTut", 7);
         }
 
     }
@@ -67,7 +67,7 @@ public class TutorialNunAI : MonoBehaviour
         player.GetComponent<PlayerMovement>().enabled = false;
         player.GetComponent<LookFunction>().enabled = false;
 
-        agent.gameObject.transform.position = player.transform.TransformPoint(new Vector3(0, 0, -3));
+        agent.gameObject.transform.position = player.transform.TransformPoint(new Vector3(0, 0, -1));
 
         nunSpawned = true;
 
