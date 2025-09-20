@@ -1,13 +1,22 @@
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public struct PlayerLevel
+    public enum PlayerLevel
     {
-        string Tutorials;
-        string BaseGame;
-    }
+        Tutorial,
+        BaseGame,
+    };
 
+    public PlayerLevel playerLevel;
+
+    void Start()
+    {
+        playerLevel = PlayerLevel.Tutorial;
+
+
+    }
 
 
 }
