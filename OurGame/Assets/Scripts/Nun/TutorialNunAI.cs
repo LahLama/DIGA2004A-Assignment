@@ -41,7 +41,7 @@ public class TutorialNunAI : MonoBehaviour
                          )
 
                         );
-            agent.transform.LookAt(player.position);
+            agent.transform.LookAt(player.GetChild(0));
 
             vignetteControl.ApplyVignette(1);
         }
@@ -70,7 +70,7 @@ public class TutorialNunAI : MonoBehaviour
         player.GetComponent<PlayerMovement>().enabled = false;
         player.GetComponent<LookFunction>().enabled = false;
 
-        agent.gameObject.transform.position = player.transform.TransformPoint(new Vector3(0, 0, -1));
+        agent.gameObject.transform.position = player.transform.TransformPoint(new Vector3(0, 0, -3));
 
         nunSpawned = true;
 

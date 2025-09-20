@@ -160,7 +160,7 @@ public class NunAi : MonoBehaviour
 
         DoorInteractions();
         vignetteControl.ApplyVignette(2);
-        agent.transform.LookAt(player);
+        agent.transform.LookAt(player.GetChild(0));
 
         if (!Physics.Raycast(transform.position, transform.forward * sightRange, 1f, StopLayer))
         {

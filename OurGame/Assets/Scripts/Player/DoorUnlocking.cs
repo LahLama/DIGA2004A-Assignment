@@ -50,7 +50,7 @@ public class DoorUnlocking : MonoBehaviour
             else if (currentItem.CompareTag(_doorTags[1]) && currentDoor.CompareTag(_doorTags[1]))
             {
                 Destroy(currentItem.gameObject);
-                Destroy(currentDoor.transform.parent.gameObject);
+                Destroy(currentDoor.transform.parent.parent.gameObject);
             }
 
             //Blue Door
