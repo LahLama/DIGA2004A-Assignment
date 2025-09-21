@@ -10,6 +10,7 @@ public class Tutorial : MonoBehaviour
     private Transform player;
     private PlayerStats playerStats;
     private GameObject TutorialBranch;
+    private GameObject BaseGameBranch;
     [SerializeField] private Vector3 OGplayerPos;
 
 
@@ -19,6 +20,8 @@ public class Tutorial : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerStats = GameObject.FindGameObjectWithTag("PlayerStats").GetComponent<PlayerStats>();
         TutorialBranch = GameObject.FindGameObjectWithTag("Tutorial");
+        BaseGameBranch = GameObject.FindGameObjectWithTag("BaseGame");
+        BaseGameBranch.SetActive(false);
         tutorialNun = GameObject.FindGameObjectWithTag("NunEnemy").GetComponent<TutorialNunAI>();
         VC = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
 
@@ -53,6 +56,7 @@ public class Tutorial : MonoBehaviour
         VC.RemoveVignette(0);
 
         TutorialBranch.SetActive(false);
+        BaseGameBranch.SetActive(true);
         return;
     }
 }

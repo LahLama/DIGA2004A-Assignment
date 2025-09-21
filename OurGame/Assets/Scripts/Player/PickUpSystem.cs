@@ -163,6 +163,12 @@ public class PickUpSystem : MonoBehaviour
         }
         objHasBeenThrown = false;
     }
+
+
+    private void ItemDescription()
+    {
+
+    }
 }
 
 
