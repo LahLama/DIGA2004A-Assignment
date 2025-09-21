@@ -43,6 +43,7 @@ public class NunAi : MonoBehaviour
     public float NunlookTime = 6;
     private float _agentSpeed;
     private float _gracePeriod = 15;
+    private bool _isGracePeriod = false;
     private Vector3 playerOGpos, nunOGpos;
 
 
@@ -56,7 +57,7 @@ public class NunAi : MonoBehaviour
         _agentSpeed = agent.speed;
 
         playerOGpos = player.transform.position;
-        nunOGpos = agent.gameObject.transform.localPosition;
+        nunOGpos = agent.gameObject.transform.position;
 
     }
 
@@ -76,7 +77,7 @@ public class NunAi : MonoBehaviour
 
         bool isChasing = (playerInSightRange && !playerInCatchRange);
 
-        if (_gracePeriod <= 1)
+        if (_isGracePeriod)
         {
             // Rumble logic
             if (isLoud || isChasing)
@@ -99,7 +100,12 @@ public class NunAi : MonoBehaviour
 
     public void StartGracePeriod()
     {
-        StartCoroutine(GraceTime(_gracePeriod));
+        Invoke("EndGracePeriod", 15);
+    }
+
+    private void EndGracePeriod()
+    {
+        _isGracePeriod = true;
     }
     private void OnDrawGizmosSelected()
     {
@@ -215,16 +221,6 @@ public class NunAi : MonoBehaviour
             yield return null;
         }
     }
-    private IEnumerator GraceTime(float _gracePeriod)
-    {
 
-        while (_gracePeriod > 0f)
-        {
-            _gracePeriod -= Time.deltaTime;
-            //  Debug.Log("Grace period remaining: " + Mathf.CeilToInt(_gracePeriod) + "s");
-
-            yield return null;
-        }
-    }
 
 }
