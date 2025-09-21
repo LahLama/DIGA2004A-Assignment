@@ -70,7 +70,8 @@ public class PickUpSystem : MonoBehaviour
 
             //Reset scale and postion         
             pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
-            pickUpObj.transform.localScale *= 0.25f;
+            pickUpObj.transform.localScale *= 1;
+            pickUpObj.transform.rotation = Quaternion.identity;
 
             //Set the parent to the player
             pickUpObj.transform.SetParent(playerHands, false);

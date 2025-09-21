@@ -130,7 +130,7 @@ public class Interactor : MonoBehaviour
 
         hitObj = Physics.SphereCast(transform.position, 0.3f, transform.forward, out raycastHit, _interactionRange, ResponsiveMasks);
 
-        noLOS = Physics.Raycast(transform.position, transform.forward, out lineCasthit, _interactionRange / 2, StopMasks);
+        noLOS = Physics.Raycast(transform.position, transform.forward, out lineCasthit, _interactionRange / 3, StopMasks);
 
         string LayerName = "";
         if (hitObj & !noLOS)
