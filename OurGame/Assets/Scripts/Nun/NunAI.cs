@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-//https://www.youtube.com/watch?v=vS6lyX2QidE
-//https://discussions.unity.com/t/how-to-change-the-color-of-the-vignette-through-script/326332
+
+
+
+
+/*
+    Title: How to make Navmesh AI move between different waypoints - Unity 3D 
+    Author: LearnWithYas
+    Date:  Oct 3, 2023
+    Availability: https://www.youtube.com/watch?v=vS6lyX2QidE
+    */
+
+
+
 public class NunAi : MonoBehaviour
 {
     public NavMeshAgent agent;

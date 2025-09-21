@@ -3,9 +3,9 @@ using System.Collections;
 using UnityEngine.AI;
 
 /*
-Title: Creating a Horror Game in Unity - Part 6: Hiding System (JavaScript)
-Author: SpeedTutor
-Date:  Jun 10, 2014
+Title: How To Pick Up an Item - Unity
+Author: Gunzz
+Date:  Oct 10, 2022
 Availability: https://www.youtube.com/watch?v=zEfahR66Pa8
 */
 
