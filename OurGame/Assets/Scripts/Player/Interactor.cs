@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -37,6 +38,8 @@ public class Interactor : MonoBehaviour
 
     public LayerMask ResponsiveMasks;
 
+    public LayerMask StopMasks;
+
 
     [Header("Bools")]
 
@@ -66,6 +69,8 @@ public class Interactor : MonoBehaviour
     public float hideDuration = 5f;
     [SerializeField] private int _interactNumber = 0;
     private Collider _currentHideObj;
+    RaycastHit lineCasthit;
+    [SerializeField] bool noLOS = false;
 
     #endregion
     private void Awake()
@@ -81,6 +86,8 @@ public class Interactor : MonoBehaviour
     void Update()
     {
         Debug.DrawLine(transform.position, transform.forward * _interactionRange);
+
+
         HandleInteractions();
         if (_interactionDelay > 0f)
         {
@@ -101,7 +108,7 @@ public class Interactor : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position + transform.forward * _interactionRange, 1f);
+        Gizmos.DrawSphere(transform.position + transform.forward * _interactionRange, 0.3f);
     }
 
 
@@ -117,12 +124,17 @@ public class Interactor : MonoBehaviour
 
 
     {
-        reticleManagement.HandleTooltip();
 
-        hitObj = Physics.Raycast(transform.position, transform.forward, out raycastHit, _interactionRange, ResponsiveMasks);
+        if (!noLOS)
+            reticleManagement.HandleTooltip();
+
+
+        hitObj = Physics.SphereCast(transform.position, 0.3f, transform.forward, out raycastHit, _interactionRange, ResponsiveMasks);
+
+        noLOS = Physics.Raycast(transform.position, transform.forward, out lineCasthit, _interactionRange / 2, StopMasks);
+
         string LayerName = "";
-
-        if (hitObj)
+        if (hitObj & !noLOS)
         {
             LayerMask specifiedLayer = raycastHit.transform.gameObject.layer;
             LayerName = LayerMask.LayerToName(specifiedLayer.value);
@@ -175,7 +187,6 @@ public class Interactor : MonoBehaviour
 
 
                 default:
-                    pickUpSystem.EquipItem();
 
                     return;
 
