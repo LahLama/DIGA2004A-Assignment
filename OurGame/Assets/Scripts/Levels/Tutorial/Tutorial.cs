@@ -22,7 +22,7 @@ public class Tutorial : MonoBehaviour
         TutorialBranch = this.gameObject;
 
         BaseGameBranch = GameObject.FindGameObjectWithTag("BaseGame");
-        BaseGameBranch.SetActive(false);
+        //BaseGameBranch.SetActive(false);
         tutorialNun = GameObject.FindGameObjectWithTag("NunEnemy").GetComponent<TutorialNunAI>();
         VC = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
 
