@@ -10,6 +10,7 @@ public class DoorUnlocking : MonoBehaviour
     private RaycastHit _hitDoorObj;
     private InnerDialouge _innerDialouge;
     private string[] _doorTags = { "ForGreenDoor", "ForRedDoor", "ForBlueDoor", "ForYellowDoor" };
+    public GameObject[] RedDoors;
 
     #endregion
 
@@ -50,6 +51,10 @@ public class DoorUnlocking : MonoBehaviour
             else if (currentItem.CompareTag(_doorTags[1]) && currentDoor.CompareTag(_doorTags[1]))
             {
                 Destroy(currentItem.gameObject);
+                foreach (var Door in RedDoors)
+                {
+                    Destroy(Door);
+                }
                 Destroy(currentDoor.transform.parent.parent.gameObject);
             }
 

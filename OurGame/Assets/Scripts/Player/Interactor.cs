@@ -161,7 +161,6 @@ public class Interactor : MonoBehaviour
                     if (raycastHit.collider.gameObject.TryGetComponent<EndDemo>(out endDemoScript))
                     {
                         innerDialouge.text.text = "You have found your brother that you lost!";
-
                     }
 
                     break;
