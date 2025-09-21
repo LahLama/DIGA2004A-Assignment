@@ -61,6 +61,7 @@ public class Interactor : MonoBehaviour
 
     private HighlightObject highlightObject;
     private EndDemo endDemoScript;
+    private DialougeState startDialougeScript;
 
     [Header("InteractionVar")]
     public float _interactionDelay = 0f;
@@ -69,7 +70,8 @@ public class Interactor : MonoBehaviour
     public float hideDuration = 5f;
     private Collider _currentHideObj;
     RaycastHit lineCasthit;
-    [SerializeField] bool noLOS = false;
+    bool noLOS = false;
+    bool hasChatted = false;
 
     #endregion
     private void Awake()
@@ -155,12 +157,22 @@ public class Interactor : MonoBehaviour
             switch (LayerName)
             {
                 case "interactionsMask":
-                    innerDialouge.text.text = "This is just an object.";
-                    StartCoroutine(innerDialouge.InnerDialogueContorl());
+
 
                     if (raycastHit.collider.gameObject.TryGetComponent<EndDemo>(out endDemoScript))
                     {
                         innerDialouge.text.text = "You have found your brother that you lost!";
+                    }
+                    else if (raycastHit.collider.gameObject.TryGetComponent<DialougeState>(out startDialougeScript) && hasChatted == false)
+                    {
+
+                        hasChatted = true;
+                        startDialougeScript.StartDialouge();
+                        return;
+                    }
+                    else
+                    {
+
                     }
 
                     break;

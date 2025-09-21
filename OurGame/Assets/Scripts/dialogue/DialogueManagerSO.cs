@@ -12,6 +12,7 @@ public class DialogueManagerSO : MonoBehaviour
     public Button choiceButton2;
     public TextMeshProUGUI choiceText1;
     public TextMeshProUGUI choiceText2;
+    public DialougeState dialougeState;
 
     [Header("StartNode")]
     public DialogueNodeSO startingNode;
@@ -19,21 +20,28 @@ public class DialogueManagerSO : MonoBehaviour
     private DialogueNodeSO currentNode;
     private Coroutine typingCoroutine;
     private bool isTyping = false;
+    private bool waitingForEnd = false;
 
-    void Start()
+    public void StartFromOtherScript()
     {
-        
         StartDialogue(startingNode);
     }
-
     void Update()
     {
+
+
         if (isTyping && Input.GetMouseButtonDown(0))
         {
+            // Skip typing
             StopCoroutine(typingCoroutine);
             dialogueText.text = currentNode.dialogueLine;
             isTyping = false;
             ShowChoices();
+        }
+        else if (waitingForEnd && Input.GetMouseButtonDown(0))
+        {
+            waitingForEnd = false;
+            CallEndFromScript();
         }
     }
 
@@ -95,5 +103,16 @@ public class DialogueManagerSO : MonoBehaviour
                 ShowNode(currentNode.choices[1].nextNode);
             });
         }
+
+        if (currentNode.choices.Length == 0)
+        {
+            waitingForEnd = true;
+        }
     }
+
+    private void CallEndFromScript()
+    {
+        dialougeState.EndDialouge();
+    }
+
 }
