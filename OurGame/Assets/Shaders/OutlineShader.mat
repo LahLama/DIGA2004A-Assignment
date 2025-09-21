@@ -38,8 +38,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _DepthIntensity: 1.75
-    - _outlineThickness: 0.22
+    - _outlineThickness: 0.85
     m_Colors:
-    - _outlineColor: {r: 0.93962264, g: 0.12587398, b: 0.12587398, a: 0}
+    - _outlineColor: {r: 0.0037735105, g: 0.0037735105, b: 0.0037735105, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
