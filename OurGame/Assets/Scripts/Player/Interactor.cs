@@ -98,6 +98,11 @@ public class Interactor : MonoBehaviour
     }
 
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position + transform.forward * _interactionRange, 1f);
+    }
 
 
 

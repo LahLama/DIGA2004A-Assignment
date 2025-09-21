@@ -32,6 +32,7 @@ public class NunAi : MonoBehaviour
 
     public float WaitPointDelay = 5;
     public float NunlookTime = 6;
+    private float _agentSpeed;
 
 
     void Awake()
@@ -41,6 +42,7 @@ public class NunAi : MonoBehaviour
         microphoneInput = GameObject.Find("Microphone").GetComponent<MoveFromMicrophone>();
         vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
         rumbler = GameObject.FindGameObjectWithTag("ControllerManager").GetComponent<ControllerRumble>();
+        _agentSpeed = agent.speed;
     }
 
     void Update()
@@ -88,7 +90,7 @@ public class NunAi : MonoBehaviour
     }
     private void Patrol()
     {
-
+        agent.speed = _agentSpeed;
         DoorInteractions();
         vignetteControl.RemoveVignette(2);
 
@@ -157,22 +159,38 @@ public class NunAi : MonoBehaviour
     }
     private void ChasePlayer()
     {
-
+        agent.speed = _agentSpeed * (5 / 3.0f);
         DoorInteractions();
         vignetteControl.ApplyVignette(2);
         agent.transform.LookAt(player.GetChild(0));
 
-        if (!Physics.Raycast(transform.position, transform.forward * sightRange, 1f, StopLayer))
-        {
-            //stops the agent
-            agent.SetDestination(transform.position);
-            agent.SetDestination(player.position);
-        }
+        StartCoroutine(ChaseTime(NunlookTime));
+
 
         //looks at player
         //transform.LookAt(player);
 
 
+    }
+
+    private IEnumerator ChaseTime(float delay)
+    {
+        float timer = delay;
+        while (timer > 0f)
+        {
+            if (!Physics.Raycast(transform.position, transform.forward * sightRange, 1f, StopLayer))
+            {
+                //stops the agent
+                agent.SetDestination(player.position);
+            }
+            else
+            {
+                agent.SetDestination(transform.position);
+
+            }
+            timer -= Time.deltaTime;
+            yield return null;
+        }
     }
 
 }
