@@ -15,11 +15,12 @@ public class Tutorial : MonoBehaviour
 
 
 
-    void Start()
+    void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerStats = GameObject.FindGameObjectWithTag("PlayerStats").GetComponent<PlayerStats>();
-        TutorialBranch = GameObject.FindGameObjectWithTag("Tutorial");
+        TutorialBranch = this.gameObject;
+
         BaseGameBranch = GameObject.FindGameObjectWithTag("BaseGame");
         BaseGameBranch.SetActive(false);
         tutorialNun = GameObject.FindGameObjectWithTag("NunEnemy").GetComponent<TutorialNunAI>();
@@ -55,8 +56,13 @@ public class Tutorial : MonoBehaviour
 
         VC.RemoveVignette(0);
 
-        TutorialBranch.SetActive(false);
+
+
         BaseGameBranch.SetActive(true);
+
+
+        //This must be the last line
+        TutorialBranch.SetActive(false);
         return;
     }
 }
