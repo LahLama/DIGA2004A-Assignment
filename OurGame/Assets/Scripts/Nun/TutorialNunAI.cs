@@ -55,7 +55,7 @@ public class TutorialNunAI : MonoBehaviour
         {
             Debug.Log("DEBUG 1");
             //wait for black screen/Animation
-            Invoke("EndTut", 7);
+            Invoke("EndTut", 4);
             TutEnded = true;
         }
     }
