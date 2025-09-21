@@ -56,10 +56,13 @@ public class PickUpSystem : MonoBehaviour
             //Get the obj that will be picked up
             GameObject pickUpObj = _hitPickUp.collider.gameObject;
 
-            ParticleSystem particles = pickUpObj.GetComponent<ParticleSystem>();
-            ParticleSystem.MainModule particles_main = particles.main;
-            particles_main.startColor = new Color(1f, 0.078f, 0.576f, 1f); // Specific pink (hex #FF1493)
-            particles.Play();
+            ParticleSystem particles;
+            if (pickUpObj.TryGetComponent<ParticleSystem>(out particles))
+            {
+                ParticleSystem.MainModule particles_main = particles.main;
+                particles_main.startColor = new Color(1f, 0.078f, 0.576f, 1f); // Specific pink (hex #FF1493)
+                particles.Play();
+            }
 
 
             //Switch off the gravity
