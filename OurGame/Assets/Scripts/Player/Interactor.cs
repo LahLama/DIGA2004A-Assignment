@@ -162,6 +162,7 @@ public class Interactor : MonoBehaviour
                     if (raycastHit.collider.gameObject.TryGetComponent<EndDemo>(out endDemoScript))
                     {
                         innerDialouge.text.text = "You have found your brother that you lost!";
+                        StartCoroutine(innerDialouge.InnerDialogueContorl());
                     }
                     else if (raycastHit.collider.gameObject.TryGetComponent<DialougeState>(out startDialougeScript) && hasChatted == false)
                     {
@@ -172,7 +173,7 @@ public class Interactor : MonoBehaviour
                     }
                     else
                     {
-
+                        innerDialouge.text.text = "I need my ball...Get it this time...";
                     }
 
                     break;

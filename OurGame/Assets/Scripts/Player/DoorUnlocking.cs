@@ -55,7 +55,7 @@ public class DoorUnlocking : MonoBehaviour
                 {
                     Destroy(Door);
                 }
-                Destroy(currentDoor.transform.parent.parent.gameObject);
+
             }
 
             //Blue Door
@@ -82,7 +82,7 @@ public class DoorUnlocking : MonoBehaviour
         else
         {
             //If the player doesnt have anything in hand
-            _innerDialouge.text.text = "The door is locked.";
+            _innerDialouge.text.text = "I need my item.";
             StartCoroutine(_innerDialouge.InnerDialogueContorl());
         }
 

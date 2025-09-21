@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.TextCore.Text;
 
 public class Tutorial : MonoBehaviour
@@ -40,7 +41,7 @@ public class Tutorial : MonoBehaviour
             nunBaseScript.enabled = true;
             tutorialNun.enabled = false;
         }
-        tutorialNun.gameObject.transform.position = tutorialNun.OriginalPos;
+        tutorialNun.gameObject.GetComponent<NavMeshAgent>().Warp(tutorialNun.OriginalPos);
 
         CharacterController cc = player.gameObject.GetComponent<CharacterController>();
 
