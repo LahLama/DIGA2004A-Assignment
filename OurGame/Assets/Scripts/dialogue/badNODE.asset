@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2423de5d63c5b3b4dad0290ea8d86afc, type: 3}
   m_Name: badNODE
   m_EditorClassIdentifier: 
-  dialogueLine: "I\u2019m telling the nun!\r\nUnless\u2026 you bring me my teddy
+  dialogueLine: " I\u2019m telling the nun!\r\nUnless\u2026 you bring me my teddy
     from the foyer.\r\nHurry up, meanie!!\r\n\r\n"
   choices: []
