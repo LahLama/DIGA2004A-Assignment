@@ -23,6 +23,7 @@ TagManager:
   - PlayerStats
   - Tutorial
   - ControllerManager
+  - NPC
   layers:
   - Default
   - TransparentFX

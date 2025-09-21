@@ -13,7 +13,7 @@ public class DialogueManagerSO : MonoBehaviour
     public TextMeshProUGUI choiceText1;
     public TextMeshProUGUI choiceText2;
 
-    [Header("Start Node")]
+    [Header("StartNode")]
     public DialogueNodeSO startingNode;
 
     private DialogueNodeSO currentNode;
@@ -22,7 +22,7 @@ public class DialogueManagerSO : MonoBehaviour
 
     void Start()
     {
-        // Automatically start the dialogue when the scene loads
+        
         StartDialogue(startingNode);
     }
 
