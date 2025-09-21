@@ -399,6 +399,17 @@
                     "action": "ExitGame",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f8421f4a-f818-4367-a941-50745fd90fcd",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Console",
+                    "action": "ExitGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

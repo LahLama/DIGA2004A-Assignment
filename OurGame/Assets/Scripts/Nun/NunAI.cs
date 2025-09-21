@@ -181,7 +181,11 @@ public class NunAi : MonoBehaviour
         agent.SetDestination(transform.position);
 
         agent.Warp(nunOGpos);
+
+        player.GetComponent<CharacterController>().enabled = false;
         player.position = playerOGpos;
+        player.GetComponent<CharacterController>().enabled = true;
+
 
         Debug.Log("CAUGHT THE PLAYER");
 
