@@ -23,6 +23,7 @@ TagManager:
   - PlayerStats
   - Tutorial
   - ControllerManager
+  - BaseGame
   layers:
   - Default
   - TransparentFX

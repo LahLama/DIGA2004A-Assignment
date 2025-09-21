@@ -5,7 +5,7 @@ public class TutorialPickUp : MonoBehaviour
 
     private Transform player;
     private TutorialNunAI tutorialNun;
-    private bool hasBeenChecked = false;
+    public bool hasBeenPicked = false;
 
     void Start()
     {
@@ -15,10 +15,10 @@ public class TutorialPickUp : MonoBehaviour
     void Update()
     {
 
-        if (this.transform.IsChildOf(player) && !hasBeenChecked)
+        if (this.transform.IsChildOf(player) && !hasBeenPicked)
         {
             tutorialNun.SpawnNunOnPlayer();
-            hasBeenChecked = true;
+            hasBeenPicked = true;
             this.gameObject.SetActive(false);
         }
     }
