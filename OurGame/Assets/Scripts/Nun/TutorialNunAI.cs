@@ -9,9 +9,10 @@ public class TutorialNunAI : MonoBehaviour
     private VignetteControl vignetteControl;
     private bool nunSpawned = false;
     private Tutorial tutorial;
+    private TutorialPickUp tutorialPickUp;
     private Transform player;
     public Vector3 OriginalPos;
-    private bool TutEnd = false;
+    private bool TutEnded = false, TutItem = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,12 +21,13 @@ public class TutorialNunAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         tutorial = GameObject.FindGameObjectWithTag("Tutorial").GetComponent<Tutorial>();
+        tutorialPickUp = tutorial.gameObject.transform.GetChild(0).GetComponent<TutorialPickUp>();
 
         if (TryGetComponent<NunAi>(out nunBaseScript))
         {
             nunBaseScript.enabled = false;
         }
-        this.transform.localScale = Vector3.zero;
+        this.transform.localScale = Vector3.one;
 
     }
 
@@ -41,19 +43,21 @@ public class TutorialNunAI : MonoBehaviour
                          )
 
                         );
-            agent.transform.LookAt(player);
+            agent.transform.LookAt(player.GetChild(0));
 
             vignetteControl.ApplyVignette(1);
         }
+        TutItem = tutorialPickUp.hasBeenPicked;
+        float dist = Vector3.Distance(player.position, agent.transform.position);
 
-        if (!TutEnd && Mathf.Abs(player.localPosition.magnitude - agent.transform.localPosition.magnitude) <= agent.stoppingDistance)
+
+        if (TutItem && !TutEnded && dist <= agent.stoppingDistance)
         {
-
+            Debug.Log("DEBUG 1");
             //wait for black screen/Animation
-            Invoke("EndTut", 7);
-            TutEnd = true;
+            Invoke("EndTut", 4);
+            TutEnded = true;
         }
-
     }
     private void EndTut()
     {
@@ -70,7 +74,7 @@ public class TutorialNunAI : MonoBehaviour
         player.GetComponent<PlayerMovement>().enabled = false;
         player.GetComponent<LookFunction>().enabled = false;
 
-        agent.gameObject.transform.position = player.transform.TransformPoint(new Vector3(0, 0, -1));
+        agent.gameObject.transform.position = player.transform.TransformPoint(new Vector3(0, 0, -3));
 
         nunSpawned = true;
 

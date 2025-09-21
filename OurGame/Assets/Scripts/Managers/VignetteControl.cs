@@ -22,6 +22,7 @@ public class VignetteControl : MonoBehaviour
     //Dramatic Mode
     public void ApplyVignette(int lerpSpeed)
     {
+        //Do beat per 0.25s to sync up with the controller vibrations
         targetIntensity = 1f;
         currentIntensity = Mathf.Lerp(currentIntensity, targetIntensity, Time.deltaTime * lerpSpeed);
         fullscreenEffectMaterial.SetFloat("_FullscreenIntensity", currentIntensity);

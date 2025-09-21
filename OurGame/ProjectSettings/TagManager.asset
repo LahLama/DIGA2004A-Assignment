@@ -23,7 +23,11 @@ TagManager:
   - PlayerStats
   - Tutorial
   - ControllerManager
+<<<<<<< HEAD
+  - BaseGame
+=======
   - NPC
+>>>>>>> Alex
   layers:
   - Default
   - TransparentFX
