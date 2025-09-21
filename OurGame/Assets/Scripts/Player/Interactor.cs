@@ -67,7 +67,6 @@ public class Interactor : MonoBehaviour
     private float _maxInteractionDelay = 0.5f;
     private float _interactionRange = 1.5f;
     public float hideDuration = 5f;
-    [SerializeField] private int _interactNumber = 0;
     private Collider _currentHideObj;
     RaycastHit lineCasthit;
     [SerializeField] bool noLOS = false;
@@ -182,12 +181,14 @@ public class Interactor : MonoBehaviour
                 case "pickUpMask":
                     _interactionDelay = _maxInteractionDelay;
                     pickUpSystem.EquipItem();
-                    _interactNumber++;
                     break;
 
 
                 default:
-
+                    if (pickUpSystem.playerHands.childCount > 1)
+                    {
+                        pickUpSystem.DropItem();
+                    }
                     return;
 
             }

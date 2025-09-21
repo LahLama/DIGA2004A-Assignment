@@ -70,8 +70,7 @@ public class PickUpSystem : MonoBehaviour
 
             //Reset scale and postion         
             pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
-            pickUpObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-            pickUpObj.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            pickUpObj.transform.localScale *= 0.25f;
 
             //Set the parent to the player
             pickUpObj.transform.SetParent(playerHands, false);
@@ -162,12 +161,6 @@ public class PickUpSystem : MonoBehaviour
             yield return null;
         }
         objHasBeenThrown = false;
-    }
-
-
-    private void ItemDescription()
-    {
-
     }
 }
 
