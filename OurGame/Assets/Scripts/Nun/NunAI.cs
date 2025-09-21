@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-//https://www.youtube.com/watch?v=vS6lyX2QidE
-//https://discussions.unity.com/t/how-to-change-the-color-of-the-vignette-through-script/326332
+
+
+
+
+/*
+    Title: How to make Navmesh AI move between different waypoints - Unity 3D 
+    Author: LearnWithYas
+    Date:  Oct 3, 2023
+    Availability: https://www.youtube.com/watch?v=vS6lyX2QidE
+    */
+
+
+
 public class NunAi : MonoBehaviour
 {
     public NavMeshAgent agent;
@@ -33,7 +42,9 @@ public class NunAi : MonoBehaviour
     public float WaitPointDelay = 5;
     public float NunlookTime = 6;
     private float _agentSpeed;
-    private float _gracePeriod = 60;
+    private float _gracePeriod = 15;
+    private bool _isGracePeriod = false;
+    private Vector3 playerOGpos, nunOGpos;
 
 
     void Awake()
@@ -44,6 +55,9 @@ public class NunAi : MonoBehaviour
         vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
         rumbler = GameObject.FindGameObjectWithTag("ControllerManager").GetComponent<ControllerRumble>();
         _agentSpeed = agent.speed;
+
+        playerOGpos = player.transform.position;
+        nunOGpos = agent.gameObject.transform.position;
 
     }
 
@@ -63,7 +77,7 @@ public class NunAi : MonoBehaviour
 
         bool isChasing = (playerInSightRange && !playerInCatchRange);
 
-        if (_gracePeriod <= 1)
+        if (_isGracePeriod)
         {
             // Rumble logic
             if (isLoud || isChasing)
@@ -86,7 +100,12 @@ public class NunAi : MonoBehaviour
 
     public void StartGracePeriod()
     {
-        StartCoroutine(GraceTime(_gracePeriod));
+        Invoke("EndGracePeriod", 15);
+    }
+
+    private void EndGracePeriod()
+    {
+        _isGracePeriod = true;
     }
     private void OnDrawGizmosSelected()
     {
@@ -161,6 +180,13 @@ public class NunAi : MonoBehaviour
     {
         agent.SetDestination(transform.position);
 
+        agent.Warp(nunOGpos);
+
+        player.GetComponent<CharacterController>().enabled = false;
+        player.position = playerOGpos;
+        player.GetComponent<CharacterController>().enabled = true;
+
+
         Debug.Log("CAUGHT THE PLAYER");
 
     }
@@ -199,16 +225,6 @@ public class NunAi : MonoBehaviour
             yield return null;
         }
     }
-    private IEnumerator GraceTime(float _gracePeriod)
-    {
 
-        while (_gracePeriod > 0f)
-        {
-            _gracePeriod -= Time.deltaTime;
-            //  Debug.Log("Grace period remaining: " + Mathf.CeilToInt(_gracePeriod) + "s");
-
-            yield return null;
-        }
-    }
 
 }

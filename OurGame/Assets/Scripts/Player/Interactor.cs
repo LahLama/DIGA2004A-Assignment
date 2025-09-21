@@ -1,12 +1,6 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
-
-
 
 
 public class Interactor : MonoBehaviour
@@ -23,14 +17,18 @@ public class Interactor : MonoBehaviour
     */
 
     /*
-    Title: Creating a Horror Game in Unity - Part 6: Hiding System (JavaScript)
-    Author: SpeedTutor
-    Date:  Jun 10, 2014
-    Availability: https://youtu.be/GTtW57u_cfg?si=NqfWBUk5yLfmXfn-
+    Title: Raycast Unity 3d - unity raycast tutorial 
+    Author: Pixelbug Studio
+    Date:  Sep 9, 2021
+    Availability: https://www.youtube.com/watch?v=cUf7FnNqv7U
     */
-    // /https://www.youtube.com/watch?v=cUf7FnNqv7U
-    //
-    //https://www.youtube.com/watch?v=QYpWYZq2I6E
+    /*
+    Title: (URP) How to fix Gun Clipping in Unity | Unity3D Tutorial |
+    Author: Podd Studios
+    Date:  Dec 3, 2022
+    Availability: https://www.youtube.com/watch?v=QYpWYZq2I6E
+    */
+
 
 
     #region Varibles
