@@ -12,7 +12,8 @@ public class TutorialNunAI : MonoBehaviour
     private TutorialPickUp tutorialPickUp;
     private Transform player;
     public Vector3 OriginalPos;
-    private bool TutEnded = false, TutItem = false;
+    private bool TutEnded = false, TutItem = false, ApplyVignette = false;
+    [SerializeField] private Transform NunSpawnPoint;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -35,6 +36,7 @@ public class TutorialNunAI : MonoBehaviour
     {
         if (nunSpawned)
         {
+
             player.GetComponentInChildren<Camera>().transform.LookAt(
                     new Vector3(
                         this.gameObject.transform.position.x,
@@ -44,8 +46,12 @@ public class TutorialNunAI : MonoBehaviour
 
                         );
             agent.transform.LookAt(player.GetChild(0));
+            if (ApplyVignette == false)
+            {
+                vignetteControl.ApplyVignette(1);
+                ApplyVignette = true;
+            }
 
-            vignetteControl.ApplyVignette(1);
         }
         TutItem = tutorialPickUp.hasBeenPicked;
         float dist = Vector3.Distance(player.position, agent.transform.position);
@@ -55,7 +61,7 @@ public class TutorialNunAI : MonoBehaviour
         {
             Debug.Log("DEBUG 1");
             //wait for black screen/Animation
-            Invoke("EndTut", 4);
+            Invoke("EndTut", 2);
             TutEnded = true;
         }
     }
@@ -63,6 +69,8 @@ public class TutorialNunAI : MonoBehaviour
     {
 
         tutorial.EndTutorial();
+        vignetteControl.RemoveVignette(1);
+        nunBaseScript.StartGracePeriod();
 
     }
     public void SpawnNunOnPlayer()
@@ -74,7 +82,9 @@ public class TutorialNunAI : MonoBehaviour
         player.GetComponent<PlayerMovement>().enabled = false;
         player.GetComponent<LookFunction>().enabled = false;
 
-        agent.gameObject.transform.position = player.transform.TransformPoint(new Vector3(0, 0, -3));
+
+        //Warp() is the correct way to instantly move a NavMeshAgent.
+        agent.Warp(NunSpawnPoint.position);
 
         nunSpawned = true;
 

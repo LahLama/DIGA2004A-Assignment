@@ -33,6 +33,7 @@ public class NunAi : MonoBehaviour
     public float WaitPointDelay = 5;
     public float NunlookTime = 6;
     private float _agentSpeed;
+    private float _gracePeriod = 60;
 
 
     void Awake()
@@ -43,6 +44,7 @@ public class NunAi : MonoBehaviour
         vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
         rumbler = GameObject.FindGameObjectWithTag("ControllerManager").GetComponent<ControllerRumble>();
         _agentSpeed = agent.speed;
+
     }
 
     void Update()
@@ -61,26 +63,31 @@ public class NunAi : MonoBehaviour
 
         bool isChasing = (playerInSightRange && !playerInCatchRange);
 
-        // Rumble logic
-        if (isLoud || isChasing)
+        if (_gracePeriod <= 1)
         {
-            rumbler.RumbleStream(0.2f, 0.5f, 0.25f);
-        }
-        else if (!isLoud && !isChasing)
-        {
-            rumbler.StopRumbleSteam();
-        }
+            // Rumble logic
+            if (isLoud || isChasing)
+            {
+                rumbler.RumbleStream(0.2f, 0.5f, 0.25f);
+            }
+            else if (!isLoud && !isChasing)
+            {
+                rumbler.StopRumbleSteam();
+            }
 
-        if (!playerInSightRange && !playerInCatchRange) Patrol();
-        if (isChasing || microphoneInput.isLoud) ChasePlayer();
-        if (playerInSightRange && playerInCatchRange) CatchPlayer();
-
+            if (!playerInSightRange && !playerInCatchRange) Patrol();
+            if (isChasing || microphoneInput.isLoud) ChasePlayer();
+            if (playerInSightRange && playerInCatchRange) CatchPlayer();
+        }
 
 
 
     }
 
-
+    public void StartGracePeriod()
+    {
+        StartCoroutine(GraceTime(_gracePeriod));
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -189,6 +196,17 @@ public class NunAi : MonoBehaviour
 
             }
             timer -= Time.deltaTime;
+            yield return null;
+        }
+    }
+    private IEnumerator GraceTime(float _gracePeriod)
+    {
+
+        while (_gracePeriod > 0f)
+        {
+            _gracePeriod -= Time.deltaTime;
+            //  Debug.Log("Grace period remaining: " + Mathf.CeilToInt(_gracePeriod) + "s");
+
             yield return null;
         }
     }

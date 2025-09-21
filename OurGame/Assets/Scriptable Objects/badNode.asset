@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2423de5d63c5b3b4dad0290ea8d86afc, type: 3}
+  m_Name: badNode
+  m_EditorClassIdentifier: 
+  dialogueLine: " I\u2019m telling the nun!\r\nUnless\u2026 you bring me my Ball
+    from the foyer.\r\nHurry up, meanie!!"
+  choices: []

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.TextCore.Text;
 
 public class Tutorial : MonoBehaviour
@@ -22,7 +23,7 @@ public class Tutorial : MonoBehaviour
         TutorialBranch = this.gameObject;
 
         BaseGameBranch = GameObject.FindGameObjectWithTag("BaseGame");
-        //BaseGameBranch.SetActive(false);
+        BaseGameBranch.SetActive(false);
         tutorialNun = GameObject.FindGameObjectWithTag("NunEnemy").GetComponent<TutorialNunAI>();
         VC = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
 
@@ -40,7 +41,7 @@ public class Tutorial : MonoBehaviour
             nunBaseScript.enabled = true;
             tutorialNun.enabled = false;
         }
-        tutorialNun.gameObject.transform.position = tutorialNun.OriginalPos;
+        tutorialNun.gameObject.GetComponent<NavMeshAgent>().Warp(tutorialNun.OriginalPos);
 
         CharacterController cc = player.gameObject.GetComponent<CharacterController>();
 
