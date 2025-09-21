@@ -42,7 +42,8 @@ public class NunAi : MonoBehaviour
     public float WaitPointDelay = 5;
     public float NunlookTime = 6;
     private float _agentSpeed;
-    private float _gracePeriod = 60;
+    private float _gracePeriod = 15;
+    private Vector3 playerOGpos, nunOGpos;
 
 
     void Awake()
@@ -53,6 +54,9 @@ public class NunAi : MonoBehaviour
         vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
         rumbler = GameObject.FindGameObjectWithTag("ControllerManager").GetComponent<ControllerRumble>();
         _agentSpeed = agent.speed;
+
+        playerOGpos = player.transform.position;
+        nunOGpos = agent.gameObject.transform.localPosition;
 
     }
 
@@ -169,6 +173,9 @@ public class NunAi : MonoBehaviour
     private void CatchPlayer()
     {
         agent.SetDestination(transform.position);
+
+        agent.Warp(nunOGpos);
+        player.position = playerOGpos;
 
         Debug.Log("CAUGHT THE PLAYER");
 

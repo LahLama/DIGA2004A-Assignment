@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2423de5d63c5b3b4dad0290ea8d86afc, type: 3}
   m_Name: startNode
   m_EditorClassIdentifier: 
-  dialogueLine: "DonutGirl: It\u2019s past your bedtime. Where are you going?"
+  dialogueLine: "DonutGirl: It\u2019s past your bedtime. Where are you going?\n(
+    Please use mouse )"
   choices:
   - choiceText: "Uh\u2026 just going to the bathroom?"
     nextNode: {fileID: 11400000, guid: b6dab94dba37b8f40a30848b64e4dbd3, type: 2}
