@@ -42,7 +42,7 @@ public class DoorUnlocking : MonoBehaviour
             //Green Door
             if (currentItem.CompareTag(_doorTags[0]) && currentDoor.CompareTag(_doorTags[0]))
             {
-                Destroy(currentDoor.gameObject);
+                Destroy(currentDoor.gameObject.transform.parent.gameObject);
                 Destroy(currentItem.gameObject);
             }
 
@@ -57,14 +57,14 @@ public class DoorUnlocking : MonoBehaviour
             else if (currentItem.CompareTag(_doorTags[2]) && currentDoor.CompareTag(_doorTags[2]))
             {
                 Destroy(currentItem.gameObject);
-                Destroy(currentDoor.gameObject);
+                Destroy(currentDoor.gameObject.transform.parent.gameObject);
             }
 
             //Yellow Door
             else if (currentItem.CompareTag(_doorTags[3]) && currentDoor.CompareTag(_doorTags[3]))
             {
                 Destroy(currentItem.gameObject);
-                Destroy(currentDoor.gameObject);
+                Destroy(currentDoor.gameObject.transform.parent.gameObject);
             }
 
             //If its not the key
