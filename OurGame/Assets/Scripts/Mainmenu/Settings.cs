@@ -6,6 +6,9 @@ public class SettingsMenu : MonoBehaviour
     public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
     public GameObject settingsPanel;
+    public Slider lookSensitivitySlider;
+    public static float LookSensitivity = 1.0f;
+
 
     void Start()
     {
@@ -15,6 +18,10 @@ public class SettingsMenu : MonoBehaviour
 
         // Apply volumes
         AudioListener.volume = masterVolumeSlider.value;
+
+         // Load saved sensitivity
+        LookSensitivity = PlayerPrefs.GetFloat("LookSensitivity", 1.0f);
+        lookSensitivitySlider.value = LookSensitivity;
     }
 
     public void OnMasterVolumeChanged(float value)
@@ -38,4 +45,11 @@ public class SettingsMenu : MonoBehaviour
     {
         settingsPanel.SetActive(false);
     }
+
+     public void OnSensitivityChanged(float value)
+    {
+        LookSensitivity = value;
+        PlayerPrefs.SetFloat("LookSensitivity", value);
+    }
+ 
 }
