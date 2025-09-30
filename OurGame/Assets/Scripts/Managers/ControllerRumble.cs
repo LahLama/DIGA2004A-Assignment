@@ -1,13 +1,18 @@
 using System.Collections;
-using System.Runtime.Serialization.Formatters;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ControllerRumble : MonoBehaviour
 {
 
-    //https://youtu.be/SmmBC-yCJ28
+
+    /*
+        Title:Add Gamepad RUMBLE with Input System | Easy Unity Tutorial
+        Author: Sasquatch B Studios
+        Date:  Jan 5 2023
+        Availability: https://youtu.be/SmmBC-yCJ28
+        */
+
     private Gamepad gamepad;
     private bool isRumbling = false;
     public bool VibrationsEnabled = true;

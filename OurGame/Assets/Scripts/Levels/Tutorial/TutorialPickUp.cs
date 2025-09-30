@@ -19,7 +19,7 @@ public class TutorialPickUp : MonoBehaviour
         {
             tutorialNun.SpawnNunOnPlayer();
             hasBeenPicked = true;
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
     }
 }

@@ -1,12 +1,6 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
-
-
 
 
 public class Interactor : MonoBehaviour
@@ -23,14 +17,18 @@ public class Interactor : MonoBehaviour
     */
 
     /*
-    Title: Creating a Horror Game in Unity - Part 6: Hiding System (JavaScript)
-    Author: SpeedTutor
-    Date:  Jun 10, 2014
-    Availability: https://youtu.be/GTtW57u_cfg?si=NqfWBUk5yLfmXfn-
+    Title: Raycast Unity 3d - unity raycast tutorial 
+    Author: Pixelbug Studio
+    Date:  Sep 9, 2021
+    Availability: https://www.youtube.com/watch?v=cUf7FnNqv7U
     */
-    // /https://www.youtube.com/watch?v=cUf7FnNqv7U
-    //
-    //https://www.youtube.com/watch?v=QYpWYZq2I6E
+    /*
+    Title: (URP) How to fix Gun Clipping in Unity | Unity3D Tutorial |
+    Author: Podd Studios
+    Date:  Dec 3, 2022
+    Availability: https://www.youtube.com/watch?v=QYpWYZq2I6E
+    */
+
 
 
     #region Varibles
@@ -61,6 +59,7 @@ public class Interactor : MonoBehaviour
 
     private HighlightObject highlightObject;
     private EndDemo endDemoScript;
+    private DialougeState startDialougeScript;
 
     [Header("InteractionVar")]
     public float _interactionDelay = 0f;
@@ -69,7 +68,8 @@ public class Interactor : MonoBehaviour
     public float hideDuration = 5f;
     private Collider _currentHideObj;
     RaycastHit lineCasthit;
-    [SerializeField] bool noLOS = false;
+    bool noLOS = false;
+    bool hasChatted = false;
 
     #endregion
     private void Awake()
@@ -155,13 +155,23 @@ public class Interactor : MonoBehaviour
             switch (LayerName)
             {
                 case "interactionsMask":
-                    innerDialouge.text.text = "This is just an object.";
-                    StartCoroutine(innerDialouge.InnerDialogueContorl());
+
 
                     if (raycastHit.collider.gameObject.TryGetComponent<EndDemo>(out endDemoScript))
                     {
                         innerDialouge.text.text = "You have found your brother that you lost!";
+                        StartCoroutine(innerDialouge.InnerDialogueContorl());
+                    }
+                    else if (raycastHit.collider.gameObject.TryGetComponent<DialougeState>(out startDialougeScript) && hasChatted == false)
+                    {
 
+                        hasChatted = true;
+                        startDialougeScript.StartDialouge();
+                        return;
+                    }
+                    else
+                    {
+                        innerDialouge.text.text = "I need my ball...Get it this time...";
                     }
 
                     break;

@@ -1,6 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
-//https://www.youtube.com/watch?v=dzD0qP8viLw
+
+/*
+    Title: How to Use Your Voice as Input in Unity - Microphone and Audio Loudness Detection
+    Author: Valem Tutorials
+    Date:  Feb 16, 2022
+    Availability: https://www.youtube.com/watch?v=dzD0qP8viLw
+    */
 public class MoveFromAudioClip : MonoBehaviour
 {
     public AudioSource soruce;

@@ -10,6 +10,7 @@ public class DoorUnlocking : MonoBehaviour
     private RaycastHit _hitDoorObj;
     private InnerDialouge _innerDialouge;
     private string[] _doorTags = { "ForGreenDoor", "ForRedDoor", "ForBlueDoor", "ForYellowDoor" };
+    public GameObject[] RedDoors;
 
     #endregion
 
@@ -50,7 +51,11 @@ public class DoorUnlocking : MonoBehaviour
             else if (currentItem.CompareTag(_doorTags[1]) && currentDoor.CompareTag(_doorTags[1]))
             {
                 Destroy(currentItem.gameObject);
-                Destroy(currentDoor.transform.parent.parent.gameObject);
+                foreach (var Door in RedDoors)
+                {
+                    Destroy(Door);
+                }
+
             }
 
             //Blue Door
@@ -77,7 +82,7 @@ public class DoorUnlocking : MonoBehaviour
         else
         {
             //If the player doesnt have anything in hand
-            _innerDialouge.text.text = "The door is locked.";
+            _innerDialouge.text.text = "I need my item.";
             StartCoroutine(_innerDialouge.InnerDialogueContorl());
         }
 

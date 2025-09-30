@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/James/NavMeshTesting.unity
     guid: 3f722b435cb297d4b8185126e3a7cc0a
+  - enabled: 1
+    path: Assets/Scenes/James/BaseLevelLayout.unity
+    guid: 38004ddc1cb67aa488e9882ef159b0cc
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: a407d3d95c6a2554abb1a2e41ca5b0fe, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
