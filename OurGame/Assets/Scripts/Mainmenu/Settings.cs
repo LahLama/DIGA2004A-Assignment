@@ -5,6 +5,7 @@ public class SettingsMenu : MonoBehaviour
 {
     public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
+    public Slider sfxVolumeSlider;
     public GameObject settingsPanel;
     public Slider lookSensitivitySlider;
     public static float LookSensitivity = 1.0f;
@@ -15,12 +16,14 @@ public class SettingsMenu : MonoBehaviour
         // Load saved values
         masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
         musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        masterVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
+
 
         // Apply volumes
         AudioListener.volume = masterVolumeSlider.value;
 
          // Load saved sensitivity
-        LookSensitivity = PlayerPrefs.GetFloat("LookSensitivity", 1.0f);
+        LookSensitivity = PlayerPrefs.GetFloat("LookSensitivity", 1f);
         lookSensitivitySlider.value = LookSensitivity;
     }
 
@@ -32,8 +35,14 @@ public class SettingsMenu : MonoBehaviour
 
     public void OnMusicVolumeChanged(float value)
     {
-        // You’d typically control a music AudioSource here
+        //  control a music AudioSource 
         PlayerPrefs.SetFloat("MusicVolume", value);
+    }
+
+    public void OnSFXVolumeChanged(float value)
+    {
+        //  control a SFX AudioSource here
+        PlayerPrefs.SetFloat("SFXVolume", value);
     }
 
     public void OpenSettings()
