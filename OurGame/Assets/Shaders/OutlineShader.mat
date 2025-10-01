@@ -37,7 +37,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DepthIntensity: 1.75
+    - _DepthIntensity: 2
     - _outlineThickness: 0.85
     m_Colors:
     - _outlineColor: {r: 0.0037735105, g: 0.0037735105, b: 0.0037735105, a: 0}
