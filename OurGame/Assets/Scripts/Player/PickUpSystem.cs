@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEditor;
 
 /*
 Title: How To Pick Up an Item - Unity
@@ -22,6 +23,7 @@ public class PickUpSystem : MonoBehaviour
     public bool objHasBeenThrown = false;
     private ControllerRumble controller;
     private Transform HoldL;
+    private PlayerStats playerStats;
     private Transform HoldR;
 
     #endregion
@@ -35,6 +37,7 @@ public class PickUpSystem : MonoBehaviour
         _enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<NunAi>();
         HoldL = GameObject.FindWithTag("Hold.L").transform;
         HoldR = GameObject.FindWithTag("Hold.R").transform;
+        playerStats = GameObject.FindWithTag("PlayerStats").GetComponent<PlayerStats>();
     }
 
 
@@ -107,11 +110,10 @@ public class PickUpSystem : MonoBehaviour
 
     public void DropItem()
     {
-
         //Only if the player has something it thier hands
-        if (playerHands.childCount > 1)
+        if (playerHands.childCount > 0)
         {
-            RepositionItems();
+
             //Get the obj that is in the hands
             Transform equipedObj = playerHands.GetChild(0);
 
@@ -143,12 +145,11 @@ public class PickUpSystem : MonoBehaviour
 
     public void ThrowItem()
     {
-        if (playerHands.childCount > 1)
+        if (playerHands.childCount > 0)
         {
-            RepositionItems();
             Transform equipedObj = playerHands.GetChild(0);
             Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
-            rb.useGravity = true; ;
+            rb.useGravity = true;
 
             Vector3 equipObjPos = equipedObj.transform.localPosition;
             equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
@@ -163,11 +164,12 @@ public class PickUpSystem : MonoBehaviour
             rb.AddForce(playerHands.forward * 5f, ForceMode.Impulse);
 
             objHasBeenThrown = true;
-            StartCoroutine(ThrowCooldown());
-
+            if (playerStats.playerLevel != PlayerStats.PlayerLevel.Tutorial)
+                StartCoroutine(ThrowCooldown());
+            return;
         }
 
-        return;
+
 
     }
 
@@ -200,11 +202,13 @@ public class PickUpSystem : MonoBehaviour
     {
         if (playerHands.childCount > 1)
         {
+            playerHands.GetChild(1).SetAsFirstSibling();
             playerHands.GetChild(0).transform.position = HoldR.position;
             playerHands.GetChild(1).transform.position = HoldL.position;
 
-            playerHands.GetChild(1).SetAsFirstSibling();
+
         }
+
     }
 
 }

@@ -180,14 +180,18 @@ public class NunAi : MonoBehaviour
     {
         agent.SetDestination(transform.position);
 
-        agent.Warp(nunOGpos);
+        player.GetComponentInChildren<Camera>().transform.LookAt(
+                          new Vector3(
+                              this.gameObject.transform.position.x,
+                              this.gameObject.transform.position.y + agent.height,
+                               this.gameObject.transform.position.z
+                               )
 
-        player.GetComponent<CharacterController>().enabled = false;
-        player.position = playerOGpos;
-        player.GetComponent<CharacterController>().enabled = true;
+                              );
+        agent.transform.LookAt(player.GetChild(0));
 
+        Invoke("RespawnPlayer", 2f);
 
-        Debug.Log("CAUGHT THE PLAYER");
 
     }
     private void ChasePlayer()
@@ -198,12 +202,19 @@ public class NunAi : MonoBehaviour
         agent.transform.LookAt(player.GetChild(0));
 
         StartCoroutine(ChaseTime(NunlookTime));
-
-
         //looks at player
         //transform.LookAt(player);
+    }
+
+    private void RespawnPlayer()
+    {
+        agent.Warp(nunOGpos);
+        player.GetComponent<CharacterController>().enabled = false;
+        player.position = playerOGpos;
+        player.GetComponent<CharacterController>().enabled = true;
 
 
+        Debug.Log("CAUGHT THE PLAYER");
     }
 
     private IEnumerator ChaseTime(float delay)
