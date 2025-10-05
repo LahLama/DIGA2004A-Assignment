@@ -113,6 +113,8 @@ public class NunAi : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, catchRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position + transform.forward * 0.5f, 0.5f);
     }
     private void Patrol()
     {
@@ -146,15 +148,14 @@ public class NunAi : MonoBehaviour
 
     private void DoorInteractions()
     {
+        Vector3 sphereCenter = transform.position + transform.forward * 0.5f;
+        float radius = 0.5f;
 
-        if (Physics.Raycast(transform.position, transform.forward, 1f, DoorLayer))
+        Collider[] hits = Physics.OverlapSphere(sphereCenter, radius, DoorLayer);
+
+        foreach (Collider col in hits)
         {
-            RaycastHit hit;
-            GameObject hitObj = null;
-
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f, DoorLayer))
-                hitObj = hit.collider.gameObject;
-
+            GameObject hitObj = col.gameObject;
             hitObj.SetActive(false);
             StartCoroutine(ActivateDoorAfterDelay(hitObj, 2f));
         }
