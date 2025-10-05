@@ -21,6 +21,8 @@ public class PickUpSystem : MonoBehaviour
     private RaycastHit _hitPickUp;
     public bool objHasBeenThrown = false;
     private ControllerRumble controller;
+    private Transform HoldL;
+    private Transform HoldR;
 
     #endregion
 
@@ -31,6 +33,8 @@ public class PickUpSystem : MonoBehaviour
         playerHands = GameObject.FindWithTag("HoldingPos").transform;
         controller = GameObject.FindGameObjectWithTag("ControllerManager").GetComponent<ControllerRumble>();
         _enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<NunAi>();
+        HoldL = GameObject.FindWithTag("Hold.L").transform;
+        HoldR = GameObject.FindWithTag("Hold.R").transform;
     }
 
 
@@ -46,7 +50,7 @@ public class PickUpSystem : MonoBehaviour
 
         //If the player has an item, drop that item
         //Only if the player has an open slot then reparent the object to the player
-        if (playerHands.childCount > 2)
+        if (playerHands.childCount > 1)
         {
             DropItem();
         }
@@ -76,11 +80,21 @@ public class PickUpSystem : MonoBehaviour
             pickUpObj.transform.rotation = Quaternion.identity;
 
 
-            _pickUpsContatiner = pickUpObj.transform.parent;
+
             //Set the parent to the player
+            _pickUpsContatiner = pickUpObj.transform.parent;
             pickUpObj.transform.SetParent(playerHands, false);
 
+
+
+
             //Animate a slight jiggle when picked up
+
+            //Reposition items on player
+            //if only 1 item -- Child1 in hand
+            //if 2 items, item 1 in hand and item 2 in other hand
+            RepositionItems();
+
 
 
             //To ensure the object doesnt visually clip through walls
@@ -97,8 +111,9 @@ public class PickUpSystem : MonoBehaviour
         //Only if the player has something it thier hands
         if (playerHands.childCount > 1)
         {
+            RepositionItems();
             //Get the obj that is in the hands
-            Transform equipedObj = playerHands.GetChild(1);
+            Transform equipedObj = playerHands.GetChild(0);
 
             //Enable the grabity
             equipedObj.gameObject.AddComponent<Rigidbody>();
@@ -130,8 +145,8 @@ public class PickUpSystem : MonoBehaviour
     {
         if (playerHands.childCount > 1)
         {
-
-            Transform equipedObj = playerHands.GetChild(1);
+            RepositionItems();
+            Transform equipedObj = playerHands.GetChild(0);
             Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
             rb.useGravity = true; ;
 
@@ -167,6 +182,20 @@ public class PickUpSystem : MonoBehaviour
         }
         objHasBeenThrown = false;
     }
+
+    private void RepositionItems()
+    {
+        if (playerHands.childCount > 1)
+        {
+            playerHands.GetChild(0).transform.position = HoldL.position;
+            playerHands.GetChild(1).transform.position = HoldR.position;
+        }
+        else
+        {
+            playerHands.GetChild(0).transform.position = HoldR.position;
+        }
+    }
+
 }
 
 

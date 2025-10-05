@@ -22,6 +22,8 @@ TagManager:
   - PickUp
   - ForYellowDoor
   - ForBlueDoor
+  - Hold.L
+  - Hold.R
   layers:
   - Default
   - TransparentFX
