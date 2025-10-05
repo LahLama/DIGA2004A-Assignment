@@ -196,6 +196,17 @@ public class PickUpSystem : MonoBehaviour
         }
     }
 
+    public void SwapItems()
+    {
+        if (playerHands.childCount > 1)
+        {
+            playerHands.GetChild(0).transform.position = HoldR.position;
+            playerHands.GetChild(1).transform.position = HoldL.position;
+
+            playerHands.GetChild(1).SetAsFirstSibling();
+        }
+    }
+
 }
 
 

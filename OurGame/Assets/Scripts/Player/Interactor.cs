@@ -44,6 +44,7 @@ public class Interactor : MonoBehaviour
     private bool _interactionInput;
     private bool _dropInput;
     private bool _throwInput;
+    private bool _swapInput;
     public bool _PlayerIsHidden = false;
     public bool hitObj = false;
 
@@ -118,7 +119,7 @@ public class Interactor : MonoBehaviour
     public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
     public void OnDrop(InputAction.CallbackContext context) { _dropInput = context.ReadValueAsButton(); }
     public void OnThrow(InputAction.CallbackContext context) { _throwInput = context.ReadValueAsButton(); }
-
+    public void OnSwapItem(InputAction.CallbackContext context) { _swapInput = context.ReadValueAsButton(); }
 
     void HandleInteractions()
 
@@ -227,7 +228,11 @@ public class Interactor : MonoBehaviour
         }
 
 
-
+        if (_swapInput && _interactionDelay <= 0)
+        {
+            _interactionDelay = 0.5f;
+            pickUpSystem.SwapItems();
+        }
 
 
     }
