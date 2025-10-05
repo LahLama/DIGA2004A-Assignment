@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
     public TextMeshProUGUI debugText;
     private GameObject _cameraTransform;
+    private GameObject _OverlaycameraTransform;
     private LookFunction lookFunction;
     private NunAi enemyAI;
 
@@ -46,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         lookFunction = GetComponent<LookFunction>();
         _cameraTransform = GameObject.FindWithTag("MainCamera");
+        _OverlaycameraTransform = GameObject.FindWithTag("OverlayCamera");
         enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<NunAi>();
         _sprintTimer = 4f;
     }
@@ -112,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
             debugText.text = "Sprinting"; // Update debug text
             float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
             _cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
+            _OverlaycameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
 
             if (_moveInput.magnitude > 0.1f)
             {
@@ -158,6 +161,7 @@ public class PlayerMovement : MonoBehaviour
         //Get the current FOV and smoothly move Camera to new FOV
         float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
         _cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __normalFOV, Time.deltaTime / 0.1f);
+        _OverlaycameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __normalFOV, Time.deltaTime / 0.1f);
 
         //Increase the sight when crounching
         if (_sightDecreased)

@@ -24,6 +24,7 @@ TagManager:
   - ForBlueDoor
   - Hold.L
   - Hold.R
+  - OverlayCamera
   layers:
   - Default
   - TransparentFX

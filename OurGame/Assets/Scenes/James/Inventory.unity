@@ -24982,7 +24982,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 7927
+    m_Bits: 16119
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -55745,6 +55745,7 @@ MonoBehaviour:
   verticalLookLimit: 90
   bobbingAmplitude: 0.05
   bobbingFrequency: 2
+  playerHands: {fileID: 654635547}
 --- !u!1 &831035649 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7992283297288499852, guid: 9acbf4a75ce538747b129c919dd3d7d0, type: 3}
@@ -66902,7 +66903,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1208127382}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: LeftHoldPos
   m_TagString: Hold.L
   m_Icon: {fileID: 0}
@@ -66918,7 +66919,7 @@ Transform:
   m_GameObject: {fileID: 1208127381}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.23, y: -0.42, z: 0.05100006}
+  m_LocalPosition: {x: -0.72, y: 0.04862434, z: 0.18999976}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74040,11 +74041,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4436845b0e7f4bf49b43a7720d7925e7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.37100005
+      value: -0.371
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4436845b0e7f4bf49b43a7720d7925e7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.17199954
+      value: -0.291
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4436845b0e7f4bf49b43a7720d7925e7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -75216,7 +75217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4436845b0e7f4bf49b43a7720d7925e7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.12
+      value: -0.23899966
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4436845b0e7f4bf49b43a7720d7925e7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -95206,7 +95207,7 @@ GameObject:
   - component: {fileID: 1749341237}
   m_Layer: 3
   m_Name: PickUpCamera
-  m_TagString: Untagged
+  m_TagString: OverlayCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95220,7 +95221,7 @@ Transform:
   m_GameObject: {fileID: 1749341235}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.13583729, y: -0.37581196, z: -0.052088097}
+  m_LocalPosition: {x: 0.13583729, y: -0.31, z: -0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -95309,7 +95310,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 16384
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -120074,7 +120075,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1942508464}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: RightHoldPos
   m_TagString: Hold.R
   m_Icon: {fileID: 0}
@@ -120090,12 +120091,12 @@ Transform:
   m_GameObject: {fileID: 1942508463}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.52, y: -0.38, z: -0.08}
+  m_LocalPosition: {x: 0.13, y: 0.040953126, z: 0.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1711941728}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 45}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1942590798
 PrefabInstance:
   m_ObjectHideFlags: 0
