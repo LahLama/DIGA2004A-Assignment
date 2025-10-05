@@ -199,8 +199,9 @@ public class Interactor : MonoBehaviour
 
 
                 default:
-                    if (pickUpSystem.playerHands.childCount > 0)
+                    if (pickUpSystem.playerHands.childCount > 0 && _interactionDelay <= 0f)
                     {
+                        _interactionDelay = 0.75f;
                         pickUpSystem.DropItem();
                     }
                     return;
@@ -208,8 +209,9 @@ public class Interactor : MonoBehaviour
             }
 
         }
-        if (_throwInput)
+        if (_throwInput && _interactionDelay <= 0)
         {
+            _interactionDelay = 1f;
             pickUpSystem.ThrowItem();
             //Play sound
         }

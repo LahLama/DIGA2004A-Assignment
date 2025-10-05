@@ -55667,6 +55667,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 4bead182-eaeb-4014-b2c0-f5edfb7255c9
     m_ActionName: 'Gameplay/ExitGame[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 330585549}
+        m_TargetAssemblyTypeName: Interactor, Assembly-CSharp
+        m_MethodName: OnSwapItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f4824a7d-c4a7-4dc2-a878-2dcc0a8fd069
+    m_ActionName: 'Gameplay/SwapItems[/Keyboard/f]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Gameplay

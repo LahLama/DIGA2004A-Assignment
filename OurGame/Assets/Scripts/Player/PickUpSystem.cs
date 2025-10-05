@@ -113,7 +113,7 @@ public class PickUpSystem : MonoBehaviour
         //Only if the player has something it thier hands
         if (playerHands.childCount > 0)
         {
-
+            SwapItems();
             //Get the obj that is in the hands
             Transform equipedObj = playerHands.GetChild(0);
 
@@ -147,6 +147,7 @@ public class PickUpSystem : MonoBehaviour
     {
         if (playerHands.childCount > 0)
         {
+            SwapItems();
             Transform equipedObj = playerHands.GetChild(0);
             Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
             rb.useGravity = true;
@@ -169,7 +170,7 @@ public class PickUpSystem : MonoBehaviour
             return;
         }
 
-
+        return;
 
     }
 
@@ -205,9 +206,13 @@ public class PickUpSystem : MonoBehaviour
             playerHands.GetChild(1).SetAsFirstSibling();
             playerHands.GetChild(0).transform.position = HoldR.position;
             playerHands.GetChild(1).transform.position = HoldL.position;
-
-
         }
+        else if (playerHands.childCount == 1)
+        {
+            playerHands.GetChild(0).transform.position = HoldR.position;
+        }
+        else
+            return;
 
     }
 
