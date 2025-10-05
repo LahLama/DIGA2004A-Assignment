@@ -70,7 +70,7 @@ public class Interactor : MonoBehaviour
     public float hideDuration = 5f;
     private Collider _currentHideObj;
     RaycastHit lineCasthit;
-    bool noLOS = false;
+    public bool noLOS = false;
     bool hasChatted = false;
 
     #endregion
@@ -125,22 +125,19 @@ public class Interactor : MonoBehaviour
 
 
     {
+        noLOS = Physics.Raycast(transform.position, transform.forward, out lineCasthit, _interactionRange / 3, StopMasks);
+
+        hitObj = Physics.SphereCast(transform.position, 0.3f, transform.forward, out raycastHit, _interactionRange, ResponsiveMasks);
 
         if (!noLOS)
             reticleManagement.HandleTooltip();
 
-
-        hitObj = Physics.SphereCast(transform.position, 0.3f, transform.forward, out raycastHit, _interactionRange, ResponsiveMasks);
-
-        noLOS = Physics.Raycast(transform.position, transform.forward, out lineCasthit, _interactionRange / 3, StopMasks);
 
         string LayerName = "";
         if (hitObj & !noLOS)
         {
             LayerMask specifiedLayer = raycastHit.transform.gameObject.layer;
             LayerName = LayerMask.LayerToName(specifiedLayer.value);
-
-
         }
 
 
