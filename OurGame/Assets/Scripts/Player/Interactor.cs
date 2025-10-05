@@ -195,7 +195,7 @@ public class Interactor : MonoBehaviour
 
 
                 default:
-                    if (pickUpSystem.playerHands.childCount > 1)
+                    if (pickUpSystem.playerHands.childCount > 2)
                     {
                         pickUpSystem.DropItem();
                     }

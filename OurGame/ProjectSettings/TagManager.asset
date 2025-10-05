@@ -3,23 +3,41 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - PlayerStats
+  - ForRedDoor
+  - BaseGame
+  - PickUps
+  - HideSlider
+  - NunEmemy
+  - Monolouge
+  - Tooltip
+  - Tutorial
+  - Microphone
+  - ControllerManager
+  - HoldingPos
+  - SprintSlider
+  - ForGreenDoor
+  - NunEnemy
+  - PickUp
+  - ForYellowDoor
+  - ForBlueDoor
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - interactionsMask
+  - hidePlacesMask
+  - doorMask
+  - pickUpMask
+  - holdingMask
   - 
   - 
   - 

@@ -29,7 +29,6 @@ public class PickUpSystem : MonoBehaviour
     {
         _interactor = GetComponent<Interactor>();
         playerHands = GameObject.FindWithTag("HoldingPos").transform;
-        _pickUpsContatiner = GameObject.FindWithTag("PickUps").transform;
         controller = GameObject.FindGameObjectWithTag("ControllerManager").GetComponent<ControllerRumble>();
         _enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<NunAi>();
     }
@@ -47,7 +46,7 @@ public class PickUpSystem : MonoBehaviour
 
         //If the player has an item, drop that item
         //Only if the player has an open slot then reparent the object to the player
-        if (playerHands.childCount > 1)
+        if (playerHands.childCount > 2)
         {
             DropItem();
         }
@@ -76,6 +75,8 @@ public class PickUpSystem : MonoBehaviour
             pickUpObj.transform.localScale *= 1;
             pickUpObj.transform.rotation = Quaternion.identity;
 
+
+            _pickUpsContatiner = pickUpObj.transform.parent;
             //Set the parent to the player
             pickUpObj.transform.SetParent(playerHands, false);
 
