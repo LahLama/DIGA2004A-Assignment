@@ -54,6 +54,7 @@ public class Interactor : MonoBehaviour
     private PickUpSystem pickUpSystem;
     private ReticleManagement reticleManagement;
     private InnerDialouge innerDialouge;
+    private IInteractables interactables;
     private HideAndShowPlayer hideAndShowPlayer;
     private DoorUnlocking doorUnlocking;
 
@@ -156,10 +157,12 @@ public class Interactor : MonoBehaviour
             {
                 case "interactionsMask":
 
+                    bool hasInteractionScript = raycastHit.collider.gameObject.TryGetComponent<IInteractables>(out interactables);
 
-                    if (raycastHit.collider.gameObject.TryGetComponent<EndDemo>(out endDemoScript))
+
+                    if (hasInteractionScript)
                     {
-                        innerDialouge.text.text = "You have found your brother that you lost!";
+                        interactables.Interact();
                         StartCoroutine(innerDialouge.InnerDialogueContorl());
                     }
                     else if (raycastHit.collider.gameObject.TryGetComponent<DialougeState>(out startDialougeScript) && hasChatted == false)
@@ -171,7 +174,7 @@ public class Interactor : MonoBehaviour
                     }
                     else
                     {
-                        innerDialouge.text.text = "I need my ball...Get it this time...";
+                        innerDialouge.text.text = "";
                     }
 
                     break;
