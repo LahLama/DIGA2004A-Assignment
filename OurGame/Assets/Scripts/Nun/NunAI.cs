@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -42,8 +42,7 @@ public class NunAi : MonoBehaviour
     public float WaitPointDelay = 5;
     public float NunlookTime = 6;
     private float _agentSpeed;
-    private float _gracePeriod = 15;
-    private bool _isGracePeriod = false;
+    public bool _isGracePeriod = true;
     private Vector3 playerOGpos, nunOGpos;
 
 
@@ -77,7 +76,7 @@ public class NunAi : MonoBehaviour
 
         bool isChasing = (playerInSightRange && !playerInCatchRange);
 
-        if (_isGracePeriod)
+        if (_isGracePeriod == false)
         {
             // Rumble logic
             if (isLoud || isChasing)
@@ -90,7 +89,7 @@ public class NunAi : MonoBehaviour
             }
 
             if (!playerInSightRange && !playerInCatchRange) Patrol();
-            if (isChasing || microphoneInput.isLoud) ChasePlayer();
+            if (isChasing || isLoud) ChasePlayer();
             if (playerInSightRange && playerInCatchRange) CatchPlayer();
         }
 
@@ -100,12 +99,13 @@ public class NunAi : MonoBehaviour
 
     public void StartGracePeriod()
     {
+        _isGracePeriod = true;
         Invoke("EndGracePeriod", 15);
     }
 
     private void EndGracePeriod()
     {
-        _isGracePeriod = true;
+        _isGracePeriod = false;
     }
     private void OnDrawGizmosSelected()
     {

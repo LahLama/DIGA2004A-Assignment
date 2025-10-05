@@ -165,7 +165,7 @@ public class PickUpSystem : MonoBehaviour
             rb.AddForce(playerHands.forward * 5f, ForceMode.Impulse);
 
             objHasBeenThrown = true;
-            if (playerStats.playerLevel != PlayerStats.PlayerLevel.Tutorial)
+            if (playerStats.playerLevel != PlayerStats.PlayerLevel.Tutorial && !_enemyAI._isGracePeriod)
                 StartCoroutine(ThrowCooldown());
             return;
         }
