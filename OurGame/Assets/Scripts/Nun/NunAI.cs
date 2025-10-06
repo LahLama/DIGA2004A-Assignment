@@ -32,15 +32,18 @@ public class NunAi : MonoBehaviour
     private VignetteControl vignetteControl;
 
     private ControllerRumble rumbler;
+    private Interactor _interactor;
 
     //states
     public float sightRange, catchRange;
     public bool playerInSightRange, playerInCatchRange, playerinLOS;
     bool isWaitingAtWaypoint = false, isLoud;
     RaycastHit isPlayer;
+    private bool onHiddenCooldownTime = false;
+    private float hiddenCooldownTime;
 
     public float WaitPointDelay = 5;
-    public float NunlookTime = 6;
+    public float NunlookTime = 2;
     private float _agentSpeed;
     public bool _isGracePeriod = true;
     private Vector3 playerOGpos, nunOGpos;
@@ -54,6 +57,7 @@ public class NunAi : MonoBehaviour
         vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
         rumbler = GameObject.FindGameObjectWithTag("ControllerManager").GetComponent<ControllerRumble>();
         _agentSpeed = agent.speed;
+        _interactor = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Interactor>();
 
         playerOGpos = player.transform.position;
         nunOGpos = agent.gameObject.transform.position;
@@ -89,12 +93,12 @@ public class NunAi : MonoBehaviour
             }
 
             if (!playerInSightRange && !playerInCatchRange) Patrol();
-            if (isChasing || isLoud) ChasePlayer();
+            if (isChasing || isLoud && !onHiddenCooldownTime) ChasePlayer();
             if (playerInSightRange && playerInCatchRange) CatchPlayer();
         }
 
-
-
+        if (_interactor._PlayerIsHidden && !onHiddenCooldownTime)
+            StartCoroutine(HiddenCooldown());
     }
 
     public void StartGracePeriod()
@@ -197,14 +201,19 @@ public class NunAi : MonoBehaviour
     }
     private void ChasePlayer()
     {
-        agent.speed = _agentSpeed * (5 / 3.0f);
-        DoorInteractions();
-        vignetteControl.ApplyVignette(2);
-        agent.transform.LookAt(player.GetChild(0));
+        if (player.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            agent.speed = _agentSpeed * (5 / 3.0f);
+            DoorInteractions();
+            vignetteControl.ApplyVignette(2);
+            agent.transform.LookAt(player.GetChild(0));
 
-        StartCoroutine(ChaseTime(NunlookTime));
-        //looks at player
-        //transform.LookAt(player);
+            StartCoroutine(ChaseTime(NunlookTime));
+            //looks at player
+            //transform.LookAt(player);
+        }
+        else
+            StopCoroutine(ChaseTime(NunlookTime));
     }
 
     private void RespawnPlayer()
@@ -221,7 +230,7 @@ public class NunAi : MonoBehaviour
     private IEnumerator ChaseTime(float delay)
     {
         float timer = delay;
-        while (timer > 0f)
+        while (timer > 0f && (player.gameObject.layer == LayerMask.NameToLayer("Player")))
         {
             if (!Physics.Raycast(transform.position, transform.forward * sightRange, 1f, StopLayer))
             {
@@ -236,6 +245,26 @@ public class NunAi : MonoBehaviour
             timer -= Time.deltaTime;
             yield return null;
         }
+    }
+
+    private IEnumerator HiddenCooldown()
+    {
+
+        onHiddenCooldownTime = true;
+        hiddenCooldownTime = 5;
+        Debug.Log("player is not chased for x seconds");
+        while (hiddenCooldownTime > 0f)
+        {
+            Patrol();
+            hiddenCooldownTime -= Time.deltaTime;
+            yield return null;
+        }
+        onHiddenCooldownTime = false;
+
+
+
+
+
     }
 
 
