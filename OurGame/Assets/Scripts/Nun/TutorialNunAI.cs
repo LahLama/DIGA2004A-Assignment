@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class TutorialNunAI : MonoBehaviour
 {
-    private NunAi nunBaseScript;
+    private NunPatrol nunPatrol;
     private NavMeshAgent agent;
     private VignetteControl vignetteControl;
     private bool nunSpawned = false;
@@ -18,16 +18,13 @@ public class TutorialNunAI : MonoBehaviour
     void Start()
     {
         OriginalPos = transform.position;
-        vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
+        vignetteControl = FindAnyObjectByType<VignetteControl>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        tutorial = GameObject.FindGameObjectWithTag("Tutorial").GetComponent<Tutorial>();
+        tutorial = FindAnyObjectByType<Tutorial>();
         tutorialPickUp = tutorial.gameObject.transform.GetChild(0).GetComponent<TutorialPickUp>();
+        nunPatrol = FindAnyObjectByType<NunPatrol>();
 
-        if (TryGetComponent<NunAi>(out nunBaseScript))
-        {
-            nunBaseScript.enabled = false;
-        }
         this.transform.localScale = Vector3.one;
 
     }
@@ -70,7 +67,7 @@ public class TutorialNunAI : MonoBehaviour
 
         tutorial.EndTutorial();
         vignetteControl.RemoveVignette(1);
-        nunBaseScript.StartGracePeriod();
+        nunPatrol.StartGracePeriod();
 
     }
     public void SpawnNunOnPlayer()
@@ -94,8 +91,6 @@ public class TutorialNunAI : MonoBehaviour
     private void MoveToPlayer()
     {
         agent.SetDestination(player.position);
-
-
     }
 
 }
