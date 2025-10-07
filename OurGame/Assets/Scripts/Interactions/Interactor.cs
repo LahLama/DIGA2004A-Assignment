@@ -72,7 +72,7 @@ public class Interactor : MonoBehaviour
     RaycastHit lineCasthit;
     public bool noLOS = false;
     bool hasChatted = false;
-
+    public GameObject tutForce;
     #endregion
     private void Awake()
     {
@@ -168,6 +168,8 @@ public class Interactor : MonoBehaviour
 
                         hasChatted = true;
                         startDialougeScript.StartDialouge();
+                        //Destroy the tutorial trigger
+                        tutForce.SetActive(false);
                         return;
                     }
                     else

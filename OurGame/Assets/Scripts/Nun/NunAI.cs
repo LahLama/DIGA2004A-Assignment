@@ -47,6 +47,7 @@ public class NunAi : MonoBehaviour
     private float _agentSpeed;
     public bool _isGracePeriod = true;
     private Vector3 playerOGpos, nunOGpos;
+    private GameObject lifeCounter;
 
 
     void Awake()
@@ -58,7 +59,7 @@ public class NunAi : MonoBehaviour
         rumbler = GameObject.FindGameObjectWithTag("ControllerManager").GetComponent<ControllerRumble>();
         _agentSpeed = agent.speed;
         _interactor = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Interactor>();
-
+        lifeCounter = GameObject.FindWithTag("LifeTracker");
         playerOGpos = player.transform.position;
         nunOGpos = agent.gameObject.transform.position;
 
@@ -125,14 +126,8 @@ public class NunAi : MonoBehaviour
         agent.speed = _agentSpeed;
         DoorInteractions();
         vignetteControl.RemoveVignette(2);
-
-
         float distanceToWayPoint = 0f;
-
         distanceToWayPoint = Vector3.Distance(waypoints[currentWayPointIndex].position, transform.position);
-
-
-
         if (distanceToWayPoint <= agent.stoppingDistance)
         {
             if (!isWaitingAtWaypoint)
@@ -142,28 +137,20 @@ public class NunAi : MonoBehaviour
             }
             return;
         }
-
         agent.SetDestination(waypoints[currentWayPointIndex].position);
-
-
-
-
     }
 
     private void DoorInteractions()
     {
         Vector3 sphereCenter = transform.position + transform.forward * 0.5f;
         float radius = 0.5f;
-
         Collider[] hits = Physics.OverlapSphere(sphereCenter, radius, DoorLayer);
-
         foreach (Collider col in hits)
         {
             GameObject hitObj = col.gameObject;
             hitObj.SetActive(false);
             StartCoroutine(ActivateDoorAfterDelay(hitObj, 2f));
         }
-
     }
 
     IEnumerator ActivateDoorAfterDelay(GameObject hitObj, float delay)
@@ -180,21 +167,12 @@ public class NunAi : MonoBehaviour
         isWaitingAtWaypoint = false;
     }
 
-
     private void CatchPlayer()
     {
         agent.SetDestination(transform.position);
-
-        player.GetComponentInChildren<Camera>().transform.LookAt(
-                          new Vector3(
-                              this.gameObject.transform.position.x,
-                              this.gameObject.transform.position.y + agent.height,
-                               this.gameObject.transform.position.z
-                               )
-
-                              );
+        Vector3 lookPos = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + agent.height, this.gameObject.transform.position.z);
+        player.GetComponentInChildren<Camera>().transform.LookAt(lookPos);
         agent.transform.LookAt(player.GetChild(0));
-
         Invoke("RespawnPlayer", 2f);
 
 
@@ -218,13 +196,21 @@ public class NunAi : MonoBehaviour
 
     private void RespawnPlayer()
     {
+        //Update the life count:
+        bool HasRespawned = false;
+        //Reset the positons
         agent.Warp(nunOGpos);
         player.GetComponent<CharacterController>().enabled = false;
         player.position = playerOGpos;
         player.GetComponent<CharacterController>().enabled = true;
+        StartGracePeriod();
+        if (!HasRespawned)
+        {
+            lifeCounter.SendMessage("RecieveMessageCatchPlayer");
+            HasRespawned = true;
+        }
 
 
-        Debug.Log("CAUGHT THE PLAYER");
     }
 
     private IEnumerator ChaseTime(float delay)

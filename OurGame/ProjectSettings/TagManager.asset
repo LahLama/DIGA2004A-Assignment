@@ -25,6 +25,7 @@ TagManager:
   - Hold.L
   - Hold.R
   - OverlayCamera
+  - LifeTracker
   layers:
   - Default
   - TransparentFX

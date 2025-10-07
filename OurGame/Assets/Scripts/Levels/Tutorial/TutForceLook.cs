@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutForceLook : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class TutForceLook : MonoBehaviour
         Vector3 euler = camera.rotation.eulerAngles;
         startDialougeScript.StartDialouge();
         camera.rotation = Quaternion.Euler(euler.x, euler.y, 0);
+        //Set to default so player cant click on the girl again.
+        girlEyes.parent.gameObject.layer = 0;
         this.gameObject.SetActive(false);
     }
 }
