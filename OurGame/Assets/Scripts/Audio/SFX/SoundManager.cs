@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//https://www.daggerhartlab.com/unity-audio-and-sound-manager-singleton-script/
 public class SoundManager : MonoBehaviour
 {
 	// Audio players components.
