@@ -154,7 +154,7 @@ public class Interactor : MonoBehaviour
             switch (LayerName)
             {
                 case "interactionsMask":
-
+                    _interactionDelay = 0.5f;
                     bool hasInteractionScript = raycastHit.collider.gameObject.TryGetComponent<IInteractables>(out interactables);
 
 
