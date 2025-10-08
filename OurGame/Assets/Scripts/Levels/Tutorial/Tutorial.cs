@@ -1,3 +1,4 @@
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,20 +13,37 @@ public class Tutorial : MonoBehaviour
     private GameObject TutorialBranch;
     private GameObject BaseGameBranch;
     [SerializeField] private Vector3 OGplayerPos;
+    private NunDoors nunDoors;
+    private NunCatch nunCatch;
+    private NunChase nunChase;
+    private NunPatrol nunPatrol;
+    private NunAi nunAi;
+
 
 
 
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        playerStats = GameObject.FindGameObjectWithTag("PlayerStats").GetComponent<PlayerStats>();
+        playerStats = FindAnyObjectByType<PlayerStats>();
         TutorialBranch = this.gameObject;
 
         BaseGameBranch = GameObject.FindGameObjectWithTag("BaseGame");
         BaseGameBranch.SetActive(false);
-        tutorialNun = GameObject.FindGameObjectWithTag("NunEnemy").GetComponent<TutorialNunAI>();
-        VC = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
+        tutorialNun = FindAnyObjectByType<TutorialNunAI>();
+        VC = FindAnyObjectByType<VignetteControl>();
 
+        nunDoors = FindAnyObjectByType<NunDoors>();
+        nunCatch = FindAnyObjectByType<NunCatch>();
+        nunChase = FindAnyObjectByType<NunChase>();
+        nunPatrol = FindAnyObjectByType<NunPatrol>();
+        nunAi = FindAnyObjectByType<NunAi>();
+
+        nunDoors.enabled = false;
+        nunCatch.enabled = false;
+        nunChase.enabled = false;
+        nunPatrol.enabled = false;
+        nunAi.enabled = false;
 
         OGplayerPos = player.transform.localPosition;
     }
@@ -34,12 +52,13 @@ public class Tutorial : MonoBehaviour
         playerStats.playerLevel = PlayerStats.PlayerLevel.BaseGame;
 
 
+        tutorialNun.enabled = false;
+        nunDoors.enabled = true;
+        nunCatch.enabled = true;
+        nunChase.enabled = true;
+        nunPatrol.enabled = true;
+        nunAi.enabled = true;
 
-        if (GameObject.FindGameObjectWithTag("NunEnemy").TryGetComponent<NunAi>(out nunBaseScript))
-        {
-            nunBaseScript.enabled = true;
-            tutorialNun.enabled = false;
-        }
         tutorialNun.gameObject.GetComponent<NavMeshAgent>().Warp(tutorialNun.OriginalPos);
 
         CharacterController cc = player.gameObject.GetComponent<CharacterController>();

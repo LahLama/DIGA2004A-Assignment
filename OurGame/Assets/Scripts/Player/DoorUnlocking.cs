@@ -35,9 +35,9 @@ public class DoorUnlocking : MonoBehaviour
         var currentDoor = _hitDoorObj.collider;
         var playerHands = _pickUpSystem.playerHands;
 
-        if (playerHands.childCount > 1)
+        if (playerHands.childCount > 0)
         {
-            var currentItem = _pickUpSystem.playerHands.GetChild(1);
+            var currentItem = _pickUpSystem.playerHands.GetChild(0);
             //Compares if the door and handheld item matches tags
 
             //Green Door

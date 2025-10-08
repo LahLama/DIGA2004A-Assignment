@@ -33,7 +33,6 @@ public class HideAndShowPlayer : MonoBehaviour
         _holdingContainer = GameObject.FindWithTag("HoldingPos");
         _hideSlider = GameObject.FindWithTag("HideSlider").GetComponent<Scrollbar>();
         _interactor = GameObject.FindWithTag("MainCamera").GetComponent<Interactor>();
-
         vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
 
     }
@@ -59,6 +58,7 @@ public class HideAndShowPlayer : MonoBehaviour
 
     public void HidePlayer()
     {
+        _hideSlider.gameObject.SetActive(true);
         _interactor._PlayerIsHidden = true;
         //Enables hiding spot camera
         //Disables player visually
@@ -79,6 +79,7 @@ public class HideAndShowPlayer : MonoBehaviour
 
     public void ShowPlayer()
     {
+
         _interactor._PlayerIsHidden = false;
         //Disables hiding spot camera
         //Enables player visually
@@ -90,6 +91,7 @@ public class HideAndShowPlayer : MonoBehaviour
         if (!_holdingContainer.activeSelf) { _holdingContainer.SetActive(true); }
 
 
+        _hideSlider.gameObject.SetActive(false);
         _player.layer = LayerMask.NameToLayer("Player");
 
     }

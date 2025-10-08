@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SwapItems",
+                    "type": "Button",
+                    "id": "f4824a7d-c4a7-4dc2-a878-2dcc0a8fd069",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -408,6 +417,28 @@
                     "processors": "",
                     "groups": ";Console",
                     "action": "ExitGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "844f39c3-468d-418f-9f05-870c81a500c9",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwapItems",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f563b839-33f3-4ae7-86a6-6f35e592ed62",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwapItems",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

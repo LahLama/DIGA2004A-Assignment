@@ -14,6 +14,7 @@ public class LookFunction : MonoBehaviour
     private float _startingYPos = 0;
     private Vector2 _lookInput;
     private GameObject _handHeldItem;
+    public GameObject playerHands;
     private GameObject _cameraTransform;
     private PlayerMovement _playerMovement;
 
@@ -49,6 +50,7 @@ public class LookFunction : MonoBehaviour
         //Bob the player's hands in a sinosoidal wave along the y-axis
         float __bobbingAmount = Mathf.Sin(Time.time * (bobbingFrequency + _playerMovement.moveSpeed / 2)) * bobbingAmplitude;
         _handHeldItem.transform.localPosition = new Vector3(_handHeldItem.transform.localPosition.x, _startingYPos + __bobbingAmount, _handHeldItem.transform.localPosition.z);
+        playerHands.transform.localPosition = new Vector3(playerHands.transform.localPosition.x, _startingYPos + __bobbingAmount, playerHands.transform.localPosition.z);
     }
 
 

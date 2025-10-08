@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEditor;
 
 /*
 Title: How To Pick Up an Item - Unity
@@ -21,6 +22,9 @@ public class PickUpSystem : MonoBehaviour
     private RaycastHit _hitPickUp;
     public bool objHasBeenThrown = false;
     private ControllerRumble controller;
+    private Transform HoldL;
+    private PlayerStats playerStats;
+    private Transform HoldR;
 
     #endregion
 
@@ -29,9 +33,11 @@ public class PickUpSystem : MonoBehaviour
     {
         _interactor = GetComponent<Interactor>();
         playerHands = GameObject.FindWithTag("HoldingPos").transform;
-        _pickUpsContatiner = GameObject.FindWithTag("PickUps").transform;
         controller = GameObject.FindGameObjectWithTag("ControllerManager").GetComponent<ControllerRumble>();
         _enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<NunAi>();
+        HoldL = GameObject.FindWithTag("Hold.L").transform;
+        HoldR = GameObject.FindWithTag("Hold.R").transform;
+        playerStats = GameObject.FindWithTag("PlayerStats").GetComponent<PlayerStats>();
     }
 
 
@@ -76,10 +82,22 @@ public class PickUpSystem : MonoBehaviour
             pickUpObj.transform.localScale *= 1;
             pickUpObj.transform.rotation = Quaternion.identity;
 
+
+
             //Set the parent to the player
+            _pickUpsContatiner = pickUpObj.transform.parent;
             pickUpObj.transform.SetParent(playerHands, false);
 
+
+
+
             //Animate a slight jiggle when picked up
+
+            //Reposition items on player
+            //if only 1 item -- Child1 in hand
+            //if 2 items, item 1 in hand and item 2 in other hand
+            RepositionItems();
+
 
 
             //To ensure the object doesnt visually clip through walls
@@ -92,12 +110,12 @@ public class PickUpSystem : MonoBehaviour
 
     public void DropItem()
     {
-
         //Only if the player has something it thier hands
-        if (playerHands.childCount > 1)
+        if (playerHands.childCount > 0)
         {
+            SwapItems();
             //Get the obj that is in the hands
-            Transform equipedObj = playerHands.GetChild(1);
+            Transform equipedObj = playerHands.GetChild(0);
 
             //Enable the grabity
             equipedObj.gameObject.AddComponent<Rigidbody>();
@@ -127,12 +145,12 @@ public class PickUpSystem : MonoBehaviour
 
     public void ThrowItem()
     {
-        if (playerHands.childCount > 1)
+        if (playerHands.childCount > 0)
         {
-
-            Transform equipedObj = playerHands.GetChild(1);
+            SwapItems();
+            Transform equipedObj = playerHands.GetChild(0);
             Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
-            rb.useGravity = true; ;
+            rb.useGravity = true;
 
             Vector3 equipObjPos = equipedObj.transform.localPosition;
             equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
@@ -147,8 +165,9 @@ public class PickUpSystem : MonoBehaviour
             rb.AddForce(playerHands.forward * 5f, ForceMode.Impulse);
 
             objHasBeenThrown = true;
-            StartCoroutine(ThrowCooldown());
-
+            if (playerStats.playerLevel != PlayerStats.PlayerLevel.Tutorial && !_enemyAI._isGracePeriod)
+                StartCoroutine(ThrowCooldown());
+            return;
         }
 
         return;
@@ -166,6 +185,37 @@ public class PickUpSystem : MonoBehaviour
         }
         objHasBeenThrown = false;
     }
+
+    private void RepositionItems()
+    {
+        if (playerHands.childCount > 1)
+        {
+            playerHands.GetChild(0).transform.position = HoldL.position;
+            playerHands.GetChild(1).transform.position = HoldR.position;
+        }
+        else
+        {
+            playerHands.GetChild(0).transform.position = HoldR.position;
+        }
+    }
+
+    public void SwapItems()
+    {
+        if (playerHands.childCount > 1)
+        {
+            playerHands.GetChild(1).SetAsFirstSibling();
+            playerHands.GetChild(0).transform.position = HoldR.position;
+            playerHands.GetChild(1).transform.position = HoldL.position;
+        }
+        else if (playerHands.childCount == 1)
+        {
+            playerHands.GetChild(0).transform.position = HoldR.position;
+        }
+        else
+            return;
+
+    }
+
 }
 
 
