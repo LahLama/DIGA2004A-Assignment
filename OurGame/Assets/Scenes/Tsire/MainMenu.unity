@@ -1666,7 +1666,7 @@ GameObject:
   - component: {fileID: 427774300}
   - component: {fileID: 427774302}
   m_Layer: 5
-  m_Name: ClickEnterText
+  m_Name: ClickStartText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2785,7 +2785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: -1
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -2793,10 +2793,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0.077429615, g: 0.5471698, b: 0.49436873, a: 1}
+    m_HighlightedColor: {r: 0.07153434, g: 0.7433963, b: 0.4777065, a: 1}
+    m_PressedColor: {r: 0.15054326, g: 0.3886792, b: 0.08726944, a: 1}
+    m_SelectedColor: {r: 0.38080564, g: 0.7283019, b: 0.2459736, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2812,7 +2812,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 797893282}
+  m_TargetGraphic: {fileID: 1869094607}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -8128,7 +8128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: -1
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -8136,10 +8136,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0.077429615, g: 0.5471698, b: 0.49436873, a: 1}
+    m_HighlightedColor: {r: 0.07153434, g: 0.7433963, b: 0.4777065, a: 1}
+    m_PressedColor: {r: 0.15054326, g: 0.3886792, b: 0.08726944, a: 1}
+    m_SelectedColor: {r: 0.38080564, g: 0.7283019, b: 0.2459736, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
