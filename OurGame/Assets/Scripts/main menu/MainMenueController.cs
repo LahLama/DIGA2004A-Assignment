@@ -7,9 +7,11 @@ public class MainMenuController : MonoBehaviour
     public GameObject videoRawImage;
     public VideoPlayer videoPlayer;
 
-    public GameObject playButton;
-    public GameObject creditButton;
-    public GameObject quitButton;
+    //public GameObject playButton;
+    //public GameObject creditButton;
+   // public GameObject quitButton;
+    public GameObject mainMenuButtons;
+
 
     private bool hasStarted = false;
 
@@ -17,10 +19,12 @@ public class MainMenuController : MonoBehaviour
     {
         clickEnterText.SetActive(true);
         videoRawImage.SetActive(false);
-        playButton.SetActive(false);
-        creditButton.SetActive(false);
-        quitButton.SetActive(false);
+       // playButton.SetActive(false);
+        //creditButton.SetActive(false);
+       // quitButton.SetActive(false);
+       mainMenuButtons.SetActive(false);
     }
+
      void Update()
     {
         if (!hasStarted && Input.GetMouseButtonDown(0))
@@ -34,10 +38,10 @@ public class MainMenuController : MonoBehaviour
             {
                 videoPlayer.Play();
             }
-            
-            playButton.SetActive(true);
-            creditButton.SetActive(true);
-            quitButton.SetActive(true);
+            mainMenuButtons.SetActive(true);
+            //playButton.SetActive(true);
+            //creditButton.SetActive(true);
+            //quitButton.SetActive(true);
         }
     }
 }
