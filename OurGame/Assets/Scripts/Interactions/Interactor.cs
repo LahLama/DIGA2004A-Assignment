@@ -44,6 +44,7 @@ public class Interactor : MonoBehaviour
     private bool _interactionInput;
     private bool _dropInput;
     private bool _throwInput;
+    private bool _swapInput;
     public bool _PlayerIsHidden = false;
     public bool hitObj = false;
 
@@ -54,6 +55,7 @@ public class Interactor : MonoBehaviour
     private PickUpSystem pickUpSystem;
     private ReticleManagement reticleManagement;
     private InnerDialouge innerDialouge;
+    private IInteractables interactables;
     private HideAndShowPlayer hideAndShowPlayer;
     private DoorUnlocking doorUnlocking;
 
@@ -68,9 +70,9 @@ public class Interactor : MonoBehaviour
     public float hideDuration = 5f;
     private Collider _currentHideObj;
     RaycastHit lineCasthit;
-    bool noLOS = false;
+    public bool noLOS = false;
     bool hasChatted = false;
-
+    public GameObject tutForce;
     #endregion
     private void Awake()
     {
@@ -117,28 +119,25 @@ public class Interactor : MonoBehaviour
     public void OnInteractions(InputAction.CallbackContext context) { _interactionInput = context.ReadValueAsButton(); }
     public void OnDrop(InputAction.CallbackContext context) { _dropInput = context.ReadValueAsButton(); }
     public void OnThrow(InputAction.CallbackContext context) { _throwInput = context.ReadValueAsButton(); }
-
+    public void OnSwapItem(InputAction.CallbackContext context) { _swapInput = context.ReadValueAsButton(); }
 
     void HandleInteractions()
 
 
     {
+        noLOS = Physics.Raycast(transform.position, transform.forward, out lineCasthit, _interactionRange / 3, StopMasks);
+
+        hitObj = Physics.SphereCast(transform.position, 0.3f, transform.forward, out raycastHit, _interactionRange, ResponsiveMasks);
 
         if (!noLOS)
             reticleManagement.HandleTooltip();
 
-
-        hitObj = Physics.SphereCast(transform.position, 0.3f, transform.forward, out raycastHit, _interactionRange, ResponsiveMasks);
-
-        noLOS = Physics.Raycast(transform.position, transform.forward, out lineCasthit, _interactionRange / 3, StopMasks);
 
         string LayerName = "";
         if (hitObj & !noLOS)
         {
             LayerMask specifiedLayer = raycastHit.transform.gameObject.layer;
             LayerName = LayerMask.LayerToName(specifiedLayer.value);
-
-
         }
 
 
@@ -155,11 +154,13 @@ public class Interactor : MonoBehaviour
             switch (LayerName)
             {
                 case "interactionsMask":
+                    _interactionDelay = 0.5f;
+                    bool hasInteractionScript = raycastHit.collider.gameObject.TryGetComponent<IInteractables>(out interactables);
 
 
-                    if (raycastHit.collider.gameObject.TryGetComponent<EndDemo>(out endDemoScript))
+                    if (hasInteractionScript)
                     {
-                        innerDialouge.text.text = "You have found your brother that you lost!";
+                        interactables.Interact();
                         StartCoroutine(innerDialouge.InnerDialogueContorl());
                     }
                     else if (raycastHit.collider.gameObject.TryGetComponent<DialougeState>(out startDialougeScript) && hasChatted == false)
@@ -167,11 +168,13 @@ public class Interactor : MonoBehaviour
 
                         hasChatted = true;
                         startDialougeScript.StartDialouge();
+                        //Destroy the tutorial trigger
+                        tutForce.SetActive(false);
                         return;
                     }
                     else
                     {
-                        innerDialouge.text.text = "I need my ball...Get it this time...";
+                        innerDialouge.text.text = "";
                     }
 
                     break;
@@ -195,8 +198,9 @@ public class Interactor : MonoBehaviour
 
 
                 default:
-                    if (pickUpSystem.playerHands.childCount > 1)
+                    if (pickUpSystem.playerHands.childCount > 0 && _interactionDelay <= 0f)
                     {
+                        _interactionDelay = 0.75f;
                         pickUpSystem.DropItem();
                     }
                     return;
@@ -204,8 +208,9 @@ public class Interactor : MonoBehaviour
             }
 
         }
-        if (_throwInput)
+        if (_throwInput && _interactionDelay <= 0)
         {
+            _interactionDelay = 1f;
             pickUpSystem.ThrowItem();
             //Play sound
         }
@@ -224,7 +229,11 @@ public class Interactor : MonoBehaviour
         }
 
 
-
+        if (_swapInput && _interactionDelay <= 0)
+        {
+            _interactionDelay = 0.5f;
+            pickUpSystem.SwapItems();
+        }
 
 
     }

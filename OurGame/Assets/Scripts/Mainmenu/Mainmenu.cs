@@ -30,6 +30,18 @@ public class MainMenu : MonoBehaviour
         settingsPanel.SetActive(false);
     }
 
+    public void Credits()
+    {
+        Debug.Log("Showing Credits...");
+        SceneManager.LoadScene("CreditsScene"); // Replace with your actual credits scene name
+    }
+
+    public void closeCredits()
+    {
+        Debug.Log("Closing Credits...");
+        SceneManager.LoadScene("Main menu"); // Replace with your actual main menu scene name
+    }
+
     public void ExitGame()
     {
         Debug.Log("Exiting Game...");

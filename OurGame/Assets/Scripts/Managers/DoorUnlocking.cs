@@ -35,9 +35,9 @@ public class DoorUnlocking : MonoBehaviour
         var currentDoor = _hitDoorObj.collider;
         var playerHands = _pickUpSystem.playerHands;
 
-        if (playerHands.childCount > 1)
+        if (playerHands.childCount > 0)
         {
-            var currentItem = _pickUpSystem.playerHands.GetChild(1);
+            var currentItem = _pickUpSystem.playerHands.GetChild(0);
             //Compares if the door and handheld item matches tags
 
             //Green Door
@@ -77,6 +77,11 @@ public class DoorUnlocking : MonoBehaviour
             {
                 _innerDialouge.text.text = "I gotta find the key.";
                 StartCoroutine(_innerDialouge.InnerDialogueContorl());
+
+
+                //Door Open
+
+
             }
         }
         else
@@ -84,6 +89,16 @@ public class DoorUnlocking : MonoBehaviour
             //If the player doesnt have anything in hand
             _innerDialouge.text.text = "I need my item.";
             StartCoroutine(_innerDialouge.InnerDialogueContorl());
+
+            // Test door animation
+
+            if (currentDoor.TryGetComponent<Animator>(out Animator animator))
+
+                if (animator != null)
+                {
+                    animator.SetTrigger("DoorOpen");
+                    return;
+                }
         }
 
 

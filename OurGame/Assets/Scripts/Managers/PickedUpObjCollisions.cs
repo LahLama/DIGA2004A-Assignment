@@ -7,11 +7,13 @@ public class PickedUpObjCollisions : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        particles = GetComponent<ParticleSystem>();
-        ParticleSystem.MainModule particles_main = particles.main;
-        particles_main.startColor = Color.white;
-        particles.Play();
-
+        TryGetComponent<ParticleSystem>(out particles);
+        if (particles)
+        {
+            ParticleSystem.MainModule particles_main = particles.main;
+            particles_main.startColor = Color.white;
+            particles.Play();
+        }
     }
 
 
