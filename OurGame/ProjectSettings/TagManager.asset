@@ -3,7 +3,26 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - PlayerStats
+  - ForRedDoor
+  - BaseGame
+  - PickUps
+  - HideSlider
+  - NunEmemy
+  - Monolouge
+  - Tooltip
+  - Tutorial
+  - Microphone
+  - ControllerManager
+  - HoldingPos
+  - SprintSlider
+  - ForBlueDoor
+  - ForYellowDoor
+  - PickUp
+  - ForGreenDoor
+  - NunEnemy
+  - collectable paper
   layers:
   - Default
   - TransparentFX
