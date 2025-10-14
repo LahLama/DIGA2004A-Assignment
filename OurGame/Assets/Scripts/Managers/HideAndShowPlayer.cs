@@ -18,6 +18,8 @@ public class HideAndShowPlayer : MonoBehaviour
     private Scrollbar _hideSlider;
     private bool _isplayerHidden;
     private float _hideDuration;
+    private GameObject handsDisplay;
+
 
     private VignetteControl vignetteControl;
 
@@ -34,6 +36,7 @@ public class HideAndShowPlayer : MonoBehaviour
         _hideSlider = GameObject.FindWithTag("HideSlider").GetComponent<Scrollbar>();
         _interactor = GameObject.FindAnyObjectByType<Interactor>();
         vignetteControl = GameObject.FindAnyObjectByType<VignetteControl>();
+        handsDisplay = GameObject.FindWithTag("Hands");
 
         CanvasGroup canvasGroup = _hideSlider.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0f;
@@ -69,6 +72,7 @@ public class HideAndShowPlayer : MonoBehaviour
         _player.gameObject.GetComponent<MeshRenderer>().enabled = false;
         _player.gameObject.GetComponent<PlayerMovement>().enabled = false;
         _player.gameObject.GetComponent<LookFunction>().enabled = false;
+        handsDisplay.gameObject.SetActive(false);
 
         if (_holdingContainer.activeSelf) { _holdingContainer.SetActive(false); }
 
@@ -91,6 +95,7 @@ public class HideAndShowPlayer : MonoBehaviour
         _player.gameObject.GetComponent<MeshRenderer>().enabled = true;
         _player.gameObject.GetComponent<PlayerMovement>().enabled = true;
         _player.gameObject.GetComponent<LookFunction>().enabled = true;
+        handsDisplay.gameObject.SetActive(true);
         if (!_holdingContainer.activeSelf) { _holdingContainer.SetActive(true); }
 
 
