@@ -34,8 +34,9 @@ public class HideAndShowPlayer : MonoBehaviour
         _hideSlider = GameObject.FindWithTag("HideSlider").GetComponent<Scrollbar>();
         _interactor = GameObject.FindAnyObjectByType<Interactor>();
         vignetteControl = GameObject.FindAnyObjectByType<VignetteControl>();
-        _hideSlider.gameObject.SetActive(false);
 
+        CanvasGroup canvasGroup = _hideSlider.GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0f;
     }
 
     void Update()
@@ -53,13 +54,14 @@ public class HideAndShowPlayer : MonoBehaviour
         {
             vignetteControl.HiddenRemoveVignette(2);
         }
+
+        HandleHideBarAppearing();
     }
 
     #endregion
 
     public void HidePlayer()
     {
-        _hideSlider.gameObject.SetActive(true);
         _interactor._PlayerIsHidden = true;
         //Enables hiding spot camera
         //Disables player visually
@@ -92,8 +94,32 @@ public class HideAndShowPlayer : MonoBehaviour
         if (!_holdingContainer.activeSelf) { _holdingContainer.SetActive(true); }
 
 
-        _hideSlider.gameObject.SetActive(false);
+
         _player.layer = LayerMask.NameToLayer("Player");
 
+    }
+
+
+    void HandleHideBarAppearing()
+    {
+        if (_interactor._PlayerIsHidden)
+        {
+            CanvasGroup canvasGroup = _hideSlider.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = _hideSlider.gameObject.AddComponent<CanvasGroup>();
+            }
+            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, 1f, Time.deltaTime / 0.2f);
+        }
+
+        else
+        {
+            CanvasGroup canvasGroup = _hideSlider.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = _hideSlider.gameObject.AddComponent<CanvasGroup>();
+            }
+            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, 0f, Time.deltaTime / 0.7f);
+        }
     }
 }

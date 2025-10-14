@@ -50,6 +50,10 @@ public class PlayerMovement : MonoBehaviour
         _OverlaycameraTransform = GameObject.FindWithTag("OverlayCamera");
         enemyAI = GameObject.FindAnyObjectByType<NunAi>();
         _sprintTimer = 4f;
+
+        CanvasGroup canvasGroup = sprintBar.GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0f;
+
     }
     private void Update()
     {
@@ -102,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleSprint()
     {
+
         float __sprintSpeed = 6;
         int __sprintFOV = 65;
 
@@ -128,6 +133,8 @@ public class PlayerMovement : MonoBehaviour
     }
     public void HandleCrouch()
     {
+
+
         //Adjust the player's components
         float __crouchSpeed = 1f;
         float __scaleModifer = 0.4f;
@@ -149,6 +156,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleWalk()
     {
+
+
+
         //Adjust the player's components to the originals
         float __normalScale = 0.7f;
         float __normalSpeed = 5f;
@@ -184,10 +194,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovementModifiers()
     {
+        HandleSprintBarAppearing();
         //A Psuedo-statemachine where the player can only do one modifier at a time 
         if (_sprintInput && !_crouchInput && !_isUnderSomething)
         {
             HandleSprint();
+
         }
         else if (_crouchInput && !_sprintInput)
         {
@@ -218,6 +230,29 @@ public class PlayerMovement : MonoBehaviour
             //Decrease the sprintTimer
             _sprintTimer += Time.deltaTime;
             sprintBar.size = 1 - (_sprintTimer / 4);
+        }
+    }
+
+    void HandleSprintBarAppearing()
+    {
+        if (_sprintInput)
+        {
+            CanvasGroup canvasGroup = sprintBar.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = sprintBar.gameObject.AddComponent<CanvasGroup>();
+            }
+            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, 1f, Time.deltaTime / 0.2f);
+        }
+
+        else
+        {
+            CanvasGroup canvasGroup = sprintBar.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = sprintBar.gameObject.AddComponent<CanvasGroup>();
+            }
+            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, 0f, Time.deltaTime / 0.7f);
         }
     }
 
