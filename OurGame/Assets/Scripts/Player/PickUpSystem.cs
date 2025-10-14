@@ -96,7 +96,7 @@ public class PickUpSystem : MonoBehaviour
             //Reposition items on player
             //if only 1 item -- Child1 in hand
             //if 2 items, item 1 in hand and item 2 in other hand
-            RepositionItems();
+            SwapItems();
 
 
 
@@ -113,7 +113,7 @@ public class PickUpSystem : MonoBehaviour
         //Only if the player has something it thier hands
         if (playerHands.childCount > 0)
         {
-            SwapItems();
+
             //Get the obj that is in the hands
             Transform equipedObj = playerHands.GetChild(0);
 
@@ -136,6 +136,7 @@ public class PickUpSystem : MonoBehaviour
 
 
 
+            Invoke("RepositionItems", 0.1f);
             return;
 
         }
@@ -147,8 +148,9 @@ public class PickUpSystem : MonoBehaviour
     {
         if (playerHands.childCount > 0)
         {
-            SwapItems();
+
             Transform equipedObj = playerHands.GetChild(0);
+
             Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
             rb.useGravity = true;
 
@@ -167,6 +169,8 @@ public class PickUpSystem : MonoBehaviour
             objHasBeenThrown = true;
             if (playerStats.playerLevel != PlayerStats.PlayerLevel.Tutorial && !_enemyAI._isGracePeriod)
                 StartCoroutine(ThrowCooldown());
+
+            Invoke("RepositionItems", 0.1f);
             return;
         }
 
