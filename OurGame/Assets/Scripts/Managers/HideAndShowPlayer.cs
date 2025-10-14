@@ -32,8 +32,9 @@ public class HideAndShowPlayer : MonoBehaviour
         _player = GameObject.FindWithTag("Player");
         _holdingContainer = GameObject.FindWithTag("HoldingPos");
         _hideSlider = GameObject.FindWithTag("HideSlider").GetComponent<Scrollbar>();
-        _interactor = GameObject.FindWithTag("MainCamera").GetComponent<Interactor>();
-        vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
+        _interactor = GameObject.FindAnyObjectByType<Interactor>();
+        vignetteControl = GameObject.FindAnyObjectByType<VignetteControl>();
+        _hideSlider.gameObject.SetActive(false);
 
     }
 

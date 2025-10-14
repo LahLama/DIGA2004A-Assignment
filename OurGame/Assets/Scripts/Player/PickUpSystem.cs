@@ -33,11 +33,11 @@ public class PickUpSystem : MonoBehaviour
     {
         _interactor = GetComponent<Interactor>();
         playerHands = GameObject.FindWithTag("HoldingPos").transform;
-        controller = GameObject.FindGameObjectWithTag("ControllerManager").GetComponent<ControllerRumble>();
-        _enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<NunAi>();
+        controller = GameObject.FindAnyObjectByType<ControllerRumble>();
+        _enemyAI = GameObject.FindAnyObjectByType<NunAi>();
         HoldL = GameObject.FindWithTag("Hold.L").transform;
         HoldR = GameObject.FindWithTag("Hold.R").transform;
-        playerStats = GameObject.FindWithTag("PlayerStats").GetComponent<PlayerStats>();
+        playerStats = GameObject.FindAnyObjectByType<PlayerStats>();
     }
 
 

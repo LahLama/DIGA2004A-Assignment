@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         lookFunction = GetComponent<LookFunction>();
         _cameraTransform = GameObject.FindWithTag("MainCamera");
         _OverlaycameraTransform = GameObject.FindWithTag("OverlayCamera");
-        enemyAI = GameObject.FindWithTag("NunEnemy").GetComponent<NunAi>();
+        enemyAI = GameObject.FindAnyObjectByType<NunAi>();
         _sprintTimer = 4f;
     }
     private void Update()
