@@ -13,6 +13,15 @@ public class TutForceLook : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player"))
+        {
+            ForceLook();
+        }
+
+    }
+
+    void ForceLook()
+    {
         Debug.Log("HEY LOOOK AT ME");
         camera.LookAt(girlEyes);
         Vector3 euler = camera.rotation.eulerAngles;
