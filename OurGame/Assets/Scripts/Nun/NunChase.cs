@@ -20,13 +20,13 @@ public class NunChase : MonoBehaviour
         vignetteControl = GameObject.FindAnyObjectByType<VignetteControl>();
         nunDoors = this.GetComponent<NunDoors>();
 
-
+        _agentSpeed = agent.speed;
     }
     public void ChasePlayer()
     {
-        if (player.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (player.gameObject.layer == LayerMask.NameToLayer("Player") && PlayerInLineOfSight())
         {
-            agent.speed = _agentSpeed * (5 / 3.0f);
+            agent.speed = _agentSpeed * (4 / 3.0f);
             nunDoors.DoorInteractions();
             vignetteControl.ApplyVignette(2);
             agent.transform.LookAt(player.GetChild(0));
@@ -47,16 +47,31 @@ public class NunChase : MonoBehaviour
         {
             if (!Physics.Raycast(transform.position, transform.forward * sightRange, 1f, StopLayer))
             {
-                //stops the agent
                 agent.SetDestination(player.position);
             }
             else
             {
-                agent.SetDestination(transform.position);
-
             }
             timer -= Time.deltaTime;
             yield return null;
         }
+    }
+
+    private bool PlayerInLineOfSight()
+    {
+        Vector3 directionToPlayer = player.position - agent.transform.position;
+        float distanceToPlayer = directionToPlayer.magnitude;
+
+        // Raycast from nun to player, ignoring the nun's own layer
+        RaycastHit hit;
+        if (Physics.Raycast(agent.transform.position, directionToPlayer.normalized, out hit, sightRange, ~StopLayer))
+        {
+            // Check if the raycast hit the player
+            if (hit.transform == player)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
