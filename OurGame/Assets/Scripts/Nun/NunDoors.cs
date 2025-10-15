@@ -13,8 +13,21 @@ public class NunDoors : MonoBehaviour
         foreach (Collider col in hits)
         {
             GameObject hitObj = col.gameObject;
-            hitObj.SetActive(false);
-            StartCoroutine(ActivateDoorAfterDelay(hitObj, 2f));
+
+            if (hitObj.gameObject.transform.parent.parent.TryGetComponent<Animator>(out Animator animator))
+
+
+                if (animator != null)
+                {
+                    animator.SetTrigger("DoorOpen");
+
+                    return;
+                }
+                else
+                {
+                    print("no animator");
+                }
+
         }
     }
 
