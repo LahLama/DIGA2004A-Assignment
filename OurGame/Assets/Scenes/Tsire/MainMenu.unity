@@ -427,7 +427,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1821374270}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -879,7 +879,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.3104, y: -27.4192}
+  m_AnchoredPosition: {x: 6.310402, y: -27.4192}
   m_SizeDelta: {x: 42.7355, y: 19.2117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &179805449
@@ -2915,7 +2915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.3104, y: -27.4192}
+  m_AnchoredPosition: {x: 6.310402, y: -27.4192}
   m_SizeDelta: {x: 42.7355, y: 19.2117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &806373316
@@ -3565,6 +3565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsPanel: {fileID: 1868624813}
+  OptionsPanel: {fileID: 0}
 --- !u!1 &955287390
 GameObject:
   m_ObjectHideFlags: 0
