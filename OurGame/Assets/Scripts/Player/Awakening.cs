@@ -18,7 +18,13 @@ public class Awakening : MonoBehaviour
 
     void Update()
     {
-        if (animation.)
+        if (!animation.isPlaying)
+        {
+            playerMovement.enabled = true;
+            lookFunction.enabled = true;
+            this.enabled = false;
+        }
     }
+
 
 }
