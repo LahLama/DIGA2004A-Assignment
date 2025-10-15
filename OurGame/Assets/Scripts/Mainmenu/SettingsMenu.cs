@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
@@ -21,7 +22,7 @@ public class SettingsMenu : MonoBehaviour
     public GameObject settingsPanel;
 
     public enum InputMethod { Keyboard, Controller, Mouse }
-   // public InputMethod currentInputMethod = InputMethod.Keyboard;
+    public InputMethod currentInputMethod = InputMethod.Keyboard;
 
     public static float LookSensitivity = 1f;
     public static float KeyboardSensitivity = 1f;
@@ -84,34 +85,34 @@ public class SettingsMenu : MonoBehaviour
     {
         KeyboardSensitivity = value;
         PlayerPrefs.SetFloat("KeyboardSensitivity", value);
-       /* if (currentInputMethod == InputMethod.Keyboard)
-            ApplyCurrentSensitivity();*/
+        if (currentInputMethod == InputMethod.Keyboard)
+            ApplyCurrentSensitivity();
     }
 
     public void OnControllerSensitivityChanged(float value)
     {
         ControllerSensitivity = value;
         PlayerPrefs.SetFloat("ControllerSensitivity", value);
-       /* if (currentInputMethod == InputMethod.Controller)
-            ApplyCurrentSensitivity();*/
+       if (currentInputMethod == InputMethod.Controller)
+            ApplyCurrentSensitivity();
     }
 
     public void OnMouseSensitivityChanged(float value)
     {
         MouseSensitivity = value;
         PlayerPrefs.SetFloat("MouseSensitivity", value);
-       /* if (currentInputMethod == InputMethod.Mouse)
-            ApplyCurrentSensitivity();*/
+        if (currentInputMethod == InputMethod.Mouse)
+            ApplyCurrentSensitivity();
     }
 
     public void SetInputMethod(int methodIndex)
     {
-        //currentInputMethod = (InputMethod)methodIndex;
-        //ApplyCurrentSensitivity();
+        currentInputMethod = (InputMethod)methodIndex;
+        ApplyCurrentSensitivity();
         UpdateSensitivityUI();
     }
 
-   /* void ApplyCurrentSensitivity()
+    void ApplyCurrentSensitivity()
     {
         switch (currentInputMethod)
         {
@@ -125,13 +126,13 @@ public class SettingsMenu : MonoBehaviour
                 LookSensitivity = MouseSensitivity;
                 break;
         }
-    }*/
+    }
 
     void UpdateSensitivityUI()
     {
-       /* keyboardSensitivitySlider.gameObject.SetActive(currentInputMethod == InputMethod.Keyboard);
+        keyboardSensitivitySlider.gameObject.SetActive(currentInputMethod == InputMethod.Keyboard);
         controllerSensitivitySlider.gameObject.SetActive(currentInputMethod == InputMethod.Controller);
-        mouseSensitivitySlider.gameObject.SetActive(currentInputMethod == InputMethod.Mouse);*/
+        mouseSensitivitySlider.gameObject.SetActive(currentInputMethod == InputMethod.Mouse);
     }
 
     // Panel Controls

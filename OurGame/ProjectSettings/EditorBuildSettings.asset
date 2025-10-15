@@ -14,9 +14,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/James/BaseLevelLayout.unity
     guid: 38004ddc1cb67aa488e9882ef159b0cc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Tsire/older scenes/Main menu.unity
     guid: fac9d538b6f035d4e8d920beda9ec10c
+  - enabled: 1
+    path: Assets/Scenes/Tsire/GameScene.unity
+    guid: ec94d940e9339bf4d9f305712c2c2fed
+  - enabled: 1
+    path: Assets/Scenes/Tsire/MainMenu.unity
+    guid: 5f53203f89d3f1d4f83d12c5423dd4b6
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: a407d3d95c6a2554abb1a2e41ca5b0fe, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

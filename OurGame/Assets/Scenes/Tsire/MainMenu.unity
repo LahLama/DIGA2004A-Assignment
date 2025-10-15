@@ -1572,9 +1572,10 @@ MonoBehaviour:
   keyboardSensitivitySlider: {fileID: 1044764005}
   controllerSensitivitySlider: {fileID: 1326037340}
   mouseSensitivitySlider: {fileID: 2140797802}
-  musicSource: {fileID: 1821374273}
-  sfxSource: {fileID: 0}
+  musicSource: {fileID: 1518721569}
+  sfxSource: {fileID: 1518721569}
   settingsPanel: {fileID: 1868624813}
+  currentInputMethod: 0
 --- !u!114 &382323235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1691,7 +1692,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17.829071, y: 9.004059}
+  m_AnchoredPosition: {x: -17.829102, y: 9.004055}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &427774300
@@ -5158,7 +5159,7 @@ GameObject:
   - component: {fileID: 1357248121}
   - component: {fileID: 1357248120}
   m_Layer: 5
-  m_Name: continue
+  m_Name: continueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7744,7 +7745,7 @@ GameObject:
   - component: {fileID: 1751429838}
   - component: {fileID: 1751429837}
   m_Layer: 5
-  m_Name: Credits
+  m_Name: CreditsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
