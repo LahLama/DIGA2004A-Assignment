@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.AI;
 public class NunCatch : MonoBehaviour
@@ -5,16 +6,17 @@ public class NunCatch : MonoBehaviour
 
     public NavMeshAgent agent;
     public Transform player;
-    private GameObject lifeCounter;
+    private LivesTracker lifeCounter;
     private Vector3 playerOGpos, nunOGpos;
     private NunPatrol nunPatrol;
+    bool HasRespawned = false;
     void Awake()
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         playerOGpos = player.transform.position;
         nunOGpos = agent.gameObject.transform.position;
-        lifeCounter = GameObject.FindWithTag("LifeTracker");
+        lifeCounter = GameObject.FindWithTag("PlayerStats").GetComponent<LivesTracker>();
         nunPatrol = this.GetComponent<NunPatrol>();
 
     }
@@ -24,7 +26,9 @@ public class NunCatch : MonoBehaviour
         Vector3 lookPos = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + agent.height, this.gameObject.transform.position.z);
         player.GetComponentInChildren<Camera>().transform.LookAt(lookPos);
         agent.transform.LookAt(player.GetChild(0));
+        HasRespawned = false;
         Invoke("RespawnPlayer", 2f);
+        return;
 
 
     }
@@ -32,9 +36,10 @@ public class NunCatch : MonoBehaviour
     private void RespawnPlayer()
     {
         //Update the life count:
-        bool HasRespawned = false;
+
         if (!HasRespawned)
         {
+            HasRespawned = true;
             //Reset the positons
             agent.Warp(nunOGpos);
             player.GetComponent<CharacterController>().enabled = false;
@@ -43,7 +48,7 @@ public class NunCatch : MonoBehaviour
             nunPatrol.StartGracePeriod();
 
             lifeCounter.SendMessage("RecieveMessageCatchPlayer");
-            HasRespawned = true;
+
         }
     }
 }

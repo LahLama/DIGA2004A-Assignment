@@ -22,7 +22,7 @@ public class TutForceLook : MonoBehaviour
 
     void ForceLook()
     {
-        Debug.Log("HEY LOOOK AT ME");
+
         camera.LookAt(girlEyes);
         Vector3 euler = camera.rotation.eulerAngles;
         startDialougeScript.StartDialouge();

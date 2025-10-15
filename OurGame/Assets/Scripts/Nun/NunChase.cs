@@ -72,7 +72,7 @@ public class NunChase : MonoBehaviour
         if (Physics.Raycast(agent.transform.position, directionToPlayer.normalized, out hit, distanceToPlayer))
         {
 
-            Debug.Log(hit.collider.name);
+
             // Only true if the first thing hit is the player
             if (hit.transform == player)
             {
