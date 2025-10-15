@@ -18,7 +18,9 @@ public class HideAndShowPlayer : MonoBehaviour
     private Scrollbar _hideSlider;
     private bool _isplayerHidden;
     private float _hideDuration;
+    private GameObject sprintBar;
     private GameObject handsDisplay;
+    private CanvasGroup canvasSprintGroup;
 
 
     private VignetteControl vignetteControl;
@@ -40,6 +42,10 @@ public class HideAndShowPlayer : MonoBehaviour
 
         CanvasGroup canvasGroup = _hideSlider.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0f;
+
+        sprintBar = GameObject.FindWithTag("SprintSlider");
+        canvasSprintGroup = sprintBar.GetComponent<CanvasGroup>();
+
     }
 
     void Update()
@@ -76,7 +82,7 @@ public class HideAndShowPlayer : MonoBehaviour
 
         if (_holdingContainer.activeSelf) { _holdingContainer.SetActive(false); }
 
-
+        canvasSprintGroup.alpha = 0f;
         _player.layer = LayerMask.NameToLayer("hidePlacesMask");
 
 
@@ -117,7 +123,7 @@ public class HideAndShowPlayer : MonoBehaviour
             canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, 1f, Time.deltaTime / 0.2f);
         }
 
-        else
+        else if (_hideSlider.size < 0.05)
         {
             CanvasGroup canvasGroup = _hideSlider.GetComponent<CanvasGroup>();
             if (canvasGroup == null)

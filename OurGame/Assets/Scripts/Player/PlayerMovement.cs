@@ -245,7 +245,7 @@ public class PlayerMovement : MonoBehaviour
             canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, 1f, Time.deltaTime / 0.2f);
         }
 
-        else
+        else if (sprintBar.size < 0.05)
         {
             CanvasGroup canvasGroup = sprintBar.GetComponent<CanvasGroup>();
             if (canvasGroup == null)
