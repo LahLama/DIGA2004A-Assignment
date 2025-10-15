@@ -6,8 +6,8 @@ public class interactionLamp : MonoBehaviour, IInteractables
 
     public void Interact()
     {
-        //Show paper on screen.
-
+        Light light = transform.GetChild(0).GetComponent<Light>();
+        light.enabled = !light.isActiveAndEnabled;
 
     }
 }

@@ -185,10 +185,26 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -784412928878185617, guid: 0f21feec3ff082f4d82c4269c9e02b06, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 96a52369395eafa46a83562aade6156a, type: 2}
     - target: {fileID: 919132149155446097, guid: 0f21feec3ff082f4d82c4269c9e02b06, type: 3}
       propertyPath: m_Name
       value: lamp (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1541998606474349963, guid: 0f21feec3ff082f4d82c4269c9e02b06, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: abd6ac2332d40f64d8d3218184ffdb6b, type: 2}
+    - target: {fileID: 1893194068992980029, guid: 0f21feec3ff082f4d82c4269c9e02b06, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 96a52369395eafa46a83562aade6156a, type: 2}
+    - target: {fileID: 4909842706458106362, guid: 0f21feec3ff082f4d82c4269c9e02b06, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 96a52369395eafa46a83562aade6156a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
