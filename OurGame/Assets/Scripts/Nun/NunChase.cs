@@ -14,9 +14,11 @@ public class NunChase : MonoBehaviour
     public float sightRange;
 
     public float NunlookTime = 2;
+
+    public bool los;
     void Awake()
     {
-
+        sightRange = GetComponent<NunAi>().sightRange;
         vignetteControl = GameObject.FindAnyObjectByType<VignetteControl>();
         nunDoors = this.GetComponent<NunDoors>();
 
@@ -24,6 +26,7 @@ public class NunChase : MonoBehaviour
     }
     public void ChasePlayer()
     {
+
         if (player.gameObject.layer == LayerMask.NameToLayer("Player") && PlayerInLineOfSight())
         {
             agent.speed = _agentSpeed * (4 / 3.0f);
@@ -37,6 +40,8 @@ public class NunChase : MonoBehaviour
         }
         else
             StopCoroutine(ChaseTime(NunlookTime));
+
+        los = PlayerInLineOfSight();
     }
 
 
@@ -57,21 +62,34 @@ public class NunChase : MonoBehaviour
         }
     }
 
-    private bool PlayerInLineOfSight()
+    public bool PlayerInLineOfSight()
     {
         Vector3 directionToPlayer = player.position - agent.transform.position;
         float distanceToPlayer = directionToPlayer.magnitude;
 
-        // Raycast from nun to player, ignoring the nun's own layer
+        // Raycast from nun to player, using StopLayer as the mask for obstacles
         RaycastHit hit;
-        if (Physics.Raycast(agent.transform.position, directionToPlayer.normalized, out hit, sightRange, ~StopLayer))
+        if (Physics.Raycast(agent.transform.position, directionToPlayer.normalized, out hit, distanceToPlayer))
         {
-            // Check if the raycast hit the player
+
+            Debug.Log(hit.collider.name);
+            // Only true if the first thing hit is the player
             if (hit.transform == player)
             {
                 return true;
             }
         }
         return false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+
+        if (agent != null && player != null)
+        {
+            Gizmos.color = Color.red;
+            Vector3 directionToPlayer = player.position - agent.transform.position;
+            Gizmos.DrawLine(agent.transform.position, agent.transform.position + directionToPlayer.normalized * Mathf.Min(sightRange, directionToPlayer.magnitude));
+        }
     }
 }

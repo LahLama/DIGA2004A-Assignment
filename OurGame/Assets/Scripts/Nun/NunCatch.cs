@@ -33,14 +33,15 @@ public class NunCatch : MonoBehaviour
     {
         //Update the life count:
         bool HasRespawned = false;
-        //Reset the positons
-        agent.Warp(nunOGpos);
-        player.GetComponent<CharacterController>().enabled = false;
-        player.position = playerOGpos;
-        player.GetComponent<CharacterController>().enabled = true;
-        nunPatrol.StartGracePeriod();
         if (!HasRespawned)
         {
+            //Reset the positons
+            agent.Warp(nunOGpos);
+            player.GetComponent<CharacterController>().enabled = false;
+            player.position = playerOGpos;
+            player.GetComponent<CharacterController>().enabled = true;
+            nunPatrol.StartGracePeriod();
+
             lifeCounter.SendMessage("RecieveMessageCatchPlayer");
             HasRespawned = true;
         }
