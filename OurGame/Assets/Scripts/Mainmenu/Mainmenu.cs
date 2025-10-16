@@ -1,27 +1,16 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     public GameObject settingsPanel;
     public GameObject OptionsPanel;
+    public GameObject UIPanel;
 
     private bool isPaused = false;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!isPaused)
-            {
-                PauseGame();
-            }
-            else
-            {
-                ResumeGame();
-            }
-        }
-    }
+   
 
     public void NewGame()
     {
@@ -41,12 +30,15 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Opening Settings...");
         settingsPanel.SetActive(true);
+        UIPanel.SetActive(false);
     }
 
     public void CloseSettings()
     {
         Debug.Log("Closing Settings...");
         settingsPanel.SetActive(false);
+        ResumeGame();
+        UIPanel.SetActive(true);
     }
 
     public void LoadMainMenu()
@@ -60,12 +52,14 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Opening Options...");
         PauseGame();
+       
     }
 
     public void CloseOptions()
     {
         Debug.Log("Closing Options...");
         ResumeGame();
+        
     }
 
     public void Credits()
@@ -100,5 +94,27 @@ public class MainMenu : MonoBehaviour
         Time.timeScale = 1;
         OptionsPanel.SetActive(false);
         isPaused = false;
+    }
+
+     void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!isPaused)
+            {
+                PauseGame();
+                 Cursor.lockState = CursorLockMode.None;
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(OptionsPanel.transform.GetChild(0).gameObject);
+            }
+            else
+            {
+                ResumeGame();
+                Cursor.lockState = CursorLockMode.Locked;
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(GameObject.Find("ResumeButton"));
+
+            }
+        }
     }
 }
