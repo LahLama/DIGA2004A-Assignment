@@ -20,38 +20,30 @@ public class NunAi : MonoBehaviour
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask playerLayer;
-    public LayerMask DoorLayer;
     public LayerMask StopLayer;
     private MoveFromMicrophone microphoneInput;
     //Patrolling +  //Waypoints
-    public int currentWayPointIndex = 0;
-    public List<Transform> waypoints;
-
-
-
-
     private ControllerRumble rumbler;
     private Interactor _interactor;
     private VignetteControl vignetteControl;
     //states
     public float sightRange, catchRange;
-    public bool playerInSightRange, playerInCatchRange, playerinLOS;
-    bool isWaitingAtWaypoint = false, isLoud;
-    RaycastHit isPlayer;
+    public bool playerInSightRange, playerInCatchRange;
+    bool isLoud;
     private bool onHiddenCooldownTime = false;
-    private float hiddenCooldownTime;
 
-    public float WaitPointDelay = 5;
-    public float NunlookTime = 2;
+
+    public float NunlookTime = 5;
     private float _agentSpeed;
     public bool _isGracePeriod = true;
-    private Vector3 playerOGpos, nunOGpos;
-    private GameObject lifeCounter;
+
     private NunDoors nunDoors;
     private NunCatch nunCatch;
     private NunChase nunChase;
     private NunPatrol nunPatrol;
 
+
+    public bool inLOS, isChasing;
 
     void Awake()
     {
@@ -62,9 +54,7 @@ public class NunAi : MonoBehaviour
         rumbler = GameObject.FindAnyObjectByType<ControllerRumble>();
         _agentSpeed = agent.speed;
         _interactor = GameObject.FindAnyObjectByType<Interactor>();
-        lifeCounter = GameObject.FindWithTag("LifeTracker");
-        playerOGpos = player.transform.position;
-        nunOGpos = agent.gameObject.transform.position;
+
 
         nunDoors = this.GetComponent<NunDoors>();
         nunCatch = this.GetComponent<NunCatch>();
@@ -87,7 +77,8 @@ public class NunAi : MonoBehaviour
 
            Debug.DrawLine(transform.position, directionToPlayer);*/
 
-        bool isChasing = (playerInSightRange && !playerInCatchRange);
+        inLOS = nunChase.PlayerInLineOfSight();
+        isChasing = playerInSightRange && !playerInCatchRange && inLOS;
 
         if (_isGracePeriod == false)
         {
@@ -101,8 +92,9 @@ public class NunAi : MonoBehaviour
                 rumbler.StopRumbleSteam();
             }
 
+
             if (!playerInSightRange && !playerInCatchRange) nunPatrol.Patrol();
-            if (isChasing || isLoud && !onHiddenCooldownTime) nunChase.ChasePlayer();
+            if ((isChasing || isLoud) && !onHiddenCooldownTime) nunChase.ChasePlayer();
             if (playerInSightRange && playerInCatchRange) nunCatch.CatchPlayer();
         }
 
@@ -135,7 +127,7 @@ public class NunAi : MonoBehaviour
 
     private IEnumerator HiddenCooldown()
     {
-
+        float hiddenCooldownTime;
         onHiddenCooldownTime = true;
         hiddenCooldownTime = 5;
         Debug.Log("player is not chased for x seconds");
