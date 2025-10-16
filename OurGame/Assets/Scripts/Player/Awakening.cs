@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Awakening : MonoBehaviour
 {
-    Animation animation;
+    Animation animationClip;
     PlayerMovement playerMovement;
     LookFunction lookFunction;
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         lookFunction = GetComponent<LookFunction>();
-        animation = GetComponent<Animation>();
+        animationClip = GetComponent<Animation>();
         playerMovement.enabled = false;
         lookFunction.enabled = false;
 
@@ -18,7 +18,7 @@ public class Awakening : MonoBehaviour
 
     void Update()
     {
-        if (!animation.isPlaying)
+        if (!animationClip.isPlaying)
         {
             playerMovement.enabled = true;
             lookFunction.enabled = true;
