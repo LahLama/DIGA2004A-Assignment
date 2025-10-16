@@ -8,6 +8,9 @@
         },
         {
             "m_Id": "ab307c819d0f4898a98979659866666e"
+        },
+        {
+            "m_Id": "0f47a717080942fcb553e2b84b726fb4"
         }
     ],
     "m_Keywords": [],
@@ -31,13 +34,7 @@
             "m_Id": "2bae171bb38744daaeedc8585b8b4fd4"
         },
         {
-            "m_Id": "ddd51934640e4f2188ae6ec525e8e012"
-        },
-        {
             "m_Id": "99ad7806646d4064897d86900e818ef9"
-        },
-        {
-            "m_Id": "1d8e704d569448e19a1094a197947f2f"
         },
         {
             "m_Id": "b16df488bbb9489aa541bced1a802ec2"
@@ -456,6 +453,29 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.BooleanShaderProperty",
+    "m_ObjectId": "0f47a717080942fcb553e2b84b726fb4",
+    "m_Guid": {
+        "m_GuidSerialized": "55b211f2-55db-4e41-b585-2698492488cb"
+    },
+    "m_Name": "IsBlinking",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "IsBlinking",
+    "m_DefaultReferenceName": "_IsBlinking",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": false
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "1460a634cac64ea797d1c111921efc3a",
     "m_Id": 1,
@@ -552,42 +572,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
-    "m_ObjectId": "1d8e704d569448e19a1094a197947f2f",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Property",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": -1300.800048828125,
-            "y": 380.800048828125,
-            "width": 128.0,
-            "height": 33.5999755859375
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "ee6c505c987d4f7d93cd086f5f5c1a56"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_DismissedVersion": 0,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_Property": {
-        "m_Id": "5164f9ff351f46d4b1ab410c61f5b2dd"
-    }
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicValueMaterialSlot",
     "m_ObjectId": "1ee52709c8254290aceed729818a3bdf",
     "m_Id": 0,
@@ -670,9 +654,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -736.0,
-            "y": 15.999991416931153,
-            "width": 208.0,
+            "x": -632.0,
+            "y": 39.99997329711914,
+            "width": 207.99996948242188,
             "height": 301.5999755859375
         }
     },
@@ -888,7 +872,7 @@
     "overrideHLSLDeclaration": true,
     "hlslDeclarationOverride": 2,
     "m_Hidden": false,
-    "m_Value": -1.0,
+    "m_Value": -0.4000000059604645,
     "m_FloatType": 1,
     "m_RangeValues": {
         "x": -1.0,
@@ -1094,8 +1078,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1480.0,
-            "y": 456.800048828125,
+            "x": -2363.199951171875,
+            "y": 380.800048828125,
             "width": 208.0,
             "height": 277.60003662109377
         }
@@ -1391,9 +1375,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1720.8001708984375,
-            "y": 432.800048828125,
-            "width": 208.0001220703125,
+            "x": -2609.60009765625,
+            "y": 380.800048828125,
+            "width": 208.0,
             "height": 301.60003662109377
         }
     },
@@ -1722,21 +1706,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "ceabef3a3449496c967b0398f7e9b16f",
-    "m_Id": 0,
-    "m_DisplayName": "blinkState",
-    "m_SlotType": 1,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Out",
-    "m_StageCapability": 3,
-    "m_Value": 0.0,
-    "m_DefaultValue": 0.0,
-    "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicValueMaterialSlot",
     "m_ObjectId": "d374a8ed6215410eb87019df899d6fea",
     "m_Id": 2,
@@ -1819,44 +1788,11 @@
         },
         {
             "m_Id": "ab307c819d0f4898a98979659866666e"
+        },
+        {
+            "m_Id": "0f47a717080942fcb553e2b84b726fb4"
         }
     ]
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
-    "m_ObjectId": "ddd51934640e4f2188ae6ec525e8e012",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Property",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": -2228.979736328125,
-            "y": 103.02938842773438,
-            "width": 0.0,
-            "height": 0.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "ceabef3a3449496c967b0398f7e9b16f"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_DismissedVersion": 0,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_Property": {
-        "m_Id": "5164f9ff351f46d4b1ab410c61f5b2dd"
-    }
 }
 
 {
@@ -1914,8 +1850,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1916.8001708984375,
-            "y": 528.0000610351563,
+            "x": -2820.800048828125,
+            "y": 581.6000366210938,
             "width": 128.0,
             "height": 33.60003662109375
         }
@@ -1936,21 +1872,6 @@
     "m_Property": {
         "m_Id": "5164f9ff351f46d4b1ab410c61f5b2dd"
     }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "ee6c505c987d4f7d93cd086f5f5c1a56",
-    "m_Id": 0,
-    "m_DisplayName": "blinkState",
-    "m_SlotType": 1,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Out",
-    "m_StageCapability": 3,
-    "m_Value": 0.0,
-    "m_DefaultValue": 0.0,
-    "m_Labels": []
 }
 
 {
