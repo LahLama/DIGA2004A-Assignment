@@ -17,29 +17,32 @@ TagManager:
   - ControllerManager
   - HoldingPos
   - SprintSlider
-  - ForBlueDoor
-  - ForYellowDoor
-  - PickUp
   - ForGreenDoor
   - NunEnemy
-  - collectable paper
+  - PickUp
+  - ForYellowDoor
+  - ForBlueDoor
+  - Hold.L
+  - Hold.R
+  - OverlayCamera
+  - LifeTracker
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - interactionsMask
+  - hidePlacesMask
+  - doorMask
+  - pickUpMask
+  - holdingMask
+  - barrierMask
   - 
   - 
   - 
