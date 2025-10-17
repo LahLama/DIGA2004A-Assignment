@@ -13102,7 +13102,7 @@ GameObject:
   - component: {fileID: 231700109}
   - component: {fileID: 231700108}
   - component: {fileID: 231700107}
-  m_Layer: 7
+  m_Layer: 13
   m_Name: Ball
   m_TagString: ForRedDoor
   m_Icon: {fileID: 0}
@@ -18620,6 +18620,7 @@ MonoBehaviour:
   playerinLOS: 0
   WaitPointDelay: 5
   NunlookTime: 6
+  _isGracePeriod: 1
 --- !u!136 &245798906
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -25123,7 +25124,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 7927
+    m_Bits: 16119
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -25229,14 +25230,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ResponsiveMasks:
     serializedVersion: 2
-    m_Bits: 1728
+    m_Bits: 1024
   StopMasks:
     serializedVersion: 2
-    m_Bits: 6145
+    m_Bits: 14337
   _PlayerIsHidden: 0
   hitObj: 0
   _interactionDelay: 0
   hideDuration: 5
+  noLOS: 0
+  tutForce: {fileID: 0}
 --- !u!45 &330585550
 Skybox:
   m_ObjectHideFlags: 0
@@ -60229,6 +60232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126829694a7563741b0e688c51222c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PaperPanel: {fileID: 0}
 --- !u!64 &819160061
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -60793,6 +60797,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 4bead182-eaeb-4014-b2c0-f5edfb7255c9
     m_ActionName: 'Gameplay/ExitGame[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f4824a7d-c4a7-4dc2-a878-2dcc0a8fd069
+    m_ActionName: 'Gameplay/SwapItems[/Keyboard/f]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1348e9ec-0c89-46d9-82a6-6eb9860d19ea
+    m_ActionName: Navigation/Navigate
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 58a8aea0-fd23-43be-a1fa-1bec92ab8c0c
+    m_ActionName: Navigation/Submit
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1ab2031f-3fec-4492-bfc7-5598a5090f58
+    m_ActionName: Navigation/Cancel
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Gameplay
@@ -60855,6 +60875,7 @@ MonoBehaviour:
   verticalLookLimit: 90
   bobbingAmplitude: 0.05
   bobbingFrequency: 2
+  playerHands: {fileID: 0}
 --- !u!1 &831035649 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7992283297288499852, guid: 9acbf4a75ce538747b129c919dd3d7d0, type: 3}
@@ -65472,7 +65493,7 @@ GameObject:
   - component: {fileID: 1109648962}
   - component: {fileID: 1109648961}
   - component: {fileID: 1109648960}
-  m_Layer: 7
+  m_Layer: 13
   m_Name: TutorialPickup - Keep Child0
   m_TagString: ForRedDoor
   m_Icon: {fileID: 0}
@@ -88140,6 +88161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126829694a7563741b0e688c51222c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PaperPanel: {fileID: 0}
 --- !u!64 &1620749503
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -90451,7 +90473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 1
@@ -90522,7 +90544,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 8448
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -123200,6 +123222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126829694a7563741b0e688c51222c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PaperPanel: {fileID: 0}
 --- !u!64 &2076401237
 MeshCollider:
   m_ObjectHideFlags: 0

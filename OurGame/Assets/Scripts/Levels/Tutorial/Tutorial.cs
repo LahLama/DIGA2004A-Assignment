@@ -18,6 +18,7 @@ public class Tutorial : MonoBehaviour
     private NunChase nunChase;
     private NunPatrol nunPatrol;
     private NunAi nunAi;
+    private LivesTracker lifeCounter;
 
 
 
@@ -46,6 +47,8 @@ public class Tutorial : MonoBehaviour
         nunAi.enabled = false;
 
         OGplayerPos = player.transform.localPosition;
+        lifeCounter = GameObject.FindWithTag("PlayerStats").GetComponent<LivesTracker>();
+
     }
     public void EndTutorial()
     {
@@ -75,6 +78,7 @@ public class Tutorial : MonoBehaviour
 
         VC.RemoveVignette(0);
 
+        lifeCounter.SendMessage("RecieveMessageCatchPlayer");
 
 
         BaseGameBranch.SetActive(true);

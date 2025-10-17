@@ -56,7 +56,7 @@ public class TutorialNunAI : MonoBehaviour
 
         if (TutItem && !TutEnded && dist <= agent.stoppingDistance)
         {
-            Debug.Log("DEBUG 1");
+
             //wait for black screen/Animation
             Invoke("EndTut", 2);
             TutEnded = true;

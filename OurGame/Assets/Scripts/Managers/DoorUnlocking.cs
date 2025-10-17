@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 
 public class DoorUnlocking : MonoBehaviour
@@ -92,17 +93,23 @@ public class DoorUnlocking : MonoBehaviour
 
             // Test door animation
 
-            if (currentDoor.TryGetComponent<Animator>(out Animator animator))
+            if (currentDoor.transform.parent.parent.TryGetComponent<Animator>(out Animator animator))
+
 
                 if (animator != null)
                 {
                     animator.SetTrigger("DoorOpen");
+
                     return;
                 }
+                else
+                {
+                    print("no animator");
+                }
         }
-
-
     }
+
+
 
 
 }
