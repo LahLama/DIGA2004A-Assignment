@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
     public GameObject settingsPanel;
     public GameObject OptionsPanel;
     public GameObject UIPanel;
+    private Transform player;
 
     private bool isPaused = false;
 
@@ -50,6 +51,7 @@ public class MainMenu : MonoBehaviour
 
     public void OpenOptions()
     {
+        //player = GameObject.FindGameObjectWithTag("Player").transform;
         Debug.Log("Opening Options...");
         PauseGame();
        
@@ -84,6 +86,9 @@ public class MainMenu : MonoBehaviour
 
     private void PauseGame()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+         player.GetComponent<PlayerMovement>().enabled = false;
+             player.GetComponent<LookFunction>().enabled = false;
         Time.timeScale = 0;
         OptionsPanel.SetActive(true);
         isPaused = true;
