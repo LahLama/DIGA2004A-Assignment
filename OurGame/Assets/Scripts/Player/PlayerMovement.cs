@@ -124,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
             if (_moveInput.magnitude > 0.1f)
             {
                 _sprintTimer -= Time.deltaTime;
+                sprintBar.value = 1 - (_sprintTimer / 4); 
                 sprintBar.size = 1 - (_sprintTimer / 4);
                 sprintBar.value = 1 - (_sprintTimer / 4);
                 //Debug.Log("--" + (int)_   sprint}Timer);
@@ -230,6 +231,10 @@ public class PlayerMovement : MonoBehaviour
 
             //Decrease the sprintTimer
             _sprintTimer += Time.deltaTime;
+<<<<<<< HEAD
+            sprintBar.value = 1 - (_sprintTimer / 4);
+            
+=======
             sprintBar.size = 1 - (_sprintTimer / 4);
             sprintBar.value = 1 - (_sprintTimer / 4);
         }
@@ -255,6 +260,7 @@ public class PlayerMovement : MonoBehaviour
                 canvasGroup = sprintBar.gameObject.AddComponent<CanvasGroup>();
             }
             canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, 0f, Time.deltaTime / 0.7f);
+>>>>>>> main
         }
     }
 
