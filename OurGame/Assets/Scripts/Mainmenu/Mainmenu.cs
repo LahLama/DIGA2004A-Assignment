@@ -4,18 +4,37 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GameObject settingsPanel;
+    public GameObject OptionsPanel;
+
+    private bool isPaused = false;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!isPaused)
+            {
+                PauseGame();
+            }
+            else
+            {
+                ResumeGame();
+            }
+        }
+    }
 
     public void NewGame()
     {
         Debug.Log("Starting New Game...");
-        SceneManager.LoadScene("GameScene"); // Replace with your actual game scene name
+        Time.timeScale = 1; // Ensure game is unpaused
+        SceneManager.LoadScene("GameScene");
     }
 
     public void ContinueGame()
     {
         Debug.Log("Continuing Game...");
-        // Add your load logic here (e.g., PlayerPrefs or save system)
-        SceneManager.LoadScene("GameScene"); // Or load saved state
+        Time.timeScale = 1;
+        SceneManager.LoadScene("GameScene");
     }
 
     public void OpenSettings()
@@ -30,21 +49,56 @@ public class MainMenu : MonoBehaviour
         settingsPanel.SetActive(false);
     }
 
+    public void LoadMainMenu()
+    {
+        Debug.Log("Loading Main Menu...");
+        Time.timeScale = 1;
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void OpenOptions()
+    {
+        Debug.Log("Opening Options...");
+        PauseGame();
+    }
+
+    public void CloseOptions()
+    {
+        Debug.Log("Closing Options...");
+        ResumeGame();
+    }
+
     public void Credits()
     {
         Debug.Log("Showing Credits...");
-        SceneManager.LoadScene("CreditsScene"); // Replace with your actual credits scene name
+        Time.timeScale = 1;
+        SceneManager.LoadScene("CreditsScene");
     }
 
     public void closeCredits()
     {
         Debug.Log("Closing Credits...");
-        SceneManager.LoadScene("Main menu"); // Replace with your actual main menu scene name
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Main menu");
     }
 
     public void ExitGame()
     {
         Debug.Log("Exiting Game...");
         Application.Quit();
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0;
+        OptionsPanel.SetActive(true);
+        isPaused = true;
+    }
+
+    private void ResumeGame()
+    {
+        Time.timeScale = 1;
+        OptionsPanel.SetActive(false);
+        isPaused = false;
     }
 }

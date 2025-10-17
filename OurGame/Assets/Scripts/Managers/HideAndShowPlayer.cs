@@ -18,6 +18,10 @@ public class HideAndShowPlayer : MonoBehaviour
     private Scrollbar _hideSlider;
     private bool _isplayerHidden;
     private float _hideDuration;
+    private GameObject sprintBar;
+    private GameObject handsDisplay;
+    private CanvasGroup canvasSprintGroup;
+
 
     private VignetteControl vignetteControl;
 
@@ -32,8 +36,15 @@ public class HideAndShowPlayer : MonoBehaviour
         _player = GameObject.FindWithTag("Player");
         _holdingContainer = GameObject.FindWithTag("HoldingPos");
         _hideSlider = GameObject.FindWithTag("HideSlider").GetComponent<Scrollbar>();
-        _interactor = GameObject.FindWithTag("MainCamera").GetComponent<Interactor>();
-        vignetteControl = GameObject.Find("VignetteControl").GetComponent<VignetteControl>();
+        _interactor = GameObject.FindAnyObjectByType<Interactor>();
+        vignetteControl = GameObject.FindAnyObjectByType<VignetteControl>();
+        handsDisplay = GameObject.FindWithTag("Hands");
+
+        CanvasGroup canvasGroup = _hideSlider.GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0f;
+
+        sprintBar = GameObject.FindWithTag("SprintSlider");
+        canvasSprintGroup = sprintBar.GetComponent<CanvasGroup>();
 
     }
 
@@ -52,13 +63,14 @@ public class HideAndShowPlayer : MonoBehaviour
         {
             vignetteControl.HiddenRemoveVignette(2);
         }
+
+        HandleHideBarAppearing();
     }
 
     #endregion
 
     public void HidePlayer()
     {
-        _hideSlider.gameObject.SetActive(true);
         _interactor._PlayerIsHidden = true;
         //Enables hiding spot camera
         //Disables player visually
@@ -66,10 +78,11 @@ public class HideAndShowPlayer : MonoBehaviour
         _player.gameObject.GetComponent<MeshRenderer>().enabled = false;
         _player.gameObject.GetComponent<PlayerMovement>().enabled = false;
         _player.gameObject.GetComponent<LookFunction>().enabled = false;
+        handsDisplay.gameObject.SetActive(false);
 
         if (_holdingContainer.activeSelf) { _holdingContainer.SetActive(false); }
 
-
+        canvasSprintGroup.alpha = 0f;
         _player.layer = LayerMask.NameToLayer("hidePlacesMask");
 
 
@@ -88,11 +101,36 @@ public class HideAndShowPlayer : MonoBehaviour
         _player.gameObject.GetComponent<MeshRenderer>().enabled = true;
         _player.gameObject.GetComponent<PlayerMovement>().enabled = true;
         _player.gameObject.GetComponent<LookFunction>().enabled = true;
+        handsDisplay.gameObject.SetActive(true);
         if (!_holdingContainer.activeSelf) { _holdingContainer.SetActive(true); }
 
 
-        _hideSlider.gameObject.SetActive(false);
+
         _player.layer = LayerMask.NameToLayer("Player");
 
+    }
+
+
+    void HandleHideBarAppearing()
+    {
+        if (_interactor._PlayerIsHidden)
+        {
+            CanvasGroup canvasGroup = _hideSlider.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = _hideSlider.gameObject.AddComponent<CanvasGroup>();
+            }
+            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, 1f, Time.deltaTime / 0.2f);
+        }
+
+        else if (_hideSlider.size < 0.05)
+        {
+            CanvasGroup canvasGroup = _hideSlider.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = _hideSlider.gameObject.AddComponent<CanvasGroup>();
+            }
+            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, 0f, Time.deltaTime / 0.7f);
+        }
     }
 }

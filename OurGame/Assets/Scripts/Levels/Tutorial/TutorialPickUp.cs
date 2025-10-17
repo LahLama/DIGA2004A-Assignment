@@ -10,7 +10,7 @@ public class TutorialPickUp : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        tutorialNun = GameObject.FindGameObjectWithTag("NunEnemy").GetComponent<TutorialNunAI>();
+        tutorialNun = GameObject.FindAnyObjectByType<TutorialNunAI>();
     }
     void Update()
     {
