@@ -96,6 +96,9 @@ public class MainMenu : MonoBehaviour
 
     private void ResumeGame()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player.GetComponent<PlayerMovement>().enabled = true;
+        player.GetComponent<LookFunction>().enabled = true;
         Time.timeScale = 1;
         OptionsPanel.SetActive(false);
         isPaused = false;

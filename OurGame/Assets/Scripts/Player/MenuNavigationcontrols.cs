@@ -21,6 +21,8 @@ public class MenuNavigationcontrols : MonoBehaviour
     private InputAction selectAction;
     private InputAction startAction;
 
+    public GameObject optionsPanelFirstButton;
+
 
 
     public void OnEnable()
@@ -83,8 +85,19 @@ public class MenuNavigationcontrols : MonoBehaviour
 
     public void OnSelect(InputAction.CallbackContext context)
     {
+
         // Optional: handle selection logic if needed
          GameObject selected = EventSystem.current.currentSelectedGameObject;
+
+         if (selected == null && firstSelectedButton != null)
+    {
+        EventSystem.current.SetSelectedGameObject(firstSelectedButton);
+        return;
+    }
+
+    // highlight or animate selection
+    Debug.Log($"Selected: {selected?.name}");
+
         if (selected != null && selected.TryGetComponent(out Button button))
         {
             button.onClick.Invoke();
@@ -93,14 +106,49 @@ public class MenuNavigationcontrols : MonoBehaviour
     }
 
     public void OnSubmit(InputAction.CallbackContext context)
+{
+    GameObject selected = EventSystem.current.currentSelectedGameObject;
+
+    if (selected == null) return;
+
+    string selectedName = selected.name.ToLower();
+
+    switch (selectedName)
     {
-        // Invoke the currently selected button
-        GameObject selected = EventSystem.current.currentSelectedGameObject;
-        if (selected != null && selected.TryGetComponent(out Button button))
-        {
-            button.onClick.Invoke();
-        }
+        case "settings":
+            if (OptionsPanel != null)
+            {
+                OptionsPanel.SetActive(true);
+                player.GetComponent<PlayerMovement>().enabled = false;
+                player.GetComponent<LookFunction>().enabled = false;
+                EventSystem.current.SetSelectedGameObject(firstSelectedButton); // Optional: focus inside panel
+            }
+            break;
+
+        case "quit":
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu"); // Replace with your actual scene name
+            break;
+
+        case "close":
+            if (OptionsPanel != null)
+            {
+                OptionsPanel.SetActive(false);
+                player.GetComponent<PlayerMovement>().enabled = true;
+                player.GetComponent<LookFunction>().enabled = true;
+            }
+            break;
+
+        default:
+            // Fallback: invoke button normally
+            if (selected.TryGetComponent(out Button button))
+            {
+                button.onClick.Invoke();
+            }
+            break;
     }
+
+    Debug.Log($"Submitted: {selected.name}");
+}
 
     public void OnCancel(InputAction.CallbackContext context)
     {
@@ -138,7 +186,11 @@ public class MenuNavigationcontrols : MonoBehaviour
              player.GetComponent<LookFunction>().enabled = false;
 
             // Optionally set focus to a button in the options panel
-            // Example: EventSystem.current.SetSelectedGameObject(optionsPanelFirstButton);
+            if (optionsPanelFirstButton != null)
+            {
+                EventSystem.current.SetSelectedGameObject(optionsPanelFirstButton);
+            }
+
         }
         else
         {
@@ -157,7 +209,7 @@ public class MenuNavigationcontrols : MonoBehaviour
         Debug.Log("Open Menu pressed - implement menu opening logic here.");
     }
 
-   /* public void OnNavigate(InputAction.CallbackContext context)
+   /*public void OnNavigate(InputAction.CallbackContext context)
     {
         Vector2 navigation = context.ReadValue<Vector2>();
 
