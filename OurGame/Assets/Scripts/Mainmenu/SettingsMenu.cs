@@ -42,6 +42,8 @@ public class SettingsMenu : MonoBehaviour
         musicVolumeSlider.value = musicVol;
         sfxVolumeSlider.value = sfxVol;
 
+        ApplyVolumeSettings();
+
         AudioListener.volume = masterVol;
         if (musicSource != null) musicSource.volume = musicVol;
         if (sfxSource != null) sfxSource.volume = sfxVol;
@@ -62,15 +64,18 @@ public class SettingsMenu : MonoBehaviour
     // Volume Handlers
     public void OnMasterVolumeChanged(float value)
     {
+        
         AudioListener.volume = value;
         PlayerPrefs.SetFloat("MasterVolume", value);
     }
 
     public void OnMusicVolumeChanged(float value)
     {
+        
         if (musicSource != null)
             musicSource.volume = value;
 
+        SoundManager.Instance.SetMusicVolume(value);
         PlayerPrefs.SetFloat("MusicVolume", value);
     }
 
@@ -79,8 +84,17 @@ public class SettingsMenu : MonoBehaviour
         if (sfxSource != null)
             sfxSource.volume = value;
 
+        SoundManager.Instance.SetEffectsVolume(value);
         PlayerPrefs.SetFloat("SFXVolume", value);
     }
+
+    private void ApplyVolumeSettings()
+    {
+        OnMusicVolumeChanged(musicVolumeSlider.value);
+        OnSFXVolumeChanged(sfxVolumeSlider.value);
+        OnMasterVolumeChanged(masterVolumeSlider.value);
+    }
+
 
     // Sensitivity Handlers
     public void OnKeyboardSensitivityChanged(float value)

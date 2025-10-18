@@ -62,6 +62,29 @@ public class SoundManager : MonoBehaviour
 		EffectsSource.clip = clips[randomIndex];
 		EffectsSource.Play();
 	}
+
+	public void SetMusicVolume(float volume)
+{
+    MusicSource.volume = volume;
+	if (MainMenuSource != null)
+	{
+		MainMenuSource.volume = volume;
+	}
+	else
+	{
+		Debug.LogWarning("MainMenuSource is not assigned in SoundManager.");
+	}
+}
+
+public void SetEffectsVolume(float volume)
+{
+    EffectsSource.volume = volume;
+}
+
+public void SetMainMenuVolume(float volume)
+{
+    MainMenuSource.volume = volume;
+}
 	
 }
 
