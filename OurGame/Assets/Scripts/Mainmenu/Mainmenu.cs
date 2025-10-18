@@ -1,52 +1,72 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     public GameObject settingsPanel;
     public GameObject OptionsPanel;
-
+    public GameObject UIPanel;
+    private Transform player;
     private bool isPaused = false;
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!isPaused)
-            {
-                PauseGame();
-            }
-            else
-            {
-                ResumeGame();
-            }
-        }
-    }
 
     public void NewGame()
     {
         Debug.Log("Starting New Game...");
-        Time.timeScale = 1; // Ensure game is unpaused
+        Time.timeScale = 1;
+        PlayerPrefs.DeleteAll(); // Clear previous save
         SceneManager.LoadScene("GameScene");
     }
 
     public void ContinueGame()
     {
         Debug.Log("Continuing Game...");
-        Time.timeScale = 1;
-        SceneManager.LoadScene("GameScene");
+        if (PlayerPrefs.HasKey("SavedScene"))
+        {
+            string savedScene = PlayerPrefs.GetString("SavedScene");
+            Time.timeScale = 1;
+            SceneManager.LoadScene(savedScene);
+        }
+        else
+        {
+            Debug.LogWarning("No saved game found. Starting new game...");
+            NewGame();
+        }
+    }
+
+    public void SaveGame()
+    {
+        SaveManager.SaveGame();
     }
 
     public void OpenSettings()
     {
         Debug.Log("Opening Settings...");
         settingsPanel.SetActive(true);
+        //UIPanel.SetActive(false);
+        //PauseGame();
+    }
+
+    public void OpenGameSettings(){
+        Debug.Log("Opening Settings...");
+        settingsPanel.SetActive(true);
+        UIPanel.SetActive(false);
+        PauseGame();
+    }
+
+    public void CloseGameSettings(){
+        Debug.Log("Closing Settings...");
+        settingsPanel.SetActive(false);
+        ResumeGame();
+        UIPanel.SetActive(true);
     }
 
     public void CloseSettings()
     {
         Debug.Log("Closing Settings...");
         settingsPanel.SetActive(false);
+        //ResumeGame();
+       // UIPanel.SetActive(true);
     }
 
     public void LoadMainMenu()
@@ -79,7 +99,7 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Closing Credits...");
         Time.timeScale = 1;
-        SceneManager.LoadScene("Main menu");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void ExitGame()
@@ -90,6 +110,9 @@ public class MainMenu : MonoBehaviour
 
     private void PauseGame()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player.GetComponent<PlayerMovement>().enabled = false;
+        player.GetComponent<LookFunction>().enabled = false;
         Time.timeScale = 0;
         OptionsPanel.SetActive(true);
         isPaused = true;
@@ -97,8 +120,32 @@ public class MainMenu : MonoBehaviour
 
     private void ResumeGame()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player.GetComponent<PlayerMovement>().enabled = true;
+        player.GetComponent<LookFunction>().enabled = true;
         Time.timeScale = 1;
         OptionsPanel.SetActive(false);
         isPaused = false;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!isPaused)
+            {
+                PauseGame();
+                Cursor.lockState = CursorLockMode.None;
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(OptionsPanel.transform.GetChild(0).gameObject);
+            }
+            else
+            {
+                ResumeGame();
+                Cursor.lockState = CursorLockMode.Locked;
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(GameObject.Find("ResumeButton"));
+            }
+        }
     }
 }

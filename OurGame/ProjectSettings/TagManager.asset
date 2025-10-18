@@ -26,10 +26,6 @@ TagManager:
   - Hold.R
   - OverlayCamera
   - LifeTracker
-<<<<<<< HEAD
-=======
-  - Hands
->>>>>>> main
   layers:
   - Default
   - TransparentFX
