@@ -52,6 +52,14 @@ public class SoundManager : MonoBehaviour
 		
 	}
 
+	public void StopMainMenuMusic()
+	{
+		
+		MainMenuSource.Stop();
+		
+		
+	}
+
 	// Play a random clip from an array, and randomize the pitch slightly.
 	public void RandomSoundEffect(params AudioClip[] clips)
 	{

@@ -41488,7 +41488,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 321350703}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: CloseSettings
+        m_MethodName: CloseGameSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -57796,7 +57796,6 @@ GameObject:
   - component: {fileID: 830116215}
   - component: {fileID: 830116216}
   - component: {fileID: 830116217}
-  - component: {fileID: 830116218}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -58157,18 +58156,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlinkShader: {fileID: 2100000, guid: 2f1eb04a41bfa054e9f648f51b6f6f9b, type: 2}
   BlinkVal: 0
---- !u!114 &830116218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830116205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f7b4125d6e008d4fa003b0d19af2422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &831035649 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7992283297288499852, guid: 9acbf4a75ce538747b129c919dd3d7d0, type: 3}
@@ -59290,18 +59277,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 321350703}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: LoadMainMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 2139673158}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
         m_MethodName: Play
@@ -59309,6 +59284,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 8300000, guid: 3103569221268f64096ab04fe04f27c7, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 321350703}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: LoadMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -121733,8 +121720,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1967412139}
-  - component: {fileID: 1967412138}
   - component: {fileID: 1967412140}
+  - component: {fileID: 1967412141}
+  - component: {fileID: 1967412142}
   m_Layer: 0
   m_Name: BackgroundMusic
   m_TagString: Untagged
@@ -121742,7 +121730,53 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!82 &1967412138
+--- !u!4 &1967412139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967412137}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 26.506126, y: -0.5051602, z: 26.72844}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1967412140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967412137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbc484038ad102d4298df335d81b42a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundAudio: {fileID: 1967412142}
+  gameSceneName: GameScene
+--- !u!114 &1967412141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967412137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8424b8a0255ece147a1f94cede32a8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EffectsSource: {fileID: 2139673157}
+  MusicSource: {fileID: 1967412142}
+  MainMenuSource: {fileID: 1967412142}
+  LowPitchRange: 0.95
+  HighPitchRange: 1.05
+--- !u!82 &1967412142
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121839,35 +121873,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!4 &1967412139
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967412137}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2139673159}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1967412140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967412137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbc484038ad102d4298df335d81b42a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  backgroundAudio: {fileID: 1967412138}
-  gameSceneName: GameScene
 --- !u!1 &1968224661
 GameObject:
   m_ObjectHideFlags: 0
@@ -131569,7 +131574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EffectsSource: {fileID: 2139673157}
   MusicSource: {fileID: 2139673157}
-  MainMenuSource: {fileID: 1967412138}
+  MainMenuSource: {fileID: 1967412142}
   LowPitchRange: 0.95
   HighPitchRange: 1.05
 --- !u!4 &2139673159
@@ -131584,8 +131589,7 @@ Transform:
   m_LocalPosition: {x: 26.506126, y: -0.5051602, z: 26.72844}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1967412139}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2141863393
@@ -132829,4 +132833,5 @@ SceneRoots:
   - {fileID: 1287275904}
   - {fileID: 1210770737}
   - {fileID: 2007994644}
+  - {fileID: 1967412139}
   - {fileID: 2139673159}
