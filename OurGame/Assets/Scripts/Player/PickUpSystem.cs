@@ -199,7 +199,7 @@ public class PickUpSystem : MonoBehaviour
         }
         else
         {
-            playerHands.GetChild(0).transform.position = HoldR.position;
+            //            playerHands.GetChild(0).transform.position = HoldR.position;
         }
     }
 
