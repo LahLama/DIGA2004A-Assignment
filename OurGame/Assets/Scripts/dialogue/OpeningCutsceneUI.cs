@@ -7,6 +7,8 @@ public class OpeningCutsceneUI : MonoBehaviour
 {
     public CanvasGroup blackScreen;
     public TextMeshProUGUI dialogueText;
+    public AudioSource audioSource;
+    public AudioClip typingSound;
 
     [TextArea(2, 5)]
     public string[] monologueLines = new string[0];
@@ -26,6 +28,9 @@ public class OpeningCutsceneUI : MonoBehaviour
 
         if (dialogueText == null)
             dialogueText = GetComponentInChildren<TextMeshProUGUI>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
 
         if (blackScreen == null || dialogueText == null)
         {
@@ -61,6 +66,15 @@ public class OpeningCutsceneUI : MonoBehaviour
         foreach (char letter in line.ToCharArray())
         {
             dialogueText.text += letter;
+
+            // Play typing sound for non-whitespace characters (if available)
+            if (audioSource != null && typingSound != null && !char.IsWhiteSpace(letter))
+            {
+                // Slight pitch variation for more natural sound
+                audioSource.pitch = Random.Range(0.95f, 1.05f);
+                audioSource.PlayOneShot(typingSound);
+            }
+
             yield return new WaitForSeconds(typingSpeed);
         }
     }
