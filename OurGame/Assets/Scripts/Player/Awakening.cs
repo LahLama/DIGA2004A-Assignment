@@ -9,13 +9,15 @@ public class Awakening : MonoBehaviour
     public Material BlinkShader;
     public float BlinkVal;
 
-    void Start()
+    void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
         lookFunction = GetComponent<LookFunction>();
         animationClip = GetComponent<Animation>();
         playerMovement.enabled = false;
         lookFunction.enabled = false;
+        if (!animationClip.isPlaying)
+            animationClip.Play();
 
     }
 
