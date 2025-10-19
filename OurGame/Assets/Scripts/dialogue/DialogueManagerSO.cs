@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
@@ -23,9 +22,15 @@ public class DialogueManagerSO : MonoBehaviour
     private bool isTyping = false;
     private bool waitingForEnd = false;
 
+     public AudioSource audioSource;
+    public AudioClip typingSound;
+
     public void StartFromOtherScript()
     {
         StartDialogue(startingNode);
+
+         if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -72,6 +77,14 @@ public class DialogueManagerSO : MonoBehaviour
         foreach (char c in fullText)
         {
             dialogueText.text += c;
+
+            if (audioSource != null && typingSound != null && !char.IsWhiteSpace(c))
+            {
+                // Slight pitch variation for more natural sound
+                audioSource.pitch = Random.Range(0.95f, 1.05f);
+                audioSource.PlayOneShot(typingSound);
+            }
+
             yield return new WaitForSeconds(0.03f);
         }
 
