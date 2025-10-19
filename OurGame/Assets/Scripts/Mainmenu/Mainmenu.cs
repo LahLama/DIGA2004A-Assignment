@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject settingsPanel;
     public GameObject OptionsPanel;
+    public GameObject mainMenuButtons;
     public GameObject UIPanel;
     private Transform player;
     private bool isPaused = false;
@@ -43,6 +44,7 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Opening Settings...");
         settingsPanel.SetActive(true);
+        mainMenuButtons.SetActive(false);
         //UIPanel.SetActive(false);
         //PauseGame();
     }
@@ -65,6 +67,7 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Closing Settings...");
         settingsPanel.SetActive(false);
+        mainMenuButtons.SetActive(true);
         //ResumeGame();
        // UIPanel.SetActive(true);
     }
