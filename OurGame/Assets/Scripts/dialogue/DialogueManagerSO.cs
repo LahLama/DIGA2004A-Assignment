@@ -25,6 +25,7 @@ public class DialogueManagerSO : MonoBehaviour
      public AudioSource audioSource;
     public AudioClip typingSound;
 
+    //Called to start dialogue from another script
     public void StartFromOtherScript()
     {
         StartDialogue(startingNode);
@@ -44,6 +45,7 @@ public class DialogueManagerSO : MonoBehaviour
             isTyping = false;
             ShowChoices();
         }
+        //End dialogue when waiting for end and mouse clicked
         else if (waitingForEnd && Input.GetMouseButtonDown(0))
         {
             waitingForEnd = false;
@@ -51,12 +53,14 @@ public class DialogueManagerSO : MonoBehaviour
         }
     }
 
+    //Start the dialogue from a given node
     public void StartDialogue(DialogueNodeSO startNode)
     {
         dialoguePanel.SetActive(true);
         ShowNode(startNode);
     }
 
+    //Display the current dialogue node
     private void ShowNode(DialogueNodeSO node)
     {
         currentNode = node;
@@ -69,6 +73,7 @@ public class DialogueManagerSO : MonoBehaviour
         choiceButton2.gameObject.SetActive(false);
     }
 
+    //typewriter effect for dialogue text
     private IEnumerator TypeText(string fullText)
     {
         isTyping = true;
@@ -92,6 +97,7 @@ public class DialogueManagerSO : MonoBehaviour
         ShowChoices();
     }
 
+    // Display choice buttons if available
     private void ShowChoices()
     {
         if (currentNode.choices.Length > 0)
@@ -106,6 +112,7 @@ public class DialogueManagerSO : MonoBehaviour
             });
         }
 
+        // Second choice (if exists)
         if (currentNode.choices.Length > 1)
         {
             choiceButton2.gameObject.SetActive(true);
@@ -124,6 +131,7 @@ public class DialogueManagerSO : MonoBehaviour
         }
     }
 
+    //Ends the Dialogue from another script
     private void CallEndFromScript()
     {
         dialougeState.EndDialouge();
