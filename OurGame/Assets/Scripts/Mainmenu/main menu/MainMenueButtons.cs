@@ -6,6 +6,7 @@ public class MainMenuButtons : MonoBehaviour
     public void OnPlayClicked()
     {
         // Replace with your actual scene name
+        
         SceneManager.LoadScene("GameScene");
     }
 

@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
 
     public void NewGame()
     {
+        
         Debug.Log("Starting New Game...");
         Time.timeScale = 1;
         PlayerPrefs.DeleteAll(); // Clear previous save
