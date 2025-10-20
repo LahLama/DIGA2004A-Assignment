@@ -49705,7 +49705,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hello
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -59317,7 +59317,7 @@ MonoBehaviour:
     tomorrow.\u201D"
   - "\u201CThere\u2019s no need to worry about the formalities. We\u2019ve handled
     all that on our end.\u201D"
-  - '"Thank you and have a blessed evening"'
+  - '"Thank you and have a blessed evening"   * End call*'
   - '*You overhear the Nun and decide to wake up with an urge to do something*'
   delayBetweenLines: 3
   typingSpeed: 0.05
