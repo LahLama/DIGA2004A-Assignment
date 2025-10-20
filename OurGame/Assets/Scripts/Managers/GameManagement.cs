@@ -8,7 +8,7 @@ public class GameManagement : MonoBehaviour
     private Gamepad gamepad;
     public void OnExitGame(InputAction.CallbackContext context)
     {
-        Application.Quit();
+
         gamepad = Gamepad.current;
 
 
