@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 81c59615314328e45a13c22e9ee0a999
+guid: 2d9bd8e12d004dd4bb993dc9adfe9cc4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: correct running icon_0
+      name: hidePollDesign_0
       rect:
         serializedVersion: 2
-        x: 1039
-        y: 502
-        width: 204
-        height: 221
+        x: 476
+        y: 491
+        width: 198
+        height: 202
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,8 +138,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2f7665fdaf61e547bec400df8685b47
-      internalID: -1621876152
+      spriteID: cf4c5329a8a592e4ba76f33a5f9e6676
+      internalID: -2010463852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hidePollDesign_1
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 220
+        width: 364
+        height: 269
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc4146d3fccc45f4d98fa326ddce2c63
+      internalID: -1074752577
       vertices: []
       indices: 
       edges: []
@@ -148,7 +170,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 071ba4f7d326ea54282b218c23dae0ba
+    spriteID: f3445b73a44475841b200e5250364cdd
     internalID: 0
     vertices: []
     indices: 
@@ -158,7 +180,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      correct running icon_0: -1621876152
+      hidePollDesign_0: -2010463852
+      hidePollDesign_1: -1074752577
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
