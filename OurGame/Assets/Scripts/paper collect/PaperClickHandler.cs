@@ -3,19 +3,41 @@ using UnityEngine;
 public class PaperClickHandler : MonoBehaviour
 {
     public GameObject popupPanel; // The panel to show when clicked
+    public GameObject collectedPanel; // The panel to show when clicked
 
-    private bool hasBeenClicked = false;
 
-    private void OnMouseDown()
+    public bool hasBeenPicked = false;
+    private Transform player;
+    void Start()
     {
-        if (hasBeenClicked) return;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        hasBeenClicked = true;
-
-        // Show the popup panel
-        popupPanel.SetActive(true);
-
-        // Hide the paper in the world
-        gameObject.SetActive(false);
     }
+    void Update()
+    {
+
+        if (this.transform.IsChildOf(player) && !hasBeenPicked)
+        {
+            hasBeenPicked = true;
+
+            // Show the popup panel
+            popupPanel.SetActive(true);
+
+            // Hide the paper in the world
+            this.GetComponent<MeshRenderer>().enabled = false;
+
+            Invoke("ShowCollectedPaper", 2);
+        }
+    }
+
+
+    void ShowCollectedPaper()
+    {
+        popupPanel.SetActive(false);
+        collectedPanel.SetActive(true);
+        gameObject.SetActive(false);
+
+
+    }
+
 }

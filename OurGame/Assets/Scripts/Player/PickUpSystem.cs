@@ -113,8 +113,12 @@ public class PickUpSystem : MonoBehaviour
 
 
 
-            //To ensure the object doesnt visually clip through walls
-            pickUpObj.layer = LayerMask.NameToLayer("holdingMask");
+            // To ensure the object and all its children don't visually clip through walls
+            int holdingLayer = LayerMask.NameToLayer("holdingMask");
+            foreach (Transform t in pickUpObj.GetComponentsInChildren<Transform>(true))
+            {
+                t.gameObject.layer = holdingLayer;
+            }
             controller.RumblePusle(0.2f, 0.2f, 0.2f);
 
             // Play pickup sound (SoundManager preferred, fallback to clip)
@@ -140,7 +144,12 @@ public class PickUpSystem : MonoBehaviour
             equipedObj.gameObject.AddComponent<Rigidbody>();
 
             //Reset so that the player cant see the objects through walls
-            equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
+
+            int pickUpLayer = LayerMask.NameToLayer("pickUpMask");
+            foreach (Transform t in equipedObj.GetComponentsInChildren<Transform>(true))
+            {
+                t.gameObject.layer = pickUpLayer;
+            }
 
             // Place object infront of player
             Vector3 equipObjPos = equipedObj.transform.localPosition;
@@ -181,8 +190,11 @@ public class PickUpSystem : MonoBehaviour
             equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
             equipedObj.SetParent(_pickUpsContatiner, true);
 
-            equipedObj.gameObject.layer = LayerMask.NameToLayer("pickUpMask");
-
+            int pickUpLayer = LayerMask.NameToLayer("pickUpMask");
+            foreach (Transform t in equipedObj.GetComponentsInChildren<Transform>(true))
+            {
+                t.gameObject.layer = pickUpLayer;
+            }
 
             equipedObj.gameObject.transform.localScale = _equippedItemScale;
             equipedObj.gameObject.transform.rotation = _equippedItemRotation;
@@ -228,7 +240,7 @@ public class PickUpSystem : MonoBehaviour
         }
         else
         {
-            playerHands.GetChild(0).transform.position = HoldR.position;
+            //            playerHands.GetChild(0).transform.position = HoldR.position;
         }
     }
 
