@@ -3,6 +3,10 @@
             using UnityEngine.UI;
             using TMPro;
 
+            //https://www.youtube.com/watch?v=UR_Rh0c4gbY
+            //https://howto.im/q/how-to-create-a-typewriter-effect-with-textmesh-pro-in-unity
+            //https://docs.unity3d.com/Manual/index.html
+
             public class OpeningCutsceneUI : MonoBehaviour
             {
                 public CanvasGroup blackScreen;

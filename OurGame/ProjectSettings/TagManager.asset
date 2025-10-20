@@ -11,32 +11,33 @@ TagManager:
   - HideSlider
   - NunEmemy
   - Monolouge
+  - Hands
   - Tooltip
+  - LifeTracker
   - Tutorial
+  - Hold.L
+  - HoldingPos
   - Microphone
   - ControllerManager
-  - HoldingPos
+  - OverlayCamera
   - SprintSlider
-  - ForGreenDoor
+  - Hold.R
+  - ForBlueDoor
+  - ForYellowDoor
   - NunEnemy
   - PickUp
-  - ForYellowDoor
-  - ForBlueDoor
-  - Hold.L
-  - Hold.R
-  - OverlayCamera
-  - LifeTracker
+  - ForGreenDoor
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - 
   - Water
   - UI
   - 
   - 
   - 
-  - 
+  - Player
   - interactionsMask
   - hidePlacesMask
   - doorMask

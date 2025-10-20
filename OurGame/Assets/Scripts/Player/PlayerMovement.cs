@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
             if (_moveInput.magnitude > 0.1f)
             {
                 _sprintTimer -= Time.deltaTime;
-                sprintBar.value = 1 - (_sprintTimer / 4); 
+                sprintBar.value = 1 - (_sprintTimer / 4);
                 sprintBar.size = 1 - (_sprintTimer / 4);
                 sprintBar.value = 1 - (_sprintTimer / 4);
                 //Debug.Log("--" + (int)_   sprint}Timer);

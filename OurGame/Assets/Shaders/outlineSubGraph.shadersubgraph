@@ -425,8 +425,8 @@
     "m_ObjectId": "42a0907505f644bbaca106f0049c02e3",
     "m_Title": "Getting the outline and making it more intense",
     "m_Position": {
-        "x": -508.8000183105469,
-        "y": -26.400035858154298
+        "x": -508.7999572753906,
+        "y": -26.399993896484376
     }
 }
 
@@ -736,7 +736,7 @@
     "m_ObjectId": "7ac4220a05fd455dadc40a5f7baaac39",
     "m_Title": "https://www.youtube.com/watch?v=JBpxSQrZRXg",
     "m_Position": {
-        "x": -269.60003662109377,
+        "x": -269.5999755859375,
         "y": -312.79998779296877
     }
 }

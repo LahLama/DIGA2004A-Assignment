@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 public class NunCatch : MonoBehaviour
 {
 
@@ -26,29 +27,45 @@ public class NunCatch : MonoBehaviour
         Vector3 lookPos = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + agent.height, this.gameObject.transform.position.z);
         player.GetComponentInChildren<Camera>().transform.LookAt(lookPos);
         agent.transform.LookAt(player.GetChild(0));
-        HasRespawned = false;
+
+        /*GAME OVER LOGIC*/
+
+        Invoke("endGameOnCatch", 4f);
+
+
+        /*HasRespawned = false;
         Invoke("RespawnPlayer", 2f);
+        GetComponent<NunPatrol>()._isGracePeriod = true;
+        player.GetComponent<Awakening>().enabled = true;*/
         return;
 
 
     }
 
-    private void RespawnPlayer()
+    /* private void RespawnPlayer()
+     {
+         //Update the life count:
+
+         if (!HasRespawned)
+         {
+             HasRespawned = true;
+             //Reset the positons
+             agent.Warp(nunOGpos);
+             player.GetComponent<CharacterController>().enabled = false;
+             player.position = playerOGpos;
+             player.GetComponent<CharacterController>().enabled = true;
+             nunPatrol.StartGracePeriod();
+
+             lifeCounter.SendMessage("RecieveMessageCatchPlayer");
+
+         }
+     }*/
+
+
+    void endGameOnCatch()
     {
-        //Update the life count:
 
-        if (!HasRespawned)
-        {
-            HasRespawned = true;
-            //Reset the positons
-            agent.Warp(nunOGpos);
-            player.GetComponent<CharacterController>().enabled = false;
-            player.position = playerOGpos;
-            player.GetComponent<CharacterController>().enabled = true;
-            nunPatrol.StartGracePeriod();
-
-            lifeCounter.SendMessage("RecieveMessageCatchPlayer");
-
-        }
+        Debug.Log("GAME IS NOW OVER");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
