@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Tsire/older scenes/Game scene.unity
     guid: ec94d940e9339bf4d9f305712c2c2fed
   - enabled: 0
-    path: Assets/Scenes/Tsire/MainMenu _older.unity
+    path: Assets/Scenes/Tsire/older scenes/MainMenu _older.unity
     guid: 5f53203f89d3f1d4f83d12c5423dd4b6
   - enabled: 0
     path: Assets/Scenes/Tsire/GameScene.unity
