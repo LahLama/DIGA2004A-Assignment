@@ -38,7 +38,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _IsBlinking: 0
-    - _blinkState: -0.09397632
+    - _blinkState: -1
     - _eyelashes: 0.1
     m_Colors: []
   m_BuildTextureStacks: []
