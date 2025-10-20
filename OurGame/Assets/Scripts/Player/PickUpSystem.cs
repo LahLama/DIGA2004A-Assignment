@@ -26,6 +26,15 @@ public class PickUpSystem : MonoBehaviour
     private PlayerStats playerStats;
     private Transform HoldR;
 
+    [Header("SFX (optional)")]
+    [SerializeField] private AudioClip pickupSfx;
+    [SerializeField] private AudioClip throwSfx;
+    [SerializeField] private AudioClip dropSfx;
+    [SerializeField] private AudioClip swapSfx;
+
+    // Optional: your SoundManager script (if available). Will try to auto-find in Awake if null.
+    private SoundManager _soundManager;
+
     #endregion
 
     #region UnityFunctions
@@ -38,6 +47,9 @@ public class PickUpSystem : MonoBehaviour
         HoldL = GameObject.FindWithTag("Hold.L").transform;
         HoldR = GameObject.FindWithTag("Hold.R").transform;
         playerStats = GameObject.FindAnyObjectByType<PlayerStats>();
+
+        if (_soundManager == null)
+            _soundManager = GameObject.FindAnyObjectByType<SoundManager>();
     }
 
 
@@ -91,6 +103,7 @@ public class PickUpSystem : MonoBehaviour
 
 
 
+
             //Animate a slight jiggle when picked up
 
             //Reposition items on player
@@ -107,6 +120,12 @@ public class PickUpSystem : MonoBehaviour
                 t.gameObject.layer = holdingLayer;
             }
             controller.RumblePusle(0.2f, 0.2f, 0.2f);
+
+            // Play pickup sound (SoundManager preferred, fallback to clip)
+            if (_soundManager != null)
+                _soundManager.Play(pickupSfx);
+            else if (pickupSfx != null)
+                AudioSource.PlayClipAtPoint(pickupSfx, transform.position);
         }
         else
             return;
@@ -143,7 +162,11 @@ public class PickUpSystem : MonoBehaviour
             equipedObj.gameObject.transform.localScale = _equippedItemScale;
             equipedObj.gameObject.transform.rotation = _equippedItemRotation;
 
-
+            // Play drop sound
+            if (_soundManager != null)
+                _soundManager.Play(dropSfx);
+            else if (dropSfx != null)
+                AudioSource.PlayClipAtPoint(dropSfx, transform.position);
 
             Invoke("RepositionItems", 0.1f);
             return;
@@ -177,6 +200,12 @@ public class PickUpSystem : MonoBehaviour
             equipedObj.gameObject.transform.rotation = _equippedItemRotation;
 
             rb.AddForce(playerHands.forward * 5f, ForceMode.Impulse);
+
+            // Play throw sound
+            if (_soundManager != null)
+                _soundManager.Play(throwSfx);
+            else if (throwSfx != null)
+                AudioSource.PlayClipAtPoint(throwSfx, transform.position);
 
             objHasBeenThrown = true;
             if (playerStats.playerLevel != PlayerStats.PlayerLevel.Tutorial && !_enemyAI._isGracePeriod)
@@ -222,6 +251,12 @@ public class PickUpSystem : MonoBehaviour
             playerHands.GetChild(1).SetAsFirstSibling();
             playerHands.GetChild(0).transform.position = HoldR.position;
             playerHands.GetChild(1).transform.position = HoldL.position;
+
+            // Play swap sound
+            if (_soundManager != null)
+                _soundManager.Play(swapSfx);
+            else if (swapSfx != null)
+                AudioSource.PlayClipAtPoint(swapSfx, transform.position);
         }
         else if (playerHands.childCount == 1)
         {
