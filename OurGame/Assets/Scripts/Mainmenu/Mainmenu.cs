@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     // UI panels and groups set from the Inspector
     public GameObject settingsPanel;    // general settings panel
     public GameObject OptionsPanel;     // in-game options/pause panel
-    public GameObject mainMenuButtons;  // main menu buttons container
+                                        // public GameObject mainMenuButtons;  // main menu buttons container
     public GameObject UIPanel;          // in-game UI container (HUD)
 
     // Player transform cached when pausing/resuming
@@ -56,7 +56,7 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Opening Settings...");
         settingsPanel.SetActive(true);
-        mainMenuButtons.SetActive(false);
+        //  mainMenuButtons.SetActive(false);
         //UIPanel.SetActive(false);
         //PauseGame();
     }
@@ -77,6 +77,7 @@ public class MainMenu : MonoBehaviour
         settingsPanel.SetActive(false);
         ResumeGame();
         UIPanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Close settings opened from main menu: hide settings and show main menu buttons
@@ -84,7 +85,9 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Closing Settings...");
         settingsPanel.SetActive(false);
-        mainMenuButtons.SetActive(true);
+        ResumeGame();
+        UIPanel.SetActive(true);
+        //mainMenuButtons.SetActive(true);
         //ResumeGame();
         // UIPanel.SetActive(true);
     }
