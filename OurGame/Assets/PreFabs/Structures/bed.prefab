@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bed
       objectReference: {fileID: 0}
+    - target: {fileID: 3365558249369945065, guid: c167ffe5ab88dda49ad326c8c9392994, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -59,6 +63,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3365558249369945065, guid: c167ffe5ab88dda49ad326c8c9392994, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1554073879041115958}
+    - targetCorrespondingSourceObject: {fileID: 3365558249369945065, guid: c167ffe5ab88dda49ad326c8c9392994, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6659510350119712517}
   m_SourcePrefab: {fileID: 100100000, guid: c167ffe5ab88dda49ad326c8c9392994, type: 3}
 --- !u!1 &1690801362769205805 stripped
 GameObject:
@@ -87,3 +94,16 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3335724914305450694, guid: c167ffe5ab88dda49ad326c8c9392994, type: 3}
+--- !u!114 &6659510350119712517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690801362769205805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6f8fbb331cf7542a876b556d7c1188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyWords: This used to be his bed

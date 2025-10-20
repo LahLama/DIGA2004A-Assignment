@@ -1,6 +1,5 @@
 using UnityEngine;
-using UnityEngine.Rendering;
-
+using System.Collections.Generic;
 
 public class DoorUnlocking : MonoBehaviour
 {
@@ -12,6 +11,8 @@ public class DoorUnlocking : MonoBehaviour
     private InnerDialouge _innerDialouge;
     private string[] _doorTags = { "ForGreenDoor", "ForRedDoor", "ForBlueDoor", "ForYellowDoor" };
     public GameObject[] RedDoors;
+    // track which key types have been unlocked
+    private HashSet<string> _unlockedKeys = new HashSet<string>();
 
     #endregion
 
@@ -31,85 +32,103 @@ public class DoorUnlocking : MonoBehaviour
 
     public void CanPlayerOpenDoor()
     {
-        //Getting the door the player is looking at
-        // and gets the item the player is holding
-        var currentDoor = _hitDoorObj.collider;
+        // safe-guard: make sure we actually hit something
+        if (_hitDoorObj.collider == null) return;
+
+        // Getting the door the player is looking at and the item the player is holding
+        Collider currentDoor = _hitDoorObj.collider;
         var playerHands = _pickUpSystem.playerHands;
 
+        // determine which door key type this door needs
+        string requiredTag = null;
+        foreach (var tag in _doorTags)
+        {
+            if (currentDoor.CompareTag(tag))
+            {
+                requiredTag = tag;
+                break;
+            }
+        }
+
+        // not a door we handle
+        if (requiredTag == null) return;
+
+        // If door type already unlocked, just play the animation repeatedly
+        if (_unlockedKeys.Contains(requiredTag))
+        {
+            DoorAnim(currentDoor);
+            if (requiredTag == _doorTags[1] && RedDoors != null) // RedDoors special group
+            {
+                foreach (var door in RedDoors)
+                {
+                    if (door == null) continue;
+                    var anim = door.GetComponentInChildren<Animator>();
+                    if (anim != null) anim.SetTrigger("DoorOpen");
+                }
+            }
+            return;
+        }
+
+        // Player must have the correct key in hand to unlock
         if (playerHands.childCount > 0)
         {
-            var currentItem = _pickUpSystem.playerHands.GetChild(0);
-            //Compares if the door and handheld item matches tags
-
-            //Green Door
-            if (currentItem.CompareTag(_doorTags[0]) && currentDoor.CompareTag(_doorTags[0]))
+            var currentItem = playerHands.GetChild(0);
+            if (currentItem != null && currentItem.CompareTag(requiredTag))
             {
-                Destroy(currentDoor.gameObject.transform.parent.gameObject);
-                Destroy(currentItem.gameObject);
-            }
+                // mark unlocked so doors can be opened any amount of times
+                _unlockedKeys.Add(requiredTag);
 
-            //Red Door
-            else if (currentItem.CompareTag(_doorTags[1]) && currentDoor.CompareTag(_doorTags[1]))
-            {
-                Destroy(currentItem.gameObject);
-                foreach (var Door in RedDoors)
+                // play animation on this door
+                DoorAnim(currentDoor);
+
+                // special handling for red doors group
+                if (requiredTag == _doorTags[1] && RedDoors != null)
                 {
-                    Destroy(Door);
+                    foreach (var door in RedDoors)
+                    {
+                        if (door == null) continue;
+                        var anim = door.GetComponentInChildren<Animator>();
+                        if (anim != null) anim.SetTrigger("DoorOpen");
+                    }
                 }
 
-            }
-
-            //Blue Door
-            else if (currentItem.CompareTag(_doorTags[2]) && currentDoor.CompareTag(_doorTags[2]))
-            {
+                // consume key (optional) - remove this line if you want the player to keep the key
                 Destroy(currentItem.gameObject);
-                Destroy(currentDoor.gameObject.transform.parent.gameObject);
+
+                return;
             }
 
-            //Yellow Door
-            else if (currentItem.CompareTag(_doorTags[3]) && currentDoor.CompareTag(_doorTags[3]))
-            {
-                Destroy(currentItem.gameObject);
-                Destroy(currentDoor.gameObject.transform.parent.gameObject);
-            }
-
-            //If its not the key
-            else
-            {
-                _innerDialouge.text.text = "I gotta find the key.";
-                StartCoroutine(_innerDialouge.InnerDialogueContorl());
-
-
-                //Door Open
-
-
-            }
+            // player has something but not the right key
+            _innerDialouge.text.text = "I gotta find the key.";
+            StartCoroutine(_innerDialouge.InnerDialogueContorl());
         }
         else
         {
-            //If the player doesnt have anything in hand
+            // player has nothing in hand
             _innerDialouge.text.text = "I need my item.";
             StartCoroutine(_innerDialouge.InnerDialogueContorl());
-
-            // Test door animation
-
-            if (currentDoor.transform.parent.parent.TryGetComponent<Animator>(out Animator animator))
-
-
-                if (animator != null)
-                {
-                    animator.SetTrigger("DoorOpen");
-
-                    return;
-                }
-                else
-                {
-                    print("no animator");
-                }
         }
     }
 
 
+    private void DoorAnim(Collider currentDoor)
+    {
+        if (currentDoor == null) return;
 
+        // try to find an Animator in the parent chain first, then children
+        Animator animator = currentDoor.GetComponentInParent<Animator>();
+        if (animator == null)
+            animator = currentDoor.GetComponentInChildren<Animator>();
+
+        if (animator != null)
+        {
+            animator.SetTrigger("DoorOpen");
+            return;
+        }
+        else
+        {
+            Debug.LogWarning("No Animator found for door: " + currentDoor.name);
+        }
+    }
 
 }
