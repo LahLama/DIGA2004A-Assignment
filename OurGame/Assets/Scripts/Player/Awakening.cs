@@ -20,7 +20,22 @@ public class Awakening : MonoBehaviour
             animationClip.Play();
 
     }
+    void OnEnable()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
 
+        player.transform.rotation = Quaternion.identity;
+
+
+        if (playerMovement != null) playerMovement.enabled = false;
+        if (lookFunction != null) lookFunction.enabled = false;
+
+        if (animationClip != null && !animationClip.isPlaying)
+            animationClip.Play();
+
+        if (BlinkShader != null)
+            BlinkShader.SetFloat("_blinkState", BlinkVal);
+    }
 
     void Update()
     {
