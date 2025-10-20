@@ -5666,6 +5666,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
   dialogueManager: {fileID: 1110130440}
+--- !u!1 &44049016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 44049017}
+  m_Layer: 0
+  m_Name: animation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &44049017
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44049016}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &48941237
 GameObject:
   m_ObjectHideFlags: 0
@@ -67091,7 +67122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 07ce27dbcbc3b1c42bdd6068426a7727, type: 3}
       propertyPath: m_Name
-      value: designed walls correct
+      value: 'designed walls '
       objectReference: {fileID: 0}
     - target: {fileID: 1248823939831005238, guid: 07ce27dbcbc3b1c42bdd6068426a7727, type: 3}
       propertyPath: m_LocalScale.y
@@ -123918,3 +123949,4 @@ SceneRoots:
   - {fileID: 1210770737}
   - {fileID: 2007994644}
   - {fileID: 1266286523}
+  - {fileID: 44049017}

@@ -60178,7 +60178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &801341160
 Transform:
   m_ObjectHideFlags: 0
@@ -73002,6 +73002,8 @@ MonoBehaviour:
   choiceText2: {fileID: 1376245920}
   dialougeState: {fileID: 43992080}
   startingNode: {fileID: 11400000, guid: 39a6912b38eafa948a9d81abe0a697ce, type: 2}
+  audioSource: {fileID: 0}
+  typingSound: {fileID: 0}
 --- !u!4 &1110130441
 Transform:
   m_ObjectHideFlags: 0
