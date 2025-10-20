@@ -46,13 +46,13 @@ public class MoveFromMicrophone : MonoBehaviour
 
         if (slider.value > _loudRange)
         {
-            _barColorbg.color = Color.red;
+            _barColorbg.color = new Color(1f, 0.95f, 0.95f, 1f);
             isLoud = true;
             StartCoroutine(Cooldown(NunlookTime));
         }
         else
         {
-            _barColorbg.color = Color.blue;
+            _barColorbg.color = new Color(0.9f, 0.95f, 1f, 1f); ;
 
         }
 
