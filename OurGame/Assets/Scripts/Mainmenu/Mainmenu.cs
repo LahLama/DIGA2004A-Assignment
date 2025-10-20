@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     // UI panels and groups set from the Inspector
     public GameObject settingsPanel;    // general settings panel
     public GameObject OptionsPanel;     // in-game options/pause panel
-    public GameObject mainMenuButtons;  // main menu buttons container
+                                        // public GameObject mainMenuButtons;  // main menu buttons container
     public GameObject UIPanel;          // in-game UI container (HUD)
 
     // Player transform cached when pausing/resuming
@@ -56,7 +56,7 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Opening Settings...");
         settingsPanel.SetActive(true);
-        mainMenuButtons.SetActive(false);
+        //  mainMenuButtons.SetActive(false);
         //UIPanel.SetActive(false);
         //PauseGame();
     }
@@ -68,7 +68,6 @@ public class MainMenu : MonoBehaviour
         settingsPanel.SetActive(true);
         UIPanel.SetActive(false);
         PauseGame();
-       
     }
 
     // Close in-game settings: hide settings, resume the game and re-enable HUD
@@ -78,7 +77,7 @@ public class MainMenu : MonoBehaviour
         settingsPanel.SetActive(false);
         ResumeGame();
         UIPanel.SetActive(true);
-       
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Close settings opened from main menu: hide settings and show main menu buttons
@@ -86,7 +85,9 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Closing Settings...");
         settingsPanel.SetActive(false);
-        mainMenuButtons.SetActive(true);
+        ResumeGame();
+        UIPanel.SetActive(true);
+        //mainMenuButtons.SetActive(true);
         //ResumeGame();
         // UIPanel.SetActive(true);
     }
@@ -184,7 +185,6 @@ public class MainMenu : MonoBehaviour
                 // Pause the game and show the options UI; unlock cursor so user can click
                 PauseGame();
                 Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
 
                 // Reset selected UI element then select the first child of OptionsPanel
                 EventSystem.current.SetSelectedGameObject(null);
@@ -195,7 +195,6 @@ public class MainMenu : MonoBehaviour
                 // Resume the game and lock cursor back for gameplay
                 ResumeGame();
                 Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
 
                 // Reset selected UI element and set selection to the ResumeButton in the scene (if present)
                 EventSystem.current.SetSelectedGameObject(null);

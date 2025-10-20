@@ -17,12 +17,19 @@ public class ControllerRumble : MonoBehaviour
     private bool isRumbling = false;
     public bool VibrationsEnabled = true;
 
+
+
     void Update()
     {
         if (!VibrationsEnabled)
         {
             StopRumbleSteam();
         }
+    }
+
+    public void swapBool()
+    {
+        VibrationsEnabled = !VibrationsEnabled;
     }
 
     public void RumblePusle(float low, float high, float duration)
@@ -94,5 +101,12 @@ public class ControllerRumble : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void RumbleTest()
+    {
+        if (!VibrationsEnabled) return;
+        // Moderate rumble for 2 seconds (low motor, high motor)
+        RumblePusle(1f, 1f, 0.5f);
     }
 }
