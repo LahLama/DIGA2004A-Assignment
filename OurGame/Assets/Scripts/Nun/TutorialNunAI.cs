@@ -11,12 +11,13 @@ public class TutorialNunAI : MonoBehaviour
     private Tutorial tutorial;
     private TutorialPickUp tutorialPickUp;
     private Transform player;
-    public Vector3 OriginalPos;
+    public Vector3 OriginalPos; private Transform camera;
     private bool TutEnded = false, TutItem = false, ApplyVignette = false;
     [SerializeField] private Transform NunSpawnPoint;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        camera = GameObject.FindGameObjectWithTag("MainCamera").transform;
         OriginalPos = transform.position;
         vignetteControl = FindAnyObjectByType<VignetteControl>();
         agent = GetComponent<NavMeshAgent>();
@@ -78,7 +79,8 @@ public class TutorialNunAI : MonoBehaviour
 
 
         this.transform.localScale = Vector3.one;
-
+        camera.rotation = Quaternion.Euler(0, 0, 0);
+        player.transform.rotation = Quaternion.Euler(0, 0, 0);
         player.GetComponent<PlayerMovement>().enabled = false;
         player.GetComponent<LookFunction>().enabled = false;
 

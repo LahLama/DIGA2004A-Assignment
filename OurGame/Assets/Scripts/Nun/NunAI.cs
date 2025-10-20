@@ -77,7 +77,7 @@ public class NunAi : MonoBehaviour
 
            Debug.DrawLine(transform.position, directionToPlayer);*/
 
-        inLOS = nunChase.PlayerInLineOfSight();
+        inLOS = true;
         isChasing = playerInSightRange && !playerInCatchRange && inLOS;
 
         if (_isGracePeriod == false)

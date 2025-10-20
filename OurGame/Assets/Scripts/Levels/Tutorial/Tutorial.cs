@@ -20,7 +20,7 @@ public class Tutorial : MonoBehaviour
     private NunAi nunAi;
     private LivesTracker lifeCounter;
 
-
+    private Transform camera;
 
 
     void Awake()
@@ -28,7 +28,7 @@ public class Tutorial : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerStats = FindAnyObjectByType<PlayerStats>();
         TutorialBranch = this.gameObject;
-
+        camera = GameObject.FindGameObjectWithTag("MainCamera").transform;
         BaseGameBranch = GameObject.FindGameObjectWithTag("BaseGame");
         BaseGameBranch.SetActive(false);
         tutorialNun = FindAnyObjectByType<TutorialNunAI>();
@@ -72,7 +72,7 @@ public class Tutorial : MonoBehaviour
         player.position = OGplayerPos + Vector3.up;
         cc.enabled = true;
 
-
+        camera.rotation = Quaternion.Euler(0, 0, 0);
         player.GetComponent<PlayerMovement>().enabled = true;
         player.GetComponent<LookFunction>().enabled = true;
 
