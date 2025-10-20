@@ -30,7 +30,7 @@ public class NunCatch : MonoBehaviour
 
         /*GAME OVER LOGIC*/
 
-        Invoke("endGameOnCatch", 4f);
+        Invoke("endGameOnCatch", 2f);
 
 
         /*HasRespawned = false;
@@ -66,6 +66,6 @@ public class NunCatch : MonoBehaviour
     {
 
         Debug.Log("GAME IS NOW OVER");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("End Scene");
     }
 }

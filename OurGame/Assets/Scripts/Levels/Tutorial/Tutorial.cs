@@ -1,4 +1,4 @@
-using UnityEditorInternal;
+
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -78,7 +78,7 @@ public class Tutorial : MonoBehaviour
 
         VC.RemoveVignette(0);
 
-        lifeCounter.SendMessage("RecieveMessageCatchPlayer");
+        //        lifeCounter.SendMessage("RecieveMessageCatchPlayer");
 
 
         BaseGameBranch.SetActive(true);
@@ -86,6 +86,8 @@ public class Tutorial : MonoBehaviour
 
         //This must be the last line
         TutorialBranch.SetActive(false);
+
+
         return;
     }
 }

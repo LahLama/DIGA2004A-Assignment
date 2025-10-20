@@ -22,7 +22,7 @@ public class HideAndShowPlayer : MonoBehaviour
     private GameObject handsDisplay;
     private CanvasGroup canvasSprintGroup;
 
-
+    private GameObject playerParts;
     private VignetteControl vignetteControl;
 
 
@@ -39,7 +39,7 @@ public class HideAndShowPlayer : MonoBehaviour
         _interactor = GameObject.FindAnyObjectByType<Interactor>();
         vignetteControl = GameObject.FindAnyObjectByType<VignetteControl>();
         handsDisplay = GameObject.FindWithTag("Hands");
-
+        playerParts = GameObject.FindWithTag("PlayerParts");
         CanvasGroup canvasGroup = _hideSlider.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0f;
 
@@ -75,7 +75,7 @@ public class HideAndShowPlayer : MonoBehaviour
         //Enables hiding spot camera
         //Disables player visually
         transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = true;
-        _player.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        playerParts.SetActive(false);
         _player.gameObject.GetComponent<PlayerMovement>().enabled = false;
         _player.gameObject.GetComponent<LookFunction>().enabled = false;
         handsDisplay.gameObject.SetActive(false);
@@ -98,7 +98,7 @@ public class HideAndShowPlayer : MonoBehaviour
         //Enables player visually
         _hideSlider.size = 0;
         transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = false;
-        _player.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        playerParts.SetActive(true);
         _player.gameObject.GetComponent<PlayerMovement>().enabled = true;
         _player.gameObject.GetComponent<LookFunction>().enabled = true;
         handsDisplay.gameObject.SetActive(true);

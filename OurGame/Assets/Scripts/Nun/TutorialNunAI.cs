@@ -71,6 +71,7 @@ public class TutorialNunAI : MonoBehaviour
         GetComponent<NunPatrol>()._isGracePeriod = true;
         player.GetComponent<Awakening>().enabled = true;
 
+
     }
     public void SpawnNunOnPlayer()
     {
