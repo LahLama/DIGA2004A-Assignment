@@ -8410,7 +8410,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 179921062}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1967412141}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 87214fea827d21745bf9530e0cf3d2aa, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &181841292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25260,7 +25272,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 20c6857c95917ed4784678386507fd70, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -26211,6 +26223,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHands: {fileID: 1711941728}
   objHasBeenThrown: 0
+  pickupSfx: {fileID: 8300000, guid: 3efc94c8ce088324aa8ec3fcccb8571d, type: 3}
+  throwSfx: {fileID: 8300000, guid: 865606a2593d8934590d9c947fa1da24, type: 3}
+  dropSfx: {fileID: 8300000, guid: 865606a2593d8934590d9c947fa1da24, type: 3}
+  swapSfx: {fileID: 8300000, guid: b0c35c4249833a8498f94e62b3e164be, type: 3}
 --- !u!114 &330585552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41792,7 +41808,7 @@ MonoBehaviour:
         m_MethodName: Play
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 3103569221268f64096ab04fe04f27c7, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 87214fea827d21745bf9530e0cf3d2aa, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -59267,7 +59283,6 @@ GameObject:
   m_Component:
   - component: {fileID: 872026503}
   - component: {fileID: 872026502}
-  - component: {fileID: 872026501}
   m_Layer: 0
   m_Name: cutsenedialogue manager
   m_TagString: Untagged
@@ -59275,28 +59290,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &872026501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872026500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a87f446b745bd429a5b2afce629bce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialoguePanel: {fileID: 0}
-  dialogueText: {fileID: 0}
-  choiceButton1: {fileID: 0}
-  choiceButton2: {fileID: 0}
-  choiceText1: {fileID: 0}
-  choiceText2: {fileID: 0}
-  dialougeState: {fileID: 0}
-  startingNode: {fileID: 0}
-  audioSource: {fileID: 0}
-  typingSound: {fileID: 0}
 --- !u!114 &872026502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59315,6 +59308,8 @@ MonoBehaviour:
   typingSound: {fileID: 8300000, guid: 3103569221268f64096ab04fe04f27c7, type: 3}
   UIPanel: {fileID: 1296394888}
   monologueLines:
+  - '*Ringing*'
+  - '*Ringing*'
   - '"Blessings to you"'
   - "\u201CI can\u2019t speak for long \u2014 the children are asleep, and I\u2019d
     rather not disturb them.\u201D"
@@ -59323,6 +59318,7 @@ MonoBehaviour:
   - "\u201CThere\u2019s no need to worry about the formalities. We\u2019ve handled
     all that on our end.\u201D"
   - '"Thank you and have a blessed evening"'
+  - '*You overhear the Nun and decide to wake up with an urge to do something*'
   delayBetweenLines: 3
   typingSpeed: 0.05
 --- !u!4 &872026503
@@ -59790,7 +59786,7 @@ MonoBehaviour:
         m_MethodName: Play
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 3103569221268f64096ab04fe04f27c7, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 87214fea827d21745bf9530e0cf3d2aa, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -61223,7 +61219,7 @@ MonoBehaviour:
         m_MethodName: Play
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 3103569221268f64096ab04fe04f27c7, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 87214fea827d21745bf9530e0cf3d2aa, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -62861,7 +62857,7 @@ MonoBehaviour:
         m_MethodName: Play
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 3103569221268f64096ab04fe04f27c7, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 87214fea827d21745bf9530e0cf3d2aa, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -64315,7 +64311,7 @@ MonoBehaviour:
         m_MethodName: Play
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 3103569221268f64096ab04fe04f27c7, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 87214fea827d21745bf9530e0cf3d2aa, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -131513,7 +131509,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2111718516}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1967412141}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 87214fea827d21745bf9530e0cf3d2aa, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &2114922803
 PrefabInstance:
   m_ObjectHideFlags: 0
