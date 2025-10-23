@@ -5915,6 +5915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &48941237
 GameObject:
@@ -8536,6 +8537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!4 &191430565 stripped
 Transform:
@@ -41484,6 +41486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &566845101
 GameObject:
@@ -49952,6 +49955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &641360907 stripped
 GameObject:
@@ -64882,6 +64886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &1106108607 stripped
 GameObject:
@@ -70245,6 +70250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!4 &1123976956 stripped
 Transform:
@@ -98146,6 +98152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &1807314062 stripped
 GameObject:
@@ -121631,6 +121638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &1933812685 stripped
 GameObject:
@@ -122661,7 +122669,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 83daf6e41d2a7e442aa85fbedba15b40, type: 3}
+  m_Resource: {fileID: 8300000, guid: 8119ae06e8fa7d447922bd7cd9e081fd, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -123463,6 +123471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &2007579221
 GameObject:
