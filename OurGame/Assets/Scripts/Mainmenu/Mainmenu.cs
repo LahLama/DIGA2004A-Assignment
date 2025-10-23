@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Starting New Game...");
         Time.timeScale = 1;                 // ensure game time is running
-        PlayerPrefs.DeleteAll();            // Clear previous save data
+       // PlayerPrefs.DeleteAll();            // Clear previous save data
         SceneManager.LoadScene("GameScene"); // load new game scene
     }
 
@@ -57,8 +57,8 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Opening Settings...");
         settingsPanel.SetActive(true);
         //  mainMenuButtons.SetActive(false);
-        //UIPanel.SetActive(false);
-        //PauseGame();
+        
+        
     }
 
     // Open in-game settings: show settings and pause the game, hide HUD
@@ -68,6 +68,8 @@ public class MainMenu : MonoBehaviour
         settingsPanel.SetActive(true);
         UIPanel.SetActive(false);
         PauseGame();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     // Close in-game settings: hide settings, resume the game and re-enable HUD
@@ -78,6 +80,7 @@ public class MainMenu : MonoBehaviour
         ResumeGame();
         UIPanel.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Close settings opened from main menu: hide settings and show main menu buttons
@@ -88,8 +91,8 @@ public class MainMenu : MonoBehaviour
         ResumeGame();
         UIPanel.SetActive(true);
         //mainMenuButtons.SetActive(true);
-        //ResumeGame();
-        // UIPanel.SetActive(true);
+        
+        
     }
 
     // Load the main menu scene (from other scenes)
@@ -105,6 +108,8 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Opening Options...");
         PauseGame();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     // Close options: resume gameplay and hide options UI
@@ -112,6 +117,8 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Closing Options...");
         ResumeGame();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Load credits scene
