@@ -20,12 +20,12 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 5.7
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 0.6924528, b: 0.6924528, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
-  m_SubtractiveShadowColor: {r: 0.0037735105, g: 0.003752151, b: 0.003752151, a: 1}
+  m_SubtractiveShadowColor: {r: 1, g: 1, b: 1, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 3d86403a01538f54bb9c348e69fcac55, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -13214,14 +13214,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141325605}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 38.209, y: 6.404286, z: 20.917}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 28.205, y: 6.336, z: 23.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1148877180}
   m_Father: {fileID: 1163519669}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!95 &141325607
 Animator:
   serializedVersion: 7
@@ -20512,6 +20512,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: ForRedDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 2699934116011831074, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2796d6b95eb22314da8ffc5b78ddcbb5, type: 2}
     - target: {fileID: 5092708244707826562, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -23403,6 +23407,7 @@ MonoBehaviour:
     m_Bits: 1
   _PlayerIsHidden: 0
   hitObj: 0
+  startDialougeScript: {fileID: 0}
   _interactionDelay: 0
   hideDuration: 5
   noLOS: 0
@@ -36027,7 +36032,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5235786763680770193, guid: 493f6cd29f6463b4f9277eff0bc93422, type: 3}
       propertyPath: m_TagString
-      value: ForBlueDoor
+      value: ForGreenDoor
       objectReference: {fileID: 0}
     - target: {fileID: 7081191284176007299, guid: 493f6cd29f6463b4f9277eff0bc93422, type: 3}
       propertyPath: m_Materials.Array.size
@@ -37126,6 +37131,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: ForRedDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 2699934116011831074, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2796d6b95eb22314da8ffc5b78ddcbb5, type: 2}
     - target: {fileID: 5092708244707826562, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -60013,6 +60022,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: ForBlueDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 2699934116011831074, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2796d6b95eb22314da8ffc5b78ddcbb5, type: 2}
     - target: {fileID: 5092708244707826562, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -78238,7 +78251,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1ec8f8fabfb6d6849814a46c28939a1e, type: 2}
+  - {fileID: 2100000, guid: 7ef3bc1e198b4aa498824823152744b9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -89456,14 +89469,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367950946}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.209, y: 6.311, z: 23.973}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 37.18, y: 6.311, z: 21}
   m_LocalScale: {x: 1.135805, y: 1.135805, z: 1.135805}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 256116331}
   m_Father: {fileID: 1163519669}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!95 &1367950948
 Animator:
   serializedVersion: 7
@@ -96369,7 +96382,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 43f795924c35ec54e98251956d5446bd, type: 2}
+  - {fileID: 2100000, guid: 1ec8f8fabfb6d6849814a46c28939a1e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109517,6 +109530,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: ForGreenDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 2699934116011831074, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2796d6b95eb22314da8ffc5b78ddcbb5, type: 2}
     - target: {fileID: 5092708244707826562, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -113491,7 +113508,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 23a9784276db6f141b44b776e12fe191, type: 2}
+  - {fileID: 2100000, guid: 43f795924c35ec54e98251956d5446bd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113570,7 +113587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1529872630957500425, guid: d436c169820314d42ac7d7b4c2020aab, type: 3}
       propertyPath: m_TagString
-      value: ForGreenDoor
+      value: ForBlueDoor
       objectReference: {fileID: 0}
     - target: {fileID: 2193503302470087347, guid: d436c169820314d42ac7d7b4c2020aab, type: 3}
       propertyPath: m_LocalScale.x
@@ -147278,8 +147295,8 @@ Transform:
   m_LocalScale: {x: 0.49000025, y: 0.48999998, z: 0.49000025}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1799835736}
   - {fileID: 330585546}
+  - {fileID: 1799835736}
   - {fileID: 346366229}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 5.751251, y: -13.8556, z: 0}
