@@ -10,6 +10,8 @@ public class SoundManager : MonoBehaviour
 	public AudioSource MusicSource;
 	public AudioSource MainMenuSource;
 
+	
+	
 	// Random pitch adjustment range.
 	public float LowPitchRange = .95f;
 	public float HighPitchRange = 1.05f;
@@ -26,10 +28,10 @@ public class SoundManager : MonoBehaviour
 			Instance = this;
 		}
 		//If an instance already exists, destroy whatever this object is to enforce the singleton.
-		else if (Instance != this)
+		/*else if (Instance != this)
 		{
 			Destroy(gameObject);
-		}
+		}*/
 
 		//Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
 		DontDestroyOnLoad (gameObject);
@@ -59,6 +61,8 @@ public class SoundManager : MonoBehaviour
 		
 		
 	}
+
+	
 
 	// Play a random clip from an array, and randomize the pitch slightly.
 	public void RandomSoundEffect(params AudioClip[] clips)

@@ -6,6 +6,8 @@ public class DialougeState : MonoBehaviour
     private GameObject player;
     [SerializeField] private GameObject tooltip; // assign in Inspector when possible
     public DialogueManagerSO dialogueManager;
+   
+    
 
     void Start()
     {
@@ -42,6 +44,7 @@ public class DialougeState : MonoBehaviour
         Cursor.visible = true;
         DialougeContainer.SetActive(true);
 
+       
         dialogueManager.StartFromOtherScript();
     }
 
@@ -52,5 +55,8 @@ public class DialougeState : MonoBehaviour
         if (tooltip != null) tooltip.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         DialougeContainer.SetActive(false);
+
+        
+
     }
 }

@@ -61,7 +61,7 @@ public class Interactor : MonoBehaviour
 
     private HighlightObject highlightObject;
     private EndDemo endDemoScript;
-    private DialougeState startDialougeScript;
+    public DialougeState startDialougeScript;
 
     [Header("InteractionVar")]
     public float _interactionDelay = 0f;

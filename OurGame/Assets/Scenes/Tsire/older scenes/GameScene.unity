@@ -5915,6 +5915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &48941237
 GameObject:
@@ -8536,6 +8537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!4 &191430565 stripped
 Transform:
@@ -41484,6 +41486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &566845101
 GameObject:
@@ -49952,6 +49955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &641360907 stripped
 GameObject:
@@ -64882,6 +64886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &1106108607 stripped
 GameObject:
@@ -70245,6 +70250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!4 &1123976956 stripped
 Transform:
@@ -98146,6 +98152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &1807314062 stripped
 GameObject:
@@ -121631,6 +121638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &1933812685 stripped
 GameObject:
@@ -122597,6 +122605,7 @@ GameObject:
   - component: {fileID: 1967412140}
   - component: {fileID: 1967412141}
   - component: {fileID: 1967412142}
+  - component: {fileID: 1967412143}
   m_Layer: 0
   m_Name: BackgroundMusic
   m_TagString: Untagged
@@ -122661,7 +122670,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 83daf6e41d2a7e442aa85fbedba15b40, type: 3}
+  m_Resource: {fileID: 8300000, guid: 8119ae06e8fa7d447922bd7cd9e081fd, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -122738,6 +122747,31 @@ AudioSource:
     - serializedVersion: 3
       time: 0
       value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!169 &1967412143
+AudioLowPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967412137}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_LowpassResonanceQ: 1
+  lowpassLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.22727273
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -123463,6 +123497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialougeContainer: {fileID: 1958816962}
+  tooltip: {fileID: 0}
   dialogueManager: {fileID: 1110130440}
 --- !u!1 &2007579221
 GameObject:
