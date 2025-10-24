@@ -2,44 +2,56 @@ using UnityEngine;
 
 public class VignetteControl : MonoBehaviour
 {
+    // Main vignette current intensity
     private float currentIntensity = 0f;
+    // Hidden vignette current intensity
     private float HiddencurrentIntensity = 0f;
-    private float targetIntensity = 0f;
 
+    // Main vignette target intensity
+    private float targetIntensity = 0f;
+    // Hidden vignette target intensity
     private float HiddentargetIntensity = 0f;
 
+    // Material used for full screen vignette effect
     public Material fullscreenEffectMaterial;
+    // Material used while hidden in a hiding spot
     public Material HideAwayVignetteMaterial;
 
-    ///UN Dramatic Mode
-    //https://docs.unity3d.com/2020.3/Documentation/ScriptReference/Material.SetFloat.html
+    /// Removes the normal vignette effect (lerps intensity down)
     public void RemoveVignette(int lerpSpeed)
     {
-        targetIntensity = 0f;
+        targetIntensity = 0f; // Target is off
+        // Smoothly reduce vignette over time
         currentIntensity = Mathf.Lerp(currentIntensity, targetIntensity, Time.deltaTime * lerpSpeed);
+        // Send intensity value to shader
         fullscreenEffectMaterial.SetFloat("_FullscreenIntensity", currentIntensity);
     }
-    //Dramatic Mode
+
+    /// Applies the normal vignette effect (lerps intensity up)
     public void ApplyVignette(int lerpSpeed)
     {
-        //Do beat per 0.25s to sync up with the controller vibrations
-        targetIntensity = 1f;
+        targetIntensity = 1f; // Target is full vignette
+        // Smoothly increase vignette over time
         currentIntensity = Mathf.Lerp(currentIntensity, targetIntensity, Time.deltaTime * lerpSpeed);
+        // Send intensity value to shader
         fullscreenEffectMaterial.SetFloat("_FullscreenIntensity", currentIntensity);
     }
 
-
+    /// Applies the hidden vignette effect (no lerp yet, just sets shader value)
     public void HiddenApplyVignette(float lerpSpeed)
     {
-        HiddentargetIntensity = 1f;
+        HiddentargetIntensity = 1f; // Target is full hidden vignette
+        // Sets current hidden vignette value but does not lerp it yet
         HideAwayVignetteMaterial.SetFloat("_FullscreenIntensity", HiddencurrentIntensity);
     }
 
-
+    /// Removes the hidden vignette effect (lerps intensity down)
     public void HiddenRemoveVignette(float lerpSpeed)
     {
-        HiddentargetIntensity = 0f;
+        HiddentargetIntensity = 0f; // Target is off
+        // Smoothly reduce hidden vignette over time
         HiddencurrentIntensity = Mathf.Lerp(HiddencurrentIntensity, HiddentargetIntensity, Time.deltaTime * lerpSpeed);
+        // Send intensity value to shader
         HideAwayVignetteMaterial.SetFloat("_FullscreenIntensity", HiddencurrentIntensity);
     }
 }

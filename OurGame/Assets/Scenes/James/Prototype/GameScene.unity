@@ -143934,7 +143934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &2139673157
 AudioSource:
   m_ObjectHideFlags: 0
@@ -144044,8 +144044,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8424b8a0255ece147a1f94cede32a8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EffectsSource: {fileID: 2139673157}
-  MusicSource: {fileID: 2139673157}
+  EffectsSource: {fileID: 2093762671}
+  MusicSource: {fileID: 1967412142}
   MainMenuSource: {fileID: 1967412142}
   LowPitchRange: 0.95
   HighPitchRange: 1.05
