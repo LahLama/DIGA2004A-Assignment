@@ -1197,7 +1197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c47ac3a62dc50f24e8b3b9957f5b2f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blackScreen: {fileID: 1290885440}
+  blackScreen: {fileID: 0}
   dialogueText: {fileID: 1984596022}
   audioSource: {fileID: 1797517153}
   typingSound: {fileID: 8300000, guid: 3103569221268f64096ab04fe04f27c7, type: 3}
