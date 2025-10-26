@@ -7,6 +7,7 @@ public class NunChase : MonoBehaviour
     public NavMeshAgent agent;             // Agent used for navigation
     public Transform player;               // Player reference
     private VignetteControl vignetteControl; // Reference to vignette effect
+    public MoveFromMicrophone moveFromMicrophone;
     private float _agentSpeed;             // Store original agent speed
     private NunDoors nunDoors;             // Reference to door interactions
     public LayerMask StopLayer;            // Layer used for obstacles that block sight
@@ -15,7 +16,7 @@ public class NunChase : MonoBehaviour
     public float NunlookTime = 2;          // Duration nun keeps chasing
 
     public bool los;                       // Stores whether player is in line of sight
-
+    bool isLoud;
     void Awake()
     {
         // Cache references
@@ -23,13 +24,15 @@ public class NunChase : MonoBehaviour
         vignetteControl = GameObject.FindAnyObjectByType<VignetteControl>();
         nunDoors = this.GetComponent<NunDoors>();
         _agentSpeed = agent.speed;
+
         player = GameObject.FindWithTag("Player").gameObject.transform;
     }
 
     public void ChasePlayer()
     {
+        isLoud = moveFromMicrophone.isLoud;
         // Check if the player is on the correct layer and is in line of sight
-        if (player.gameObject.layer == LayerMask.NameToLayer("Player") && PlayerInLineOfSight())
+        if (player.gameObject.layer == LayerMask.NameToLayer("Player") && PlayerInLineOfSight() || isLoud)
         {
             // Increase agent speed during chase
             agent.speed = _agentSpeed * (4 / 3.0f);
