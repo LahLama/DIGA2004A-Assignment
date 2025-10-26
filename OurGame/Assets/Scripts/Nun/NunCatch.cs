@@ -40,7 +40,11 @@ public class NunCatch : MonoBehaviour
         agent.transform.LookAt(player.GetChild(0));
 
         /* GAME OVER LOGIC */
-        Invoke("endGameOnCatch", 2f);
+        Invoke("endGameOnCatch", 4f);
+
+        player.GetComponent<LookFunction>().enabled = false;
+        player.GetComponent<PlayerMovement>().enabled = false;
+
 
         /* 
         Optional respawn logic (commented out)
