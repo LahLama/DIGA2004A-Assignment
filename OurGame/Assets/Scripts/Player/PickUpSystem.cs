@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 using UnityEditor;
+using Mono.Cecil.Cil;
 
 /*
 Title: How To Pick Up an Item - Unity
@@ -184,7 +185,7 @@ public class PickUpSystem : MonoBehaviour
 
             objHasBeenThrown = true;
             if (playerStats.playerLevel != PlayerStats.PlayerLevel.Tutorial && !_enemyAI._isGracePeriod)
-                StartCoroutine(ThrowCooldown());
+                StartCoroutine(ThrowCooldown(equipedObj.gameObject));
 
             Invoke("RepositionItems", 0.1f);
             return;
@@ -194,12 +195,12 @@ public class PickUpSystem : MonoBehaviour
 
     }
 
-    private IEnumerator ThrowCooldown()
+    private IEnumerator ThrowCooldown(GameObject gameObject)
     {
         float timer = 5f;
         while (timer > 0f)
         {
-            _enemyAI.agent.SetDestination(transform.position);
+            _enemyAI.agent.SetDestination(gameObject.transform.position);
             timer -= Time.deltaTime;
             yield return null;
         }

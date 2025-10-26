@@ -23,6 +23,7 @@ public class NunChase : MonoBehaviour
         vignetteControl = GameObject.FindAnyObjectByType<VignetteControl>();
         nunDoors = this.GetComponent<NunDoors>();
         _agentSpeed = agent.speed;
+        player = GameObject.FindWithTag("Player").gameObject.transform;
     }
 
     public void ChasePlayer()

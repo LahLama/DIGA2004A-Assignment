@@ -51,7 +51,7 @@ public class TutorialNunAI : MonoBehaviour
             );
 
             // Make the nun face the player
-            agent.transform.LookAt(player.GetChild(0));
+            agent.transform.LookAt(player.GetChild(1));
 
             // Apply vignette one time when nun appears
             if (ApplyVignette == false)
