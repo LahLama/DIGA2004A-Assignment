@@ -106,11 +106,11 @@ public class Interactor : MonoBehaviour
     }
 
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position + transform.forward * _interactionRange, 0.3f);
-    }
+    /* private void OnDrawGizmos()
+     {
+         Gizmos.color = Color.green;
+         Gizmos.DrawSphere(transform.position + transform.forward * _interactionRange, 0.3f);
+     }*/
 
 
 
@@ -155,12 +155,13 @@ public class Interactor : MonoBehaviour
             {
                 case "interactionsMask":
                     _interactionDelay = 0.5f;
-                    bool hasInteractionScript = raycastHit.collider.gameObject.TryGetComponent<IInteractables>(out interactables);
-
-
-                    if (hasInteractionScript)
+                    var interactableComponents = raycastHit.collider.gameObject.GetComponents<IInteractables>();
+                    if (interactableComponents != null && interactableComponents.Length > 0)
                     {
-                        interactables.Interact();
+                        foreach (var comp in interactableComponents)
+                        {
+                            comp?.Interact();
+                        }
                         StartCoroutine(innerDialouge.InnerDialogueContorl());
                     }
                     else if (raycastHit.collider.gameObject.TryGetComponent<DialougeState>(out startDialougeScript) && hasChatted == false)
@@ -180,12 +181,27 @@ public class Interactor : MonoBehaviour
                     break;
 
                 case "hidePlacesMask":
-                    raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().HidePlayer();
-                    _PlayerIsHidden = true;
-                    hideDuration = 5f;
-                    _interactionDelay = 1f;
+                    if (raycastHit.collider != null)
+                    {
+                        // try to find HideAndShowPlayer on collider or its parents
+                        HideAndShowPlayer hideComp = null;
+                        if (!raycastHit.collider.TryGetComponent<HideAndShowPlayer>(out hideComp))
+                            hideComp = raycastHit.collider.GetComponentInParent<HideAndShowPlayer>();
 
-                    break;
+                        if (hideComp != null)
+                        {
+                            hideComp.HidePlayer(); // pass the collider/spot if needed
+                            _currentHideObj = raycastHit.collider;    // store for later Show
+                            _PlayerIsHidden = true;
+                            hideDuration = 5f;
+                            _interactionDelay = 1f;
+                        }
+                        else
+                        {
+                            Debug.LogWarning("HideAndShowPlayer component not found on hit collider or parents: " + raycastHit.collider.name);
+                        }
+                    }
+                    break; ;
 
                 case "doorMask":
                     doorUnlocking.CanPlayerOpenDoor();
@@ -218,7 +234,19 @@ public class Interactor : MonoBehaviour
         //Show player after 5seconds, the limit of hiding
         if (hideDuration <= 0 && _PlayerIsHidden)
         {
-            raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
+            if (_currentHideObj != null)
+            {
+                HideAndShowPlayer hideComp = null;
+                if (!_currentHideObj.TryGetComponent<HideAndShowPlayer>(out hideComp))
+                    hideComp = _currentHideObj.GetComponentInParent<HideAndShowPlayer>();
+
+                if (hideComp != null) hideComp.ShowPlayer();
+                else Debug.LogWarning("ShowPlayer: HideAndShowPlayer not found on stored hide object.");
+            }
+            else
+            {
+                Debug.LogWarning("ShowPlayer: no stored hide object to show from.");
+            }
             _PlayerIsHidden = false;
         }
 
@@ -241,10 +269,24 @@ public class Interactor : MonoBehaviour
 
     private IEnumerator WaitAndCheckHide()
     {
+
         yield return new WaitForSeconds(0.5f);
         if (_interactionInput && _PlayerIsHidden)
         {
-            raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
+            if (_currentHideObj != null)
+            {
+                HideAndShowPlayer hideComp = null;
+                if (!_currentHideObj.TryGetComponent<HideAndShowPlayer>(out hideComp))
+                    hideComp = _currentHideObj.GetComponentInParent<HideAndShowPlayer>();
+
+                if (hideComp != null) hideComp.ShowPlayer();
+                else Debug.LogWarning("WaitAndCheckHide: HideAndShowPlayer not found on stored hide object.");
+            }
+            else
+            {
+                Debug.LogWarning("WaitAndCheckHide: no stored hide object to show from.");
+            }
+
             _PlayerIsHidden = false;
         }
     }

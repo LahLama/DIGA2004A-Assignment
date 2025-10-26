@@ -5,6 +5,8 @@ public class TutorialPickUp : MonoBehaviour
 
     private Transform player;
     private TutorialNunAI tutorialNun;
+
+    public GameObject UI;
     public bool hasBeenPicked = false;
 
     void Start()
@@ -17,6 +19,7 @@ public class TutorialPickUp : MonoBehaviour
 
         if (this.transform.IsChildOf(player) && !hasBeenPicked)
         {
+            UI.SetActive(false);
             tutorialNun.SpawnNunOnPlayer();
             hasBeenPicked = true;
             Destroy(this.gameObject);

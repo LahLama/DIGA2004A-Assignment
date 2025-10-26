@@ -192,6 +192,7 @@ public class MainMenu : MonoBehaviour
                 // Pause the game and show the options UI; unlock cursor so user can click
                 PauseGame();
                 Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
 
                 // Reset selected UI element then select the first child of OptionsPanel
                 EventSystem.current.SetSelectedGameObject(null);
@@ -202,6 +203,7 @@ public class MainMenu : MonoBehaviour
                 // Resume the game and lock cursor back for gameplay
                 ResumeGame();
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
 
                 // Reset selected UI element and set selection to the ResumeButton in the scene (if present)
                 EventSystem.current.SetSelectedGameObject(null);

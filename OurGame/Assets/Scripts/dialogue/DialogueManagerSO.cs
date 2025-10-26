@@ -12,10 +12,14 @@ public class DialogueManagerSO : MonoBehaviour
     public Button choiceButton2;
     public TextMeshProUGUI choiceText1;
     public TextMeshProUGUI choiceText2;
-    public DialougeState dialougeState;
 
-    [Header("StartNode")]
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip typingSound;
+
+    [Header("Dialogue Logic")]
     public DialogueNodeSO startingNode;
+    public DialougeState dialougeState;
 
     private DialogueNodeSO currentNode;
     private Coroutine typingCoroutine;
@@ -24,15 +28,18 @@ public class DialogueManagerSO : MonoBehaviour
 
     public void StartFromOtherScript()
     {
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+
         StartDialogue(startingNode);
     }
+
     void Update()
     {
-
+        if (currentNode == null) return;
 
         if (isTyping && Input.GetMouseButtonDown(0))
         {
-            // Skip typing
             StopCoroutine(typingCoroutine);
             dialogueText.text = currentNode.dialogueLine;
             isTyping = false;
@@ -71,6 +78,13 @@ public class DialogueManagerSO : MonoBehaviour
         foreach (char c in fullText)
         {
             dialogueText.text += c;
+
+            if (audioSource != null && typingSound != null && !char.IsWhiteSpace(c))
+            {
+                audioSource.pitch = Random.Range(0.95f, 1.05f);
+                audioSource.PlayOneShot(typingSound);
+            }
+
             yield return new WaitForSeconds(0.03f);
         }
 
@@ -82,29 +96,29 @@ public class DialogueManagerSO : MonoBehaviour
     {
         if (currentNode.choices.Length > 0)
         {
-            choiceButton1.gameObject.SetActive(true);
-            choiceText1.text = currentNode.choices[0].choiceText;
-
-            choiceButton1.onClick.RemoveAllListeners();
-            choiceButton1.onClick.AddListener(() =>
+            if (currentNode.choices.Length >= 1)
             {
-                ShowNode(currentNode.choices[0].nextNode);
-            });
-        }
+                choiceButton1.gameObject.SetActive(true);
+                choiceText1.text = currentNode.choices[0].choiceText;
+                choiceButton1.onClick.RemoveAllListeners();
+                choiceButton1.onClick.AddListener(() =>
+                {
+                    ShowNode(currentNode.choices[0].nextNode);
+                });
+            }
 
-        if (currentNode.choices.Length > 1)
-        {
-            choiceButton2.gameObject.SetActive(true);
-            choiceText2.text = currentNode.choices[1].choiceText;
-
-            choiceButton2.onClick.RemoveAllListeners();
-            choiceButton2.onClick.AddListener(() =>
+            if (currentNode.choices.Length >= 2)
             {
-                ShowNode(currentNode.choices[1].nextNode);
-            });
+                choiceButton2.gameObject.SetActive(true);
+                choiceText2.text = currentNode.choices[1].choiceText;
+                choiceButton2.onClick.RemoveAllListeners();
+                choiceButton2.onClick.AddListener(() =>
+                {
+                    ShowNode(currentNode.choices[1].nextNode);
+                });
+            }
         }
-
-        if (currentNode.choices.Length == 0)
+        else
         {
             waitingForEnd = true;
         }
@@ -112,7 +126,7 @@ public class DialogueManagerSO : MonoBehaviour
 
     private void CallEndFromScript()
     {
-        dialougeState.EndDialouge();
+        if (dialougeState != null)
+            dialougeState.EndDialouge();
     }
-
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 using UnityEditor;
+using Mono.Cecil.Cil;
 
 /*
 Title: How To Pick Up an Item - Unity
@@ -17,7 +18,6 @@ public class PickUpSystem : MonoBehaviour
     private Interactor _interactor;
     private NunAi _enemyAI;
     private Transform _pickUpsContatiner;
-    private Vector3 _equippedItemScale;
     private Quaternion _equippedItemRotation;
     private RaycastHit _hitPickUp;
     public bool objHasBeenThrown = false;
@@ -81,34 +81,18 @@ public class PickUpSystem : MonoBehaviour
                 particles_main.startColor = new Color(1f, 0.078f, 0.576f, 1f); // Specific pink (hex #FF1493)
                 particles.Play();
             }
-
-
             //Switch off the gravity
             Destroy(pickUpObj.GetComponent<Rigidbody>());
             //Get the Orignal scale and rotation
             _equippedItemRotation = pickUpObj.transform.rotation;
-            _equippedItemScale = pickUpObj.transform.localScale;
-
             //Reset scale and postion         
             pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
-            pickUpObj.transform.localScale *= 1;
             pickUpObj.transform.rotation = Quaternion.identity;
-
-
-
             //Set the parent to the player
             _pickUpsContatiner = pickUpObj.transform.parent;
-            pickUpObj.transform.SetParent(playerHands, false);
+            SetParentPreserveWorldScale(pickUpObj.transform, playerHands, false);
 
 
-
-
-
-            //Animate a slight jiggle when picked up
-
-            //Reposition items on player
-            //if only 1 item -- Child1 in hand
-            //if 2 items, item 1 in hand and item 2 in other hand
             SwapItems();
 
 
@@ -151,16 +135,11 @@ public class PickUpSystem : MonoBehaviour
                 t.gameObject.layer = pickUpLayer;
             }
 
-            // Place object infront of player
-            Vector3 equipObjPos = equipedObj.transform.localPosition;
-            equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
 
             //Reset the player to the pickups element
-            equipedObj.SetParent(_pickUpsContatiner, true);
+            SetParentPreserveWorldScale(equipedObj, _pickUpsContatiner, true);
 
-            //Reset the scale and postion to its originals
-            equipedObj.gameObject.transform.localScale = _equippedItemScale;
-            equipedObj.gameObject.transform.rotation = _equippedItemRotation;
+
 
             // Play drop sound
             if (_soundManager != null)
@@ -185,10 +164,7 @@ public class PickUpSystem : MonoBehaviour
 
             Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
             rb.useGravity = true;
-
-            Vector3 equipObjPos = equipedObj.transform.localPosition;
-            equipObjPos = new Vector3(equipObjPos.x, equipObjPos.y + 1, equipObjPos.z);
-            equipedObj.SetParent(_pickUpsContatiner, true);
+            SetParentPreserveWorldScale(equipedObj, _pickUpsContatiner, true);
 
             int pickUpLayer = LayerMask.NameToLayer("pickUpMask");
             foreach (Transform t in equipedObj.GetComponentsInChildren<Transform>(true))
@@ -196,7 +172,7 @@ public class PickUpSystem : MonoBehaviour
                 t.gameObject.layer = pickUpLayer;
             }
 
-            equipedObj.gameObject.transform.localScale = _equippedItemScale;
+
             equipedObj.gameObject.transform.rotation = _equippedItemRotation;
 
             rb.AddForce(playerHands.forward * 5f, ForceMode.Impulse);
@@ -209,7 +185,7 @@ public class PickUpSystem : MonoBehaviour
 
             objHasBeenThrown = true;
             if (playerStats.playerLevel != PlayerStats.PlayerLevel.Tutorial && !_enemyAI._isGracePeriod)
-                StartCoroutine(ThrowCooldown());
+                StartCoroutine(ThrowCooldown(equipedObj.gameObject));
 
             Invoke("RepositionItems", 0.1f);
             return;
@@ -219,12 +195,12 @@ public class PickUpSystem : MonoBehaviour
 
     }
 
-    private IEnumerator ThrowCooldown()
+    private IEnumerator ThrowCooldown(GameObject gameObject)
     {
         float timer = 5f;
         while (timer > 0f)
         {
-            _enemyAI.agent.SetDestination(transform.position);
+            _enemyAI.agent.SetDestination(gameObject.transform.position);
             timer -= Time.deltaTime;
             yield return null;
         }
@@ -266,7 +242,27 @@ public class PickUpSystem : MonoBehaviour
             return;
 
     }
+    private void SetParentPreserveWorldScale(Transform child, Transform parent, bool worldPositionStays)
+    {
+        if (child == null)
+            return;
 
+        Vector3 worldScale = child.lossyScale;
+        child.SetParent(parent, worldPositionStays);
+
+        if (parent == null)
+        {
+            child.localScale = worldScale;
+            return;
+        }
+
+        Vector3 parentScale = parent.lossyScale;
+        child.localScale = new Vector3(
+            parentScale.x != 0f ? worldScale.x / parentScale.x : worldScale.x,
+            parentScale.y != 0f ? worldScale.y / parentScale.y : worldScale.y,
+            parentScale.z != 0f ? worldScale.z / parentScale.z : worldScale.z
+        );
+    }
 }
 
 
