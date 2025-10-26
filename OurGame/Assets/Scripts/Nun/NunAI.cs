@@ -90,15 +90,15 @@ public class NunAi : MonoBehaviour
             StartCoroutine(HiddenCooldown());
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         // Visualise ranges in the editor
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, catchRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position + transform.forward * 0.5f, 0.5f);
+        /*Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position + transform.forward * 0.5f, 0.5f);*/
     }
 
     private IEnumerator HiddenCooldown()

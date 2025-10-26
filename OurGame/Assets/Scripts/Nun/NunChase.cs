@@ -97,7 +97,7 @@ public class NunChase : MonoBehaviour
         // Draw a line to visualise line of sight in the editor
         if (agent != null && player != null)
         {
-            Gizmos.color = Color.red;
+            Gizmos.color = Color.white;
             Vector3 directionToPlayer = player.position - agent.transform.position;
             Gizmos.DrawLine(agent.transform.position, agent.transform.position + directionToPlayer.normalized * Mathf.Min(sightRange, directionToPlayer.magnitude));
         }
