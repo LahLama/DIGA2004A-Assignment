@@ -17,7 +17,6 @@ public class PickUpSystem : MonoBehaviour
     private Interactor _interactor;
     private NunAi _enemyAI;
     private Transform _pickUpsContatiner;
-    private Vector3 _equippedItemScale;
     private Quaternion _equippedItemRotation;
     private RaycastHit _hitPickUp;
     public bool objHasBeenThrown = false;
@@ -87,11 +86,11 @@ public class PickUpSystem : MonoBehaviour
             Destroy(pickUpObj.GetComponent<Rigidbody>());
             //Get the Orignal scale and rotation
             _equippedItemRotation = pickUpObj.transform.rotation;
-            _equippedItemScale = pickUpObj.transform.localScale;
+
 
             //Reset scale and postion         
             pickUpObj.transform.localPosition = new Vector3(0f, 0f, 0f);
-            pickUpObj.transform.localScale *= 1;
+
             pickUpObj.transform.rotation = Quaternion.identity;
 
 
@@ -158,9 +157,7 @@ public class PickUpSystem : MonoBehaviour
             //Reset the player to the pickups element
             equipedObj.SetParent(_pickUpsContatiner, true);
 
-            //Reset the scale and postion to its originals
-            equipedObj.gameObject.transform.localScale = _equippedItemScale;
-            equipedObj.gameObject.transform.rotation = _equippedItemRotation;
+
 
             // Play drop sound
             if (_soundManager != null)
@@ -196,7 +193,7 @@ public class PickUpSystem : MonoBehaviour
                 t.gameObject.layer = pickUpLayer;
             }
 
-            equipedObj.gameObject.transform.localScale = _equippedItemScale;
+
             equipedObj.gameObject.transform.rotation = _equippedItemRotation;
 
             rb.AddForce(playerHands.forward * 5f, ForceMode.Impulse);
