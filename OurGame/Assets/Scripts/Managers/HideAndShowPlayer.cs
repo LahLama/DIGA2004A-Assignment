@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+using Mono.Cecil.Cil;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +26,7 @@ public class HideAndShowPlayer : MonoBehaviour
 
     private GameObject playerParts; // visual model of player to show/hide
     private VignetteControl vignetteControl; // screen effect for hiding
+    Vector3 playerOGpos;
 
     #endregion
 
@@ -75,56 +78,47 @@ public class HideAndShowPlayer : MonoBehaviour
 
     #endregion
 
-    public void HidePlayer()
+    public void HidePlayer(Collider HidePlace)
     {
         // Mark player hidden so enemies cannot detect them
         _interactor._PlayerIsHidden = true;
+        playerOGpos = _player.transform.position;
 
-        // Enable hiding camera from hiding spot object
-        transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = true;
-
-        // Hide player models and disable movement/looking
-        playerParts.SetActive(false);
         _player.gameObject.GetComponent<PlayerMovement>().enabled = false;
-        _player.gameObject.GetComponent<LookFunction>().enabled = false;
 
-        // Hide hand visuals
-        handsDisplay.gameObject.SetActive(false);
+        _player.GetComponent<CharacterController>().enabled = false;
+        _player.transform.position = HidePlace.transform.position;
+
 
         // Hide held item visually if any
-        if (_holdingContainer.activeSelf) { _holdingContainer.SetActive(false); }
 
         // Hide sprint UI
-        canvasSprintGroup.alpha = 0f;
+        canvasSprintGroup.alpha = 1f;
 
         // Move player to new layer for AI masking while hidden
         _player.layer = LayerMask.NameToLayer("hidePlacesMask");
+
+
+
+
     }
 
     public void ShowPlayer()
     {
         // Mark player visible again
         _interactor._PlayerIsHidden = false;
-
         // Reset hide bar UI
         _hideSlider.size = 0;
-
-        // Turn off hiding camera
-        transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = false;
-
         // Bring back visual model and player controls
-        playerParts.SetActive(true);
         _player.gameObject.GetComponent<PlayerMovement>().enabled = true;
-        _player.gameObject.GetComponent<LookFunction>().enabled = true;
-
-        // Show hands again
-        handsDisplay.gameObject.SetActive(true);
-
-        // Restore item visibility if player is holding something
-        if (!_holdingContainer.activeSelf) { _holdingContainer.SetActive(true); }
-
+        _player.GetComponent<CharacterController>().enabled = true;
+        _player.transform.position = playerOGpos;
+        canvasSprintGroup.alpha = 0f;
         // Set player back to regular layer
         _player.layer = LayerMask.NameToLayer("Player");
+
+        // Mark player hidden so enemies cannot detect them
+        _interactor._PlayerIsHidden = true;
     }
 
 

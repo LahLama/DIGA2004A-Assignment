@@ -180,7 +180,7 @@ public class Interactor : MonoBehaviour
                     break;
 
                 case "hidePlacesMask":
-                    raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().HidePlayer();
+                    GetComponent<HideAndShowPlayer>().HidePlayer(raycastHit.collider);
                     _PlayerIsHidden = true;
                     hideDuration = 5f;
                     _interactionDelay = 1f;
@@ -203,6 +203,11 @@ public class Interactor : MonoBehaviour
                         _interactionDelay = 0.75f;
                         pickUpSystem.DropItem();
                     }
+                    if (_PlayerIsHidden)
+                    {
+                        raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
+                        _PlayerIsHidden = false;
+                    }
                     return;
 
             }
@@ -218,7 +223,7 @@ public class Interactor : MonoBehaviour
         //Show player after 5seconds, the limit of hiding
         if (hideDuration <= 0 && _PlayerIsHidden)
         {
-            raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
+            GetComponent<HideAndShowPlayer>().ShowPlayer();
             _PlayerIsHidden = false;
         }
 
@@ -244,7 +249,7 @@ public class Interactor : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (_interactionInput && _PlayerIsHidden)
         {
-            raycastHit.collider.gameObject.GetComponent<HideAndShowPlayer>().ShowPlayer();
+            GetComponent<HideAndShowPlayer>().ShowPlayer();
             _PlayerIsHidden = false;
         }
     }
