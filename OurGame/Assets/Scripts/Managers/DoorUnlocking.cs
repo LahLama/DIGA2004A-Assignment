@@ -14,6 +14,9 @@ public class DoorUnlocking : MonoBehaviour
 
     // Stores keys that have been used once and now permanently unlock doors of that colour
     private HashSet<string> _unlockedKeys = new HashSet<string>();
+    // Fog control (increase when a new door type is unlocked)
+    [SerializeField] private float fogIncreaseAmount = 0.2f;
+    [SerializeField] private float maxFogDensity = 1.0f;
 
     #endregion
 
@@ -24,6 +27,9 @@ public class DoorUnlocking : MonoBehaviour
         _interactor = GetComponent<Interactor>();
         _pickUpSystem = GetComponent<PickUpSystem>();
         _innerDialouge = GetComponent<InnerDialouge>();
+
+        RenderSettings.fog = true;
+
     }
 
     void Update()
@@ -85,7 +91,7 @@ public class DoorUnlocking : MonoBehaviour
             {
                 // Mark this key/door type as unlocked permanently
                 _unlockedKeys.Add(requiredTag);
-
+                IncreaseFog();
                 // Trigger opening animation
                 DoorAnim(currentDoor);
 
@@ -138,5 +144,16 @@ public class DoorUnlocking : MonoBehaviour
             Debug.LogWarning("No Animator found for door: " + currentDoor.name);
         }
     }
+    private void IncreaseFog()
+    {
+        // enable fog if not already
+        RenderSettings.fog = true;
 
+        // increase density and clamp to max
+        float newDensity = RenderSettings.fogDensity + fogIncreaseAmount;
+        RenderSettings.fogDensity = Mathf.Clamp(newDensity, 0f, maxFogDensity);
+
+        // optional: log for debugging
+        Debug.Log($"Fog increased to {RenderSettings.fogDensity:F2}");
+    }
 }

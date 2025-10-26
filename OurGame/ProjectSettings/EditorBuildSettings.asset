@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Tsire/CreditsScene.unity
     guid: a9d4d17679096dd4abf408a40dd35b9f
   - enabled: 0
-    path: Assets/Scenes/James/BaseLevelLayout.unity
+    path: Assets/Scenes/James/Old Scenes/BaseLevelLayout.unity
     guid: 38004ddc1cb67aa488e9882ef159b0cc
   - enabled: 0
     path: Assets/Scenes/Tsire/older scenes/Main menu.unity
@@ -33,13 +33,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Tsire/cutscene.unity
     guid: 97f0c814bce241146979a96b582438ed
   - enabled: 1
-    path: Assets/Scenes/James/Prototype/MainMenu.unity
+    path: Assets/Scenes/James/Prototype/Updated/MainMenu.unity
     guid: e863cce14e412714a9f650c293c6dcfd
   - enabled: 1
-    path: Assets/Scenes/James/Prototype/GameScene.unity
+    path: Assets/Scenes/James/Prototype/Updated/GameScene.unity
     guid: 3446b37c77b2b234f93f25663affa00d
   - enabled: 1
-    path: Assets/Scenes/James/Prototype/End Scene.unity
+    path: Assets/Scenes/James/Prototype/Updated/End Scene.unity
     guid: 53e712355639ea04283565717d3ad748
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: a407d3d95c6a2554abb1a2e41ca5b0fe, type: 2}

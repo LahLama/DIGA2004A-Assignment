@@ -8,6 +8,7 @@ public class Awakening : MonoBehaviour
     LookFunction lookFunction;
     public Material BlinkShader;
     public float BlinkVal;
+    public GameObject UI;
 
     void Awake()
     {
@@ -35,6 +36,9 @@ public class Awakening : MonoBehaviour
 
         if (BlinkShader != null)
             BlinkShader.SetFloat("_blinkState", BlinkVal);
+
+
+        UI.SetActive(true);
     }
 
     void Update()
