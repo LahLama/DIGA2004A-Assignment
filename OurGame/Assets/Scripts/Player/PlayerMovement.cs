@@ -107,8 +107,8 @@ public class PlayerMovement : MonoBehaviour
     public void HandleSprint()
     {
 
-        float __sprintSpeed = 6;
-        int __sprintFOV = 65;
+        float __sprintSpeed = 5;
+        int __sprintFOV = 80;
 
         if (_sprintTimer >= _sprintDuration) { _canSprint = true; }
         if (_sprintTimer < 0) { _canSprint = false; }
@@ -162,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Adjust the player's components to the originals
         float __normalScale = 0.7f;
-        float __normalSpeed = 5f;
+        float __normalSpeed = 2.5f;
         int __normalFOV = 60;
 
         moveSpeed = __normalSpeed; // Reset to normal speed
