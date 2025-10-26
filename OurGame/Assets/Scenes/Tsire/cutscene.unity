@@ -370,7 +370,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hello
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -502,6 +502,7 @@ MonoBehaviour:
   dialogueText: {fileID: 375851567}
   audioSource: {fileID: 2135687295}
   typingSound: {fileID: 8300000, guid: 3103569221268f64096ab04fe04f27c7, type: 3}
+  UIPanel: {fileID: 0}
   monologueLines:
   - '"Blessings to you"'
   - "\u201CI can\u2019t speak for long \u2014 the children are asleep, and I\u2019d
@@ -767,8 +768,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1.6968994, y: -2.2626038}
+  m_SizeDelta: {x: 59.9569, y: 49.7757}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2135687291
 MonoBehaviour:
