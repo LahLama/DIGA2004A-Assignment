@@ -155,12 +155,13 @@ public class Interactor : MonoBehaviour
             {
                 case "interactionsMask":
                     _interactionDelay = 0.5f;
-                    bool hasInteractionScript = raycastHit.collider.gameObject.TryGetComponent<IInteractables>(out interactables);
-
-
-                    if (hasInteractionScript)
+                    var interactableComponents = raycastHit.collider.gameObject.GetComponents<IInteractables>();
+                    if (interactableComponents != null && interactableComponents.Length > 0)
                     {
-                        interactables.Interact();
+                        foreach (var comp in interactableComponents)
+                        {
+                            comp?.Interact();
+                        }
                         StartCoroutine(innerDialouge.InnerDialogueContorl());
                     }
                     else if (raycastHit.collider.gameObject.TryGetComponent<DialougeState>(out startDialougeScript) && hasChatted == false)
