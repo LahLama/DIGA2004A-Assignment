@@ -20,12 +20,12 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 5.7
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 1, g: 0.6924528, b: 0.6924528, a: 1}
+  m_AmbientSkyColor: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
-  m_SubtractiveShadowColor: {r: 1, g: 1, b: 1, a: 1}
+  m_SubtractiveShadowColor: {r: 0.0037735105, g: 0.003752151, b: 0.003752151, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 3d86403a01538f54bb9c348e69fcac55, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -13214,14 +13214,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141325605}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 28.205, y: 6.336, z: 23.97}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 38.209, y: 6.404286, z: 20.917}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1148877180}
   m_Father: {fileID: 1163519669}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &141325607
 Animator:
   serializedVersion: 7
@@ -20512,10 +20512,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: ForRedDoor
       objectReference: {fileID: 0}
-    - target: {fileID: 2699934116011831074, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2796d6b95eb22314da8ffc5b78ddcbb5, type: 2}
     - target: {fileID: 5092708244707826562, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -20820,9 +20816,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 181001f949221c14490878117dac1aae, type: 3}
       insertIndex: -1
       addedObject: {fileID: 245798915}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 181001f949221c14490878117dac1aae, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 245798917}
   m_SourcePrefab: {fileID: 100100000, guid: 181001f949221c14490878117dac1aae, type: 3}
 --- !u!4 &245798902 stripped
 Transform:
@@ -21126,27 +21119,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &245798917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 245798903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a10c826e3b716bf459772ec47ca21f98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 8235981918065295480}
-  maxAlertDistance: 20
-  sightLayers:
-    m_Bits: 0
-  fieldOfView: 90
-  viewDistance: 25
-  spottedClip: {fileID: 8300000, guid: c21f78c464026134988c080e48b838bf, type: 3}
-  alertSource: {fileID: 0}
-  hasPlayedSound: 0
 --- !u!1 &246326189
 GameObject:
   m_ObjectHideFlags: 0
@@ -22144,19 +22116,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 278440676}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1967412141}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 87214fea827d21745bf9530e0cf3d2aa, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &282890455
 GameObject:
   m_ObjectHideFlags: 0
@@ -23431,7 +23391,6 @@ MonoBehaviour:
     m_Bits: 1
   _PlayerIsHidden: 0
   hitObj: 0
-  startDialougeScript: {fileID: 0}
   _interactionDelay: 0
   hideDuration: 5
   noLOS: 0
@@ -36056,7 +36015,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5235786763680770193, guid: 493f6cd29f6463b4f9277eff0bc93422, type: 3}
       propertyPath: m_TagString
-      value: ForGreenDoor
+      value: ForBlueDoor
       objectReference: {fileID: 0}
     - target: {fileID: 7081191284176007299, guid: 493f6cd29f6463b4f9277eff0bc93422, type: 3}
       propertyPath: m_Materials.Array.size
@@ -37155,10 +37114,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: ForRedDoor
       objectReference: {fileID: 0}
-    - target: {fileID: 2699934116011831074, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2796d6b95eb22314da8ffc5b78ddcbb5, type: 2}
     - target: {fileID: 5092708244707826562, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -60046,10 +60001,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: ForBlueDoor
       objectReference: {fileID: 0}
-    - target: {fileID: 2699934116011831074, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2796d6b95eb22314da8ffc5b78ddcbb5, type: 2}
     - target: {fileID: 5092708244707826562, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -78275,7 +78226,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ef3bc1e198b4aa498824823152744b9, type: 2}
+  - {fileID: 2100000, guid: 1ec8f8fabfb6d6849814a46c28939a1e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87816,19 +87767,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1302340887}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1967412141}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 87214fea827d21745bf9530e0cf3d2aa, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1305316905
 GameObject:
   m_ObjectHideFlags: 0
@@ -89493,14 +89432,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367950946}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 37.18, y: 6.311, z: 21}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 28.209, y: 6.311, z: 23.973}
   m_LocalScale: {x: 1.135805, y: 1.135805, z: 1.135805}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 256116331}
   m_Father: {fileID: 1163519669}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1367950948
 Animator:
   serializedVersion: 7
@@ -96406,7 +96345,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1ec8f8fabfb6d6849814a46c28939a1e, type: 2}
+  - {fileID: 2100000, guid: 43f795924c35ec54e98251956d5446bd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109554,10 +109493,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: ForGreenDoor
       objectReference: {fileID: 0}
-    - target: {fileID: 2699934116011831074, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2796d6b95eb22314da8ffc5b78ddcbb5, type: 2}
     - target: {fileID: 5092708244707826562, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -113532,7 +113467,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 43f795924c35ec54e98251956d5446bd, type: 2}
+  - {fileID: 2100000, guid: 23a9784276db6f141b44b776e12fe191, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113611,7 +113546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1529872630957500425, guid: d436c169820314d42ac7d7b4c2020aab, type: 3}
       propertyPath: m_TagString
-      value: ForBlueDoor
+      value: ForGreenDoor
       objectReference: {fileID: 0}
     - target: {fileID: 2193503302470087347, guid: d436c169820314d42ac7d7b4c2020aab, type: 3}
       propertyPath: m_LocalScale.x
@@ -134011,7 +133946,6 @@ GameObject:
   - component: {fileID: 1967412141}
   - component: {fileID: 1967412142}
   - component: {fileID: 1967412143}
-  - component: {fileID: 1967412144}
   m_Layer: 0
   m_Name: BackgroundMusic
   m_TagString: Untagged
@@ -134078,7 +134012,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 8119ae06e8fa7d447922bd7cd9e081fd, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.693
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -134175,13 +134109,13 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 4d7a214246de17441a347076d210f1dd, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.65
+  m_Volume: 0.44
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 135
+  Priority: 209
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -134250,31 +134184,6 @@ AudioSource:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!169 &1967412144
-AudioLowPassFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967412137}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_LowpassResonanceQ: 1
-  lowpassLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.22727273
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -142450,11 +142359,11 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093762670}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 8119ae06e8fa7d447922bd7cd9e081fd, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -147319,8 +147228,8 @@ Transform:
   m_LocalScale: {x: 0.49000025, y: 0.48999998, z: 0.49000025}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 330585546}
   - {fileID: 1799835736}
+  - {fileID: 330585546}
   - {fileID: 346366229}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 5.751251, y: -13.8556, z: 0}
