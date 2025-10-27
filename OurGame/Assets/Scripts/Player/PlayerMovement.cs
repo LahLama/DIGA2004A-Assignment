@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+    
     #region Varibles
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -60,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();
         HandleMovementModifiers();
         HandleUnderAObject();
+        HandleFootstepAudio();
     }
     #endregion
 
@@ -257,6 +258,26 @@ public class PlayerMovement : MonoBehaviour
             canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, 0f, Time.deltaTime / 0.7f);
         }
     }
+
+    public void HandleFootstepAudio()
+{
+    if (_moveInput.magnitude > 0.1f && controller.isGrounded)
+    {
+        if (_sprintInput && _canSprint)
+        {
+            SoundManager.Instance.PlayLooping("SprintStep");
+        }
+        else
+        {
+            SoundManager.Instance.PlayLooping("WalkStep");
+        }
+    }
+    else
+    {
+        SoundManager.Instance.StopLooping("SprintStep");
+        SoundManager.Instance.StopLooping("WalkStep");
+    }
+}
 
 
 

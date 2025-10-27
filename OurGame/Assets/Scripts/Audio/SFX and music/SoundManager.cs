@@ -97,6 +97,42 @@ public void SetMainMenuVolume(float volume)
 {
     MainMenuSource.volume = volume;
 }
+
+private Dictionary<string, AudioSource> _loopingSources = new Dictionary<string, AudioSource>();
+
+public void PlayLooping(string clipName)
+{
+    if (_loopingSources.ContainsKey(clipName))
+    {
+        if (!_loopingSources[clipName].isPlaying)
+            _loopingSources[clipName].Play();
+        return;
+    }
+
+    AudioClip clip = Resources.Load<AudioClip>(clipName);
+    if (clip == null)
+    {
+        Debug.LogWarning($"Clip '{clipName}' not found in Resources.");
+        return;
+    }
+
+    AudioSource loopSource = gameObject.AddComponent<AudioSource>();
+    loopSource.clip = clip;
+    loopSource.loop = true;
+    loopSource.playOnAwake = false;
+    loopSource.volume = EffectsSource.volume;
+    loopSource.Play();
+
+    _loopingSources.Add(clipName, loopSource);
+}
+
+public void StopLooping(string clipName)
+{
+    if (_loopingSources.ContainsKey(clipName))
+    {
+        _loopingSources[clipName].Stop();
+    }
+}
 	
 }
 
