@@ -87,6 +87,7 @@ public class TutorialNunAI : MonoBehaviour
 
     public void SpawnNunOnPlayer()
     {
+        PlayerStats.Instance.playerLevel = PlayerStats.PlayerLevel.Cutscene;
         // Reset nun and player camera rotations
         this.transform.localScale = Vector3.one;
         camera.rotation = Quaternion.Euler(0, 0, 0);

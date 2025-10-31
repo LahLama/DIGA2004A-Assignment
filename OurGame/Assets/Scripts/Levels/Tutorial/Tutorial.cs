@@ -52,7 +52,7 @@ public class Tutorial : MonoBehaviour
     }
     public void EndTutorial()
     {
-        playerStats.playerLevel = PlayerStats.PlayerLevel.BaseGame;
+
 
 
         tutorialNun.enabled = false;
@@ -86,7 +86,7 @@ public class Tutorial : MonoBehaviour
 
         //This must be the last line
         TutorialBranch.SetActive(false);
-
+        PlayerStats.Instance.playerLevel = PlayerStats.PlayerLevel.BaseGame;
 
         return;
     }
