@@ -148,7 +148,7 @@ public class Interactor : MonoBehaviour
          }*/
 
 
-        if (_interactionInput && _interactionDelay <= 0)
+        if (_interactionInput && _interactionDelay <= 0 && Time.timeScale != 0)
         {
 
             switch (LayerName)
