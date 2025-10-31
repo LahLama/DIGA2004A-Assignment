@@ -3,7 +3,112 @@ guid: 997c377a8bae2174cb4997955a08bc74
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BoatDecor1
+    second: {fileID: 2100000, guid: b8465126304da4c448bc0096be7247a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BoatDecor2
+    second: {fileID: 2100000, guid: 631814c0ff1e96e48b1c6a6d50c84fec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BoatDecor3
+    second: {fileID: 2100000, guid: 5b46ba5304163514b8a0d31a4971d923, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ChildWindow
+    second: {fileID: 2100000, guid: 20dcd07629a75f64a93c500a88ddcaec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ChildroomDecor1
+    second: {fileID: 2100000, guid: 356a83e7ca7c55148a34059325358059, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ChildroomDecor2
+    second: {fileID: 2100000, guid: da9e2157e4737fc4e96818213740bb3a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ChildroomDecor3
+    second: {fileID: 2100000, guid: 66b0abe98ceedee428915e2c6fba635d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DoorKids
+    second: {fileID: 2100000, guid: d01f78f08ac25774fa30b17ada3b5881, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DoorKite
+    second: {fileID: 2100000, guid: cb827b0439dd61048ad2e4c79c6ee684, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DoorSecret
+    second: {fileID: 2100000, guid: d7a6b7e96b958054eb57fbbd3b1249b7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DoorTrain
+    second: {fileID: 2100000, guid: e316b28ffb20fd14c87dc63a4a210e60, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Doorboat
+    second: {fileID: 2100000, guid: a298af800b02b5e449ad49bb0cb18b38, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: KiteRoomDecor
+    second: {fileID: 2100000, guid: da5d308a2645d3a46a3da8540514711c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: KiteRoomDecor2
+    second: {fileID: 2100000, guid: ded67d1e10e63ec428b34385637a3e42, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: KiteWindow
+    second: {fileID: 2100000, guid: dfdc032dca5230e4580cae7320a1dace, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: NunWindow
+    second: {fileID: 2100000, guid: f138f1d77abe06b4591f2cef5fe07426, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WallSecret
+    second: {fileID: 2100000, guid: eb8735235497a3a479f068336c23c4e2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: kiteDecor3
+    second: {fileID: 2100000, guid: 4a6fe83e2e436244cbaac3ea4be569bb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trainDecor1
+    second: {fileID: 2100000, guid: 31d3c0dd25b40bb49b72464ea6c3bbd4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trainDecor2
+    second: {fileID: 2100000, guid: 821e47b98d382754ab0901897e879d40, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trainDecor3
+    second: {fileID: 2100000, guid: 3586017dfa41a174e824e2abc3ea0390, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
