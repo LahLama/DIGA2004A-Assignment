@@ -24,7 +24,7 @@ public class Awakening : MonoBehaviour
     void OnEnable()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-
+        PlayerStats.Instance.playerLevel = PlayerStats.PlayerLevel.Cutscene;
         player.transform.rotation = Quaternion.identity;
 
 
@@ -50,6 +50,7 @@ public class Awakening : MonoBehaviour
             playerMovement.enabled = true;
             lookFunction.enabled = true;
             BlinkShader.SetFloat("_blinkState", BlinkVal);
+            PlayerStats.Instance.playerLevel = PlayerStats.PlayerLevel.Tutorial;
             this.enabled = false;
 
 

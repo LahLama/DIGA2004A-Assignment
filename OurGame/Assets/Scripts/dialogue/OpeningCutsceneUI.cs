@@ -141,6 +141,6 @@ public class OpeningCutsceneUI : MonoBehaviour
 
         gameObject.SetActive(false); // Hide cutscene UI
 
-        PlayerStats.Instance.playerLevel = PlayerStats.PlayerLevel.Tutorial;
+
     }
 }
