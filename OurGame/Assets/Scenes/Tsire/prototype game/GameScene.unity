@@ -21073,6 +21073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 245798907}
   player: {fileID: 830116209}
+  moveFromMicrophone: {fileID: 0}
   StopLayer:
     serializedVersion: 2
     m_Bits: 32769
@@ -23612,6 +23613,8 @@ MonoBehaviour:
   RedDoors:
   - {fileID: 1700127766}
   - {fileID: 522446242}
+  fogIncreaseAmount: 0.2
+  maxFogDensity: 1
 --- !u!1 &330763535
 GameObject:
   m_ObjectHideFlags: 0
@@ -36326,12 +36329,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5235786763680770193, guid: 493f6cd29f6463b4f9277eff0bc93422, type: 3}
       insertIndex: -1
       addedObject: {fileID: 715267846}
-    - targetCorrespondingSourceObject: {fileID: 8266629978271127434, guid: 493f6cd29f6463b4f9277eff0bc93422, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1438579342}
-    - targetCorrespondingSourceObject: {fileID: 382479088795214640, guid: 493f6cd29f6463b4f9277eff0bc93422, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1307450358}
   m_SourcePrefab: {fileID: 100100000, guid: 493f6cd29f6463b4f9277eff0bc93422, type: 3}
 --- !u!1 &445300733
 GameObject:
@@ -36606,6 +36603,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe40e639570fe2d4298c9c32aedfd547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lampOnSound: LampOn
+  lampOffSound: LampOff
 --- !u!4 &448411491 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1465161637766822277, guid: 17fd45310ed7da64b944a6a9edef3e0f, type: 3}
@@ -60874,7 +60873,7 @@ GameObject:
   - component: {fileID: 793863993}
   - component: {fileID: 793863992}
   m_Layer: 0
-  m_Name: Quad (3)
+  m_Name: ItemFrames
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62321,6 +62320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlinkShader: {fileID: 2100000, guid: 2f1eb04a41bfa054e9f648f51b6f6f9b, type: 2}
   BlinkVal: 0
+  UI: {fileID: 0}
 --- !u!1 &831035649 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7992283297288499852, guid: 9acbf4a75ce538747b129c919dd3d7d0, type: 3}
@@ -74906,7 +74906,7 @@ GameObject:
   - component: {fileID: 952983315}
   - component: {fileID: 952983314}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: ItemFrames
   m_TagString: ForRedDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76862,8 +76862,10 @@ MonoBehaviour:
   choiceButton2: {fileID: 1302340889}
   choiceText1: {fileID: 1249850299}
   choiceText2: {fileID: 1989479328}
-  dialougeState: {fileID: 43992080}
+  audioSource: {fileID: 0}
+  typingSound: {fileID: 0}
   startingNode: {fileID: 11400000, guid: 39a6912b38eafa948a9d81abe0a697ce, type: 2}
+  dialougeState: {fileID: 43992080}
 --- !u!1 &1047466644 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5505857251194573274, guid: bf299a6039ff4a040ac2c67acfca5b6b, type: 3}
@@ -77480,6 +77482,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe40e639570fe2d4298c9c32aedfd547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lampOnSound: LampOn
+  lampOffSound: LampOff
 --- !u!1 &1080558441 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: 29a69a4f6ba445b4ea5ec77d501cc1a9, type: 3}
@@ -78537,7 +78541,7 @@ GameObject:
   - component: {fileID: 1105081100}
   - component: {fileID: 1105081099}
   m_Layer: 0
-  m_Name: Quad (1)
+  m_Name: ItemFrames
   m_TagString: ForRedDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78978,6 +78982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7464eb64ca64d14d85603042edb7c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UI: {fileID: 0}
   hasBeenPicked: 0
 --- !u!114 &1109648961
 MonoBehaviour:
@@ -86457,6 +86462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe40e639570fe2d4298c9c32aedfd547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lampOnSound: LampOn
+  lampOffSound: LampOff
 --- !u!1 &1227220039
 GameObject:
   m_ObjectHideFlags: 0
@@ -88266,33 +88273,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305316905}
   m_Mesh: {fileID: 4634777723034467612, guid: 997c377a8bae2174cb4997955a08bc74, type: 3}
---- !u!1 &1307450356 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 382479088795214640, guid: 493f6cd29f6463b4f9277eff0bc93422, type: 3}
-  m_PrefabInstance: {fileID: 442919228}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1307450358
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1307450356}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2882091625789468594, guid: 69b1879f81df3064c84caab109898f4d, type: 3}
 --- !u!1001 &1308489896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -91125,6 +91105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe40e639570fe2d4298c9c32aedfd547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lampOnSound: LampOn
+  lampOffSound: LampOff
 --- !u!65 &1411084450
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -96668,7 +96650,7 @@ GameObject:
   - component: {fileID: 1434399750}
   - component: {fileID: 1434399749}
   m_Layer: 0
-  m_Name: Quad (2)
+  m_Name: ItemFrames
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96769,33 +96751,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1335290683284971835, guid: 15adfad145d279f4893781992599ff41, type: 3}
   m_PrefabInstance: {fileID: 881030000}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1438579340 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8266629978271127434, guid: 493f6cd29f6463b4f9277eff0bc93422, type: 3}
-  m_PrefabInstance: {fileID: 442919228}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1438579342
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1438579340}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2878918184448134240, guid: 69b1879f81df3064c84caab109898f4d, type: 3}
 --- !u!1 &1439063297 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5bf2a1afcf8b6dd4e8b7baa9a9f0ccec, type: 3}
@@ -113794,7 +113749,7 @@ GameObject:
   - component: {fileID: 1798335908}
   - component: {fileID: 1798335907}
   m_Layer: 0
-  m_Name: Quad (5)
+  m_Name: ItemFrames
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136876,6 +136831,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe40e639570fe2d4298c9c32aedfd547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lampOnSound: LampOn
+  lampOffSound: LampOff
 --- !u!1001 &2042961541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -147942,6 +147899,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlinkShader: {fileID: 2100000, guid: 2f1eb04a41bfa054e9f648f51b6f6f9b, type: 2}
   BlinkVal: 0
+  UI: {fileID: 0}
 --- !u!111 &8721156114313566916
 Animation:
   m_ObjectHideFlags: 0

@@ -3,7 +3,32 @@ guid: 43b5d6a20a7168f4e9e6c10a4ae8dc58
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BoatWindow
+    second: {fileID: 2100000, guid: af6e0abafb6d60048929c53c5054d5f0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: boat colour
+    second: {fileID: 2100000, guid: a44e5b83cbc63464d9e50a50d1118091, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: flag colour
+    second: {fileID: 2100000, guid: 125cb4b7c3ef0b84e920210093cebc42, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: outline
+    second: {fileID: 2100000, guid: f4c3658f9d773c14586a2f9ff1725e34, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: outline.001
+    second: {fileID: 2100000, guid: 6654e987e408e6945a47a351998b1193, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

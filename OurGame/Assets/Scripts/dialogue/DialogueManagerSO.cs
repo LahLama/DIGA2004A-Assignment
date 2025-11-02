@@ -58,21 +58,19 @@ public class DialogueManagerSO : MonoBehaviour
         }
     }
 
-   public void StartDialogue(DialogueNodeSO startNode)
-{
-    dialoguePanel.SetActive(true);
-
-    if (playerMovement != null)
+    public void StartDialogue(DialogueNodeSO startNode)
     {
-        playerMovement.isDialogueActive = true;
+        dialoguePanel.SetActive(true);
 
-        // Immediately stop any footstep sounds
-        SoundManager.Instance.StopLooping("WalkStep");
-        SoundManager.Instance.StopLooping("SprintStep");
+        if (PlayerStats.Instance.playerLevel == PlayerStats.PlayerLevel.Cutscene)
+        {
+            // Immediately stop any footstep sounds
+            SoundManager.Instance.StopLooping("WalkStep");
+            SoundManager.Instance.StopLooping("SprintStep");
+        }
+
+        ShowNode(startNode);
     }
-
-    ShowNode(startNode);
-}
     private void ShowNode(DialogueNodeSO node)
     {
         currentNode = node;
@@ -144,8 +142,6 @@ public class DialogueManagerSO : MonoBehaviour
         if (dialougeState != null)
             dialougeState.EndDialouge();
 
-        // Re-enable footstep audio after dialogue ends
-        if (playerMovement != null)
-            playerMovement.isDialogueActive = false;
+
     }
 }
