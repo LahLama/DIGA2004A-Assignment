@@ -5,42 +5,21 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/James/NavMeshTesting.unity
-    guid: 3f722b435cb297d4b8185126e3a7cc0a
-  - enabled: 0
-    path: Assets/Scenes/Tsire/CreditsScene.unity
+  - enabled: 1
+    path: Assets/Scenes/Demo_1/GameScene.unity
+    guid: 08bb1d9db4094fd40bb47f99caa151c5
+  - enabled: 1
+    path: Assets/Scenes/Demo_1/MainMenu.unity
+    guid: cc58877efb69e6d418e88ebd670f0107
+  - enabled: 1
+    path: Assets/Scenes/Demo_1/End Scene.unity
+    guid: 35a4773a26e8e124bbd956524996db18
+  - enabled: 1
+    path: Assets/Scenes/Demo_1/final cutscene.unity
+    guid: 688fe1831f39a0d4b95556c196a22734
+  - enabled: 1
+    path: Assets/Scenes/Demo_1/CreditsScene.unity
     guid: a9d4d17679096dd4abf408a40dd35b9f
-  - enabled: 0
-    path: Assets/Scenes/James/Old Scenes/BaseLevelLayout.unity
-    guid: 38004ddc1cb67aa488e9882ef159b0cc
-  - enabled: 0
-    path: Assets/Scenes/Tsire/older scenes/menu/Main menu.unity
-    guid: fac9d538b6f035d4e8d920beda9ec10c
-  - enabled: 0
-    path: Assets/Scenes/Tsire/older scenes/Game/Game scene.unity
-    guid: ec94d940e9339bf4d9f305712c2c2fed
-  - enabled: 0
-    path: Assets/Scenes/Tsire/older scenes/menu/MainMenu _older.unity
-    guid: 5f53203f89d3f1d4f83d12c5423dd4b6
-  - enabled: 0
-    path: Assets/Scenes/Tsire/older scenes/Game/GameScene.unity
-    guid: fcb54f96547a37e458a853164e4ba2aa
-  - enabled: 0
-    path: Assets/Scenes/Tsire/older scenes/olderMainMenu.unity
-    guid: 7e05f04c84079124c8289a781f78e80a
-  - enabled: 0
-    path: Assets/Scenes/Tsire/older scenes/cutscene.unity
-    guid: 97f0c814bce241146979a96b582438ed
-  - enabled: 1
-    path: Assets/Scenes/James/Prototype/MainMenu.unity
-    guid: e863cce14e412714a9f650c293c6dcfd
-  - enabled: 1
-    path: Assets/Scenes/James/Prototype/GameScene.unity
-    guid: 3446b37c77b2b234f93f25663affa00d
-  - enabled: 1
-    path: Assets/Scenes/James/Prototype/End Scene.unity
-    guid: 53e712355639ea04283565717d3ad748
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: a407d3d95c6a2554abb1a2e41ca5b0fe, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
