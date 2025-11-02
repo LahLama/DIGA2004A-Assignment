@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    
+
     #region Varibles
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -109,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
         float __sprintSpeed = 2.5f;
-        int __sprintFOV = 80;
+        int __sprintFOV = 75;
 
         if (_sprintTimer >= _sprintDuration) { _canSprint = true; }
         if (_sprintTimer < 0) { _canSprint = false; }
@@ -121,15 +121,14 @@ public class PlayerMovement : MonoBehaviour
             float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
             _cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
             _OverlaycameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
+        }
 
-            if (_moveInput.magnitude > 0.1f)
-            {
-                _sprintTimer -= Time.deltaTime;
-                sprintBar.size = 1 - (_sprintTimer / 4);
+        if (_moveInput.magnitude > 0.1f)
+        {
+            _sprintTimer += Time.deltaTime;
+            sprintBar.size = 1 - (_sprintTimer / 4);
 
-                //Debug.Log("--" + (int)_   sprint}Timer);
-            }
-
+            //Debug.Log("--" + (int)_   sprint}Timer);
         }
 
     }
@@ -201,15 +200,19 @@ public class PlayerMovement : MonoBehaviour
         if (_sprintInput && !_crouchInput && !_isUnderSomething)
         {
             HandleSprint();
-
+            SoundManager.Instance.PlayLooping("SprintStep");
+            SoundManager.Instance.StopLooping("WalkStep");
         }
         else if (_crouchInput && !_sprintInput)
         {
             HandleCrouch();
+
         }
         else if (!_isUnderSomething)
         {
             HandleWalk();
+            SoundManager.Instance.PlayLooping("WalkStep");
+            SoundManager.Instance.StopLooping("SprintStep");
         }
         else if (_isUnderSomething)
         {
@@ -230,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             //Decrease the sprintTimer
-            _sprintTimer += Time.deltaTime;
+            _sprintTimer -= Time.deltaTime;
             sprintBar.size = 1 - (_sprintTimer / 4);
 
         }
@@ -260,24 +263,24 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void HandleFootstepAudio()
-{
-    if (_moveInput.magnitude > 0.1f && controller.isGrounded)
     {
-        if (_sprintInput && _canSprint)
+        if (_moveInput.magnitude > 0.1f && controller.isGrounded)
         {
-            SoundManager.Instance.PlayLooping("SprintStep");
+            if (_sprintInput && _canSprint)
+            {
+                SoundManager.Instance.PlayLooping("SprintStep");
+            }
+            else
+            {
+                SoundManager.Instance.PlayLooping("WalkStep");
+            }
         }
         else
         {
-            SoundManager.Instance.PlayLooping("WalkStep");
+            SoundManager.Instance.StopLooping("SprintStep");
+            SoundManager.Instance.StopLooping("WalkStep");
         }
     }
-    else
-    {
-        SoundManager.Instance.StopLooping("SprintStep");
-        SoundManager.Instance.StopLooping("WalkStep");
-    }
-}
 
 
 

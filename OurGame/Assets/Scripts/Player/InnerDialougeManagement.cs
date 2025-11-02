@@ -18,18 +18,25 @@ public class InnerDialouge : MonoBehaviour
 
     public IEnumerator InnerDialogueContorl()
     {
-        //Panel appears
+        // Panel appears
         panel.GetComponent<Image>().CrossFadeAlpha(1f, 0.2f, true);
         yield return new WaitForSeconds(0.22f);
         panel.SetActive(true);
 
-        //Panel Stays
+        // Panel stays
         yield return new WaitForSeconds(2f);
+
+        // Don't disappear while hitObj is true
+        while (FindAnyObjectByType<Interactor>().hitObj)
+        {
+            yield return null; // wait until next frame and re-check
+        }
+
+        // Panel fades out once hitObj is false
         panel.GetComponent<Image>().CrossFadeAlpha(0f, 0.3f, true);
 
-        //Panely dissapears
+        // Panel disappears
         yield return new WaitForSeconds(0.32f);
         panel.SetActive(false);
-
     }
 }
