@@ -133,6 +133,14 @@ public void StopLooping(string clipName)
         _loopingSources[clipName].Stop();
     }
 }
+
+public void SetLoopingVolume(string clipName, float volume)
+{
+    if (_loopingSources.ContainsKey(clipName))
+    {
+        _loopingSources[clipName].volume = volume;
+    }
+}
 	
 }
 

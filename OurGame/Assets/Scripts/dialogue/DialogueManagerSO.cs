@@ -26,10 +26,16 @@ public class DialogueManagerSO : MonoBehaviour
     private bool isTyping = false;
     private bool waitingForEnd = false;
 
+    // Reference to PlayerMovement
+    private PlayerMovement playerMovement;
+
     public void StartFromOtherScript()
     {
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
+
+        // Find PlayerMovement in the scene
+        playerMovement = FindObjectOfType<PlayerMovement>();
 
         StartDialogue(startingNode);
     }
@@ -52,12 +58,21 @@ public class DialogueManagerSO : MonoBehaviour
         }
     }
 
-    public void StartDialogue(DialogueNodeSO startNode)
+   public void StartDialogue(DialogueNodeSO startNode)
+{
+    dialoguePanel.SetActive(true);
+
+    if (playerMovement != null)
     {
-        dialoguePanel.SetActive(true);
-        ShowNode(startNode);
+        playerMovement.isDialogueActive = true;
+
+        // Immediately stop any footstep sounds
+        SoundManager.Instance.StopLooping("WalkStep");
+        SoundManager.Instance.StopLooping("SprintStep");
     }
 
+    ShowNode(startNode);
+}
     private void ShowNode(DialogueNodeSO node)
     {
         currentNode = node;
@@ -128,5 +143,9 @@ public class DialogueManagerSO : MonoBehaviour
     {
         if (dialougeState != null)
             dialougeState.EndDialouge();
+
+        // Re-enable footstep audio after dialogue ends
+        if (playerMovement != null)
+            playerMovement.isDialogueActive = false;
     }
 }

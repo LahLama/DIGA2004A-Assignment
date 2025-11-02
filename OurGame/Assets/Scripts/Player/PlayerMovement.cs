@@ -31,6 +31,12 @@ public class PlayerMovement : MonoBehaviour
     private float _sprintDuration = 4f;
     public Scrollbar sprintBar;
 
+    [Header("Dialogue State")]
+    public bool isDialogueActive = false;
+
+    [Header("Audio Settings")]
+    public Slider sfxVolumeSlider;
+
     [Header("Other Componets")]
     private CharacterController controller;
     public TextMeshProUGUI debugText;
@@ -259,16 +265,27 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void HandleFootstepAudio()
+public void HandleFootstepAudio()
 {
+    if (Time.timeScale == 0f || isDialogueActive)
+    {
+        SoundManager.Instance.StopLooping("SprintStep");
+        SoundManager.Instance.StopLooping("WalkStep");
+        return;
+    }
+
+    float volume = sfxVolumeSlider != null ? sfxVolumeSlider.value : 1f;
+
     if (_moveInput.magnitude > 0.1f && controller.isGrounded)
     {
         if (_sprintInput && _canSprint)
         {
+            SoundManager.Instance.SetLoopingVolume("SprintStep", volume);
             SoundManager.Instance.PlayLooping("SprintStep");
         }
         else
         {
+            SoundManager.Instance.SetLoopingVolume("WalkStep", volume);
             SoundManager.Instance.PlayLooping("WalkStep");
         }
     }
@@ -278,8 +295,6 @@ public class PlayerMovement : MonoBehaviour
         SoundManager.Instance.StopLooping("WalkStep");
     }
 }
-
-
 
 
 }
