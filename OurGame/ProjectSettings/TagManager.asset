@@ -28,6 +28,7 @@ TagManager:
   - PickUp
   - ForGreenDoor
   - PlayerParts
+  - interact
   layers:
   - Default
   - TransparentFX
