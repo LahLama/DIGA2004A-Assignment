@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Sprint Controls")]
     private float _sprintTimer;
+    // current available stamina (seconds)
+    private float _sprintStamina;
     bool _canSprint = true;
     private float _sprintDuration = 4f;
     public Scrollbar sprintBar;
@@ -53,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
 
         CanvasGroup canvasGroup = sprintBar.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0f;
+        _sprintStamina = _sprintDuration;
 
     }
     private void Update()
@@ -110,25 +113,33 @@ public class PlayerMovement : MonoBehaviour
 
         float __sprintSpeed = 2.5f;
         int __sprintFOV = 75;
-
-        if (_sprintTimer >= _sprintDuration) { _canSprint = true; }
-        if (_sprintTimer < 0) { _canSprint = false; }
-
+        _canSprint = _sprintStamina > 0f;
         if (_sprintInput && _canSprint)
         {
+            // only consume stamina when player is actually moving
+            bool isMoving = _moveInput.magnitude > 0.1f;
+            if (isMoving)
+            {
+                // consume stamina
+                _sprintStamina = Mathf.Max(0f, _sprintStamina - Time.deltaTime);
+                if (_sprintStamina <= 0f) _canSprint = false;
+            }
+
             moveSpeed = __sprintSpeed; // Sprint speed
             debugText.text = "Sprinting"; // Update debug text
             float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
             _cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
             _OverlaycameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
-        }
 
-        if (_moveInput.magnitude > 0.1f)
-        {
-            _sprintTimer += Time.deltaTime;
-            sprintBar.size = 1 - (_sprintTimer / 4);
 
-            //Debug.Log("--" + (int)_   sprint}Timer);
+            if (_moveInput.magnitude > 0.1f)
+            {
+                _sprintTimer -= Time.deltaTime;
+                sprintBar.size = 1 - (_sprintTimer / 4);
+
+                //Debug.Log("--" + (int)_   sprint}Timer);
+            }
+
         }
 
     }
@@ -200,19 +211,15 @@ public class PlayerMovement : MonoBehaviour
         if (_sprintInput && !_crouchInput && !_isUnderSomething)
         {
             HandleSprint();
-            SoundManager.Instance.PlayLooping("SprintStep");
-            SoundManager.Instance.StopLooping("WalkStep");
+
         }
         else if (_crouchInput && !_sprintInput)
         {
             HandleCrouch();
-
         }
         else if (!_isUnderSomething)
         {
             HandleWalk();
-            SoundManager.Instance.PlayLooping("WalkStep");
-            SoundManager.Instance.StopLooping("SprintStep");
         }
         else if (_isUnderSomething)
         {
@@ -233,7 +240,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             //Decrease the sprintTimer
-            _sprintTimer -= Time.deltaTime;
+            _sprintTimer += Time.deltaTime;
             sprintBar.size = 1 - (_sprintTimer / 4);
 
         }

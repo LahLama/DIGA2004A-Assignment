@@ -28,6 +28,7 @@ TagManager:
   - PickUp
   - ForGreenDoor
   - PlayerParts
+  - PlayerEyes
   layers:
   - Default
   - TransparentFX
