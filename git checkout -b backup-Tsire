@@ -1,0 +1,353 @@
+[33mfa27b5d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mTsire[m[33m, [m[1;31morigin/Tsire[m[33m)[m resolved merge conflict for WakeUp.anim
+[33mf02ec94[m Copied demo scene from James
+[33m8ae0d25[m end demo animation
+[33m8a3fbc0[m merge
+[33mab80f70[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/James[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m, [m[1;32mJames[m[33m)[m Merge branch 'James'
+[33m8270cc7[m Wake Up Animation
+[33m9013e6b[m Wake up anim
+[33mc95e1f2[m[33m ([m[1;31morigin/Alex[m[33m, [m[1;32mAlex[m[33m)[m animation video in demo file alex
+[33mab92dc6[m merge from main
+[33m3fbe83f[m Merge branch 'Alex'
+[33mdf44c31[m scenes
+[33mf42f054[m ReOrganized Files
+[33mbc9e308[m New Scenes | Demo_1
+[33m2e0eb52[m Merge branch 'Tsire'
+[33m19ff10b[m Merged Changes to main
+[33mf22d65e[m updated the sound for the vase
+[33m139c538[m Merge branch 'Tsire'
+[33mc652ea6[m updated script for falling object animation
+[33m90b76f7[m Merge branch 'James'
+[33m9ca6aac[m SprintBar
+[33mc2d1ad5[m Merge branch 'Alex'
+[33mc015ecc[m game scene
+[33m54b525a[m updated the shelf animation in gamescene
+[33m0f78698[m updated game scene
+[33m05de671[m EndDemo.cs | Game End Foundation implemented
+[33m505440d[m Awakening.cs | fixed pause bug
+[33m1c9ccbf[m Edit to sounds, redone tutotial art
+[33m58b4efa[m added a vase to gamescene Tsire from Alex scene folder
+[33m098c794[m Merge branch 'main' into James
+[33ma33f9d1[m Merge branch 'main' into Tsire
+[33m2af7535[m merge from main
+[33m5cb149e[m Merge branch 'Alex'
+[33m58ffe27[m scripts ,animation of objects
+[33madd037d[m updated gamescene
+[33mefe61ef[m Edited the walking sound and updated the game scene
+[33m7a98897[m Merge branch 'main' into Tsire
+[33m9b08366[m Merge branch 'Alex'
+[33mca5bc6e[m animations,objects,shelf and glass object
+[33m83e8e05[m unlooped audio in final cutscene
+[33md022bc3[m Restored wake up animation
+[33m3bf0864[m Player can't pause during cutscenes
+[33m7c01019[m Object dropping no longer when paused
+[33mab38755[m Adjusted wand Light
+[33m73f0914[m Re-Materialized the walls
+[33mc7e4cd2[m Added Lore and Reorganized toys
+[33m2ec1125[m Made a credit scene
+[33m2ad3214[m Added a background sound to the End Scene
+[33m6a29cd8[m imported new audio and added sound to the lamps and  horse toy
+[33mbb78735[m Added  a sound for the doors
+[33md99b668[m created a new scene for the end of the game
+[33m72be78f[m updated the sprite for interaction
+[33mdd553d1[m Merge branch 'Tsire'
+[33m74cfa90[m changed the walking sound with new imported audio
+[33mc134e8b[m Added a walking and running sound under resources
+[33m710cc73[m copied scene from James and added sound effects
+[33mb0f3230[m hand mesh,new folder
+[33m7e78c0b[m Merge branch 'Alex'
+[33me4cb07a[m copied scenes
+[33m4034668[m Merge branch 'main' into Tsire
+[33m9f72057[m Merge branch 'James'
+[33m5509d38[m Updated scenes
+[33mc6cd924[m Merge branch 'James'
+[33mee9a23f[m Reorganzied files
+[33m9f10b4b[m turned of eerie sound from background music in gamescene
+[33mb7d326a[m Exteriors now respond to the lightning
+[33me76c9e1[m Exteriors now respond to the lightning
+[33mde77cf4[m Cutscene gets rid of uneed ui
+[33m8839552[m Visual rep of noise level
+[33m24a6e33[m Added some more interactables
+[33md29059c[m Adjusted Hiding spots bounding boxes
+[33m6eba919[m Added more audio and made a script for nun sound trigger
+[33ma541839[m Merge branch 'Tsire'
+[33m3f7783a[m Dynamic animation interactor script
+[33mf84fc74[m Raised Ceiling for animation
+[33mbb066d4[m Nun gets distracted by thrown objects
+[33mbfacaaa[m fog increases on Door Unlocks
+[33m7511a6c[m Adjusted player speed
+[33mfee79c4[m Added Emissive Door Knobs
+[33m994ea76[m Fixed incorrect item scaling
+[33m23f357f[m Items no longer scale when picked up
+[33ma922c99[m Reverted Hiding Changes
+[33mf5de80f[m ReDone Hiding Mechanic
+[33mf714f19[m edited the endscene and added a new script for  it
+[33mdd85844[m updated end scene and sound in gamescene
+[33md9d50a8[m updated game scene
+[33m29ed2e6[m Merge branch 'main' of https://github.com/LahLama/DIGA2004A-Assignment
+[33mdab7f91[m Commented Scripts
+[33m64e7f88[m updated dialogue script to have  a sound effect
+[33m5dd2b44[m fixed the rain sound in the gamescene
+[33mc25a54d[m copied Gamescene from James to Tsire
+[33m0faf61c[m Title Screen Update
+[33mf51209f[m ReAdded Hands
+[33m891386f[m Auidio Source
+[33mbf8eb1a[m Tweaks and Changes
+[33mdf178b7[m Merge branch 'James'
+[33m620c236[m Build No 1
+[33m6581658[m Merge branch 'Alex'
+[33m1db996d[m Merge branch 'Alex' into James
+[33m29cfc62[m saved
+[33m33ea33b[m Merge branch 'Alex' into James
+[33m6b5f46e[m Merge branch 'Tsire' into James
+[33mb0b7324[m Wake Up after tutorial
+[33me299281[m Merge branch 'main' of https://github.com/LahLama/DIGA2004A-Assignment
+[33m977f598[m Merge branch 'main' into Alex
+[33mcac7400[m added an ending scene
+[33m112c923[m wall details,SPRITES
+[33m298a484[m added edted rain sfx
+[33m5ec7132[m Merge
+[33m4b32abd[m Merge branch 'Tsire' into James
+[33mb1e1f62[m Inspector References update
+[33me5f1a7e[m Merge branch 'main' into Tsire
+[33m3933272[m repositioned skip button in gamescene
+[33m3ccb0da[m Merge branch 'James' into Tsire
+[33m1a2462c[m Reimplemented inspector values
+[33mf2d67f7[m Merge branch 'James' into Tsire
+[33mb85805b[m Merge branch 'James' into Tsire
+[33m5f1ccb3[m UI improvements
+[33m7b70a3e[m Merge branch 'Alex' into Tsire
+[33m528cfc9[m Merge branch 'Alex'
+[33m4ccea53[m Merge branch 'Alex' into James
+[33m2d08f70[m saved ui
+[33mf5f800e[m Merge branch 'main' into James
+[33m568ee10[m Merge branch 'Tsire'
+[33m1af12cd[m added a lime green material
+[33m00848bb[m Merge branch 'Alex' into James
+[33m36f7a7a[m Added particles
+[33m9fbf020[m Improved Door Animations
+[33m463fb7a[m copied a scene from James folder to Tsire
+[33m8d6942a[m Merge branch 'Alex'
+[33m3c850e4[m poll designs with icons.icon of pieces of papers
+[33m18e6f9f[m Merged GameScene with BugFixes
+[33mfd87865[m file management
+[33mf9b1972[m Animation Try out
+[33m3eb587e[m Merge branch 'Alex' into James
+[33m315504c[m Changed MC's shirt colour
+[33m82b2774[m Merge branch 'main' into Tsire
+[33m8d12fba[m updated the menu script and GameScene
+[33m61dda5f[m 3d object implemented
+[33m652f684[m character walking and running mesh
+[33m93ea2b9[m Interactive Beds and Normals Updated
+[33ma0f23d3[m Settings Pane Intergrated
+[33m2a8a618[m Merge branch 'Alex'
+[33m136428c[m mesh placements
+[33m75aa601[m replaced the telephone sound
+[33m6531ced[m scaled the cutscenecanvas and edited playercontrols
+[33me452484[m Turned off a renderer feature
+[33m18f4016[m Merge branch 'main' into Tsire
+[33m1a1471a[m Fixed Background image animation
+[33mb09acd2[m Added new sound effects , edited the  pickup script
+[33m93361af[m Merge branch 'Alex'
+[33m30b0b75[m deleted scenes and renamed scene
+[33m3401f7f[m Merge branch 'James'
+[33m5ec0ae1[m Merged Tsire from James
+[33m1835292[m Merge branch 'Alex'
+[33mde18306[m hand pose mesh
+[33m9a13836[m Merge branch 'Alex'
+[33md9821c0[m background meshes
+[33mad80f4f[m added references and comments to some of  the scripts
+[33m0636b68[m added a loop to the first sound in main menu
+[33m71c2716[m Merge branch 'Tsire'
+[33m17a8de2[m refined the opening dialogue and replaced the mainmenu with a new one
+[33m49fa461[m Merge branch 'Alex'
+[33m3e3f44a[m thunder and lightning script
+[33m3157ad5[m updated the opening cutscene
+[33m3a09038[m Merge branch 'Alex'
+[33m8eb4b9d[m particle fog
+[33m814cc77[m add dialogue for the opening scene
+[33m8240b78[m Merge branch 'Alex'
+[33m532e821[m materials
+[33m19d7ab7[m Merge branch 'Alex'
+[33ma3da830[m animation of characters
+[33m9aedaef[m Merge branch 'Tsire'
+[33me8aa4ba[m testing animations 3d,all character animations
+[33m0c1ad5d[m added two images for the items
+[33m5f0370f[m Merge branch 'main' into Tsire
+[33mb0c0d69[m turned off options panel in game scene
+[33m3de3e02[m DoorAnimation Hotfix
+[33m595e299[m Merge branch 'Alex'
+[33mab91e21[m added meshes and animation testing scene
+[33mcd4b8fd[m added a new audio for dialogue
+[33m6b6e9f4[m made a copy of mainmenu and edited the scene
+[33m205b52d[m edited the ui for the options and settings
+[33mc42595f[m BugFixes.scene | Pickup Tutorial Blocks
+[33mbd61713[m Wallintergration.scene
+[33m3c5931e[m Digetic Movement and Door Scaling
+[33m90d7587[m updated sound script, game scene and main menu scene
+[33m60f8bca[m Walls Scaled, Files Reordered, Masks ReApplied
+[33m351c21e[m updated settingsMenu script and Sound manager script
+[33m5ef390b[m Merge branch 'Tsire'
+[33mee7bd53[m slider ui
+[33m0d1d4fb[m updated game scene and main menu scene
+[33m120be79[m added options to inventory scene
+[33mda5644e[m merge
+[33m09ffe5e[m Merge branch 'main' into Tsire
+[33m0a60d97[m updated settings script
+[33m21521c1[m updated menuNavigation script and mainmenu script
+[33m21968bd[m Added a script for input detection
+[33m2df341b[m merged from main
+[33m4df1298[m PaperPickUp Intergrated
+[33m270457c[m slider bar
+[33m1d9a873[m materials for walls
+[33m26d3449[m Merge branch 'James'
+[33m150c69b[m Blinking And Wake Up
+[33med7e5b0[m updated m Game scene implementing controller
+[33m1c1ef52[m Blink Shader
+[33mb3ff065[m wake up Animation sequence implemented
+[33m56b111c[m Wake Up Animation
+[33m2be8eb8[m LivesTracker.cs | Lives system implemented
+[33m7528e3d[m NunChase.cs | Line of sight now works
+[33m1e5b30d[m added a sprite for options and updated the game scene
+[33m652da61[m NunChase.cs | improved Nuns Chase AI
+[33medb839d[m updated mainmenu gameview
+[33meb089eb[m Nun Lamp Interaction
+[33mb521b1f[m updated mainmenu script and adde an options button to the game
+[33m04c43c2[m Lamps Placed and interactive
+[33m9df50a1[m Occulusion Settings
+[33m0d1712a[m Inventory.cs | All Doors have animation
+[33ma245f37[m Nun and Player Door Animations
+[33mf3a9936[m Merge branch 'main' into Tsire
+[33m74579a0[m main menu scene update
+[33m12f188a[m audio update in main menu and asset update
+[33ma5dcc31[m Dynamic Bars
+[33m94cc8d5[m HideAndShowPlayer.cs | updated hiding visibililty
+[33m30b60f5[m Dynamic bars visuals
+[33me2ce347[m Improved Script Getting
+[33me9c1107[m TutForceLook.cs | Player specific trigger
+[33m61e8d63[m PickUpSystem.cs | Items Reposition Correctly
+[33m61114ec[m update to main menu scene
+[33m282b1c8[m Merge branch 'main' into Alex
+[33mc397797[m copy main menu and scenes
+[33mdaf4be0[m Merge branch 'James'
+[33mb20e8c1[m Merge branch 'Alex'
+[33m66be450[m added new folders,testing scenes,added materials
+[33m8927257[m Merge branch 'main' into Tsire
+[33meb75eb9[m wall objects
+[33m87c417f[m Merge branch 'Alex'
+[33m436ef15[m 3d meshes,materials and new folders
+[33mb7919b2[m updated settingsMenu script
+[33m951704e[m Merge branch 'main' into Tsire
+[33mf69fc10[m renamed a gameobject
+[33m8dd19b1[m Added a new script for navigation and added a new action map
+[33meb04a20[m fixed the volume sliders
+[33mb4c9455[m updated the settings panel in the main menu scene
+[33m233f322[m update to main menu scene
+[33m4461fe4[m Door Animation Foundation
+[33mcce5cef[m Merge branch 'James'
+[33med23a52[m Merge branch 'Alex'
+[33mb169249[m main menue + adding meshes
+[33m6e0724b[m added a credit scene and button
+[33mb625379[m Basic Lamp Interaction Foundation
+[33m74e98fb[m changed the sound manager script
+[33m636d257[m Nun Scripts.
+[33m1cc788b[m Interactor.cs & LivesTracker.cs
+[33m2974617[m Player is now forced to look at girl when exiting
+[33m0f85e02[m NunAI.cs | Nun now ignores the player on hide
+[33m467ad7c[m HideAndShowPlayer.cs | Hider Bar is more responsive
+[33m9d20b00[m NunAI.cs | improved Door Handleing
+[33meedbaed[m NunAi.cs | Grace period works
+[33m96eb254[m FovChanges are consistent
+[33mff3ce78[m Inventory.cs | Swap items on release
+[33m0f75490[m NunAi.cs | Fixed tutorial throwing bug
+[33m75b8865[m pickUpSystem.cs | Swapping Mechnic
+[33mcfef449[m interactbles.cs | Dynamic Text feedback
+[33m8781a15[m Inventory.scene | Basic Inventory System
+[33m6511ca6[m Inventory.scene | LayerMasks Fixed
+[33mf137e47[m Added a sound Manger script and an audio
+[33md8e290a[m saved scene
+[33m768fd6f[m asset update
+[33me38f30a[m update to main menu scene
+[33ma330a2d[m base level scene update and main menu update
+[33m30010d4[m updated settings script and added a sfx slider
+[33mf093441[m update to mainmenu scene
+[33mad736cf[m Merge branch 'main' of https://github.com/LahLama/DIGA2004A-Assignment
+[33m1bbe433[m Merge branch 'Tsire'
+[33m47e5395[m Merge branch 'main' of https://github.com/LahLama/DIGA2004A-Assignment
+[33m7a49d61[m Minor Fixes
+[33m53d1f33[m Merge branch 'main' into Tsire
+[33md01805c[m deleted scenes from my folder and added new scenes
+[33mcb2ce02[m updated base level scene and added a new folder
+[33mc40e580[m Merge branch 'Tsire'
+[33m350a9c2[m deleted sensitivity manager
+[33m3223adc[m added control settings to the manu
+[33m4b5191c[m Updated main menu scene
+[33m6384afe[m Asset update and scene update
+[33m3d99f00[m Merge branch 'Tsire'
+[33m376da3e[m created a new scene
+[33m03a1dd9[m Updated controller vibrations
+[33mc5ebd91[m Merge branch 'James'
+[33mf03da79[m Merge branch 'main' of https://github.com/LahLama/DIGA2004A-Assignment
+[33mf2fc209[m Built Version
+[33m83d456c[m Books and Blocks added
+[33m3a6526b[m Merge branch 'Alex' into James
+[33m95f915f[m Building Test
+[33m65fcc42[m Merge branch 'Alex'
+[33mdde63b9[m building block object
+[33mdd229e4[m New Doors
+[33mf9ec47e[m Merge branch 'Tsire' into James
+[33m9556a63[m Generated the NavMesh
+[33ma9de800[m Merge branch 'Tsire'
+[33m63f7c3c[m replaced the doors in baseLevellayout
+[33mcfc259c[m Imported objects into main scene
+[33m45b969d[m Merge Tsire into James
+[33ma2ca645[m Merge branch 'Tsire'
+[33m690002f[m added new door to baseLevellayout scene
+[33m9284b3d[m Imported Rain Texture
+[33m28d7674[m Merge branch 'Alex' into James
+[33ma1a12d7[m base level particles
+[33mf013647[m Merge branch 'James'
+[33m697ad6b[m TUTORIAL DONE
+[33m6947023[m Merge branch 'main' into Tsire
+[33mfe56292[m added an new door
+[33m29d5124[m Merge branch 'Alex'
+[33md20214b[m particle effects
+[33mf496d40[m DialougeSystem working
+[33mf7d3d7d[m Merge branch 'Tsire'
+[33meeaa2c6[m asset management
+[33mc351dd6[m scene and asset update
+[33me16e1be[m Merge branch 'main' into James
+[33mc41852a[m Doors can now open
+[33m3b2f9be[m Keys now work with Toys
+[33m7c15fa1[m Merge branch 'main' into Alex
+[33mefa5b58[m cpoying scene
+[33m957dd7e[m Merge branch 'James'
+[33m00c6fff[m Added Fog
+[33mf94a6d3[m Merge branch 'Alex'
+[33md022b01[m changed name and editing fog
+[33mfe87d0d[m Merge branch 'James'
+[33m0ddb6f5[m Toy Materials
+[33mf3089a3[m Merge branch 'main' into Tsire
+[33m1c47325[m Merge branch 'Alex' into James
+[33m438dec1[m Merge branch 'main' into Alex
+[33me503ec0[m rain particle
+[33m2d450a6[m levellayout scene
+[33ma8d7c99[m Merge branch 'main' into James
+[33m159fb58[m BaseLevelLayout | Imported Toys
+[33m8180889[m dialogue and particle effects fog
+[33m299bf10[m dialogue and fog particle effect
+[33m88db609[m BaseLevelLayout | HIding spots implemented
+[33m1071ac5[m PickUpSystem.cs | Added a check for particle system
+[33m91c6d86[m Objects now are correctly held
+[33m997e817[m BaseLevelLayout | Adjusted structure of objects
+[33m2b2a647[m Imported More objects to BaseLevelLayout
+[33m3432291[m Merge branch 'main' into Tsire
+[33m8182e13[m levellayout update
+[33mc1db23f[m Merge branch 'James'
+[33me3497fd[m Merge branch 'main' of https://github.com/LahLama/DIGA2004A-Assignment
+[33m0f0179b[m BaseLevelLayout | added more beds
+[33m80803e2[m BaseLevelLayout | Imported items from other scene
+[33m0bb5908[m BaseLevelLayout | Object adjustments
+[33m8cbd7b4[m Merge branch 'main' into Tsire
+[33me6e2ac4[m added beds to the scene
+[33m73b4dce[m Merge branch 'Alex'
+[33m8e953d4[m placement of objects + wardrobe mesh
