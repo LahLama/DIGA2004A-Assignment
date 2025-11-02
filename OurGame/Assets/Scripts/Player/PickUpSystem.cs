@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.AI;
-using UnityEditor;
-using Mono.Cecil.Cil;
+
 
 /*
 Title: How To Pick Up an Item - Unity
