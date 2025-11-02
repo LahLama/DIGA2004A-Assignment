@@ -88,6 +88,7 @@ public class OpeningCutsceneUI : MonoBehaviour
             UIPanel.SetActive(true);
 
         gameObject.SetActive(false); // Hide cutscene UI
+        PlayerStats.Instance.playerLevel = PlayerStats.PlayerLevel.Tutorial;
     }
 
     IEnumerator TypeLine(string line)
@@ -139,5 +140,7 @@ public class OpeningCutsceneUI : MonoBehaviour
             UIPanel.SetActive(true);
 
         gameObject.SetActive(false); // Hide cutscene UI
+
+
     }
 }

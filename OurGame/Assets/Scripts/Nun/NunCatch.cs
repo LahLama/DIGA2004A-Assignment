@@ -37,7 +37,7 @@ public class NunCatch : MonoBehaviour
         player.GetComponentInChildren<Camera>().transform.LookAt(lookPos);
 
         // Make the nun face the player
-        agent.transform.LookAt(player.GetChild(0));
+        agent.transform.LookAt(GameObject.FindGameObjectWithTag("PlayerEyes").transform);
 
         /* GAME OVER LOGIC */
         Invoke("endGameOnCatch", 4f);

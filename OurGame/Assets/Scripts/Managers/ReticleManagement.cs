@@ -56,7 +56,7 @@ public class ReticleManagement : MonoBehaviour
         // If no object to interact with or cooldown is active, hide tooltip text and fade icon
         if (!_interactor.hitObj || _interactor._interactionDelay > 0)
         {
-            _toolTip.color = new Color(1f, 1f, 1f, 0.5f); // half opacity
+            _toolTip.color = new Color(1f, 1f, 1f, 0.2f); // half opacity
             _tooltipText.gameObject.SetActive(false);
             return;
         }

@@ -92,6 +92,7 @@ public class DoorUnlocking : MonoBehaviour
                 // Mark this key/door type as unlocked permanently
                 _unlockedKeys.Add(requiredTag);
                 IncreaseFog();
+                currentDoor.GetComponentInParent<IInteractables>().Interact();
                 // Trigger opening animation
                 DoorAnim(currentDoor);
 

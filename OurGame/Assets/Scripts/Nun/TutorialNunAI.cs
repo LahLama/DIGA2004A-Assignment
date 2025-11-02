@@ -51,7 +51,7 @@ public class TutorialNunAI : MonoBehaviour
             );
 
             // Make the nun face the player
-            agent.transform.LookAt(player.GetChild(1));
+            agent.transform.LookAt(GameObject.FindGameObjectWithTag("PlayerEyes").transform);
 
             // Apply vignette one time when nun appears
             if (ApplyVignette == false)
@@ -87,6 +87,7 @@ public class TutorialNunAI : MonoBehaviour
 
     public void SpawnNunOnPlayer()
     {
+        PlayerStats.Instance.playerLevel = PlayerStats.PlayerLevel.Cutscene;
         // Reset nun and player camera rotations
         this.transform.localScale = Vector3.one;
         camera.rotation = Quaternion.Euler(0, 0, 0);

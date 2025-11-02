@@ -44,7 +44,7 @@ public class NunChase : MonoBehaviour
             vignetteControl.ApplyVignette(2);
 
             // Make agent face the player
-            agent.transform.LookAt(player.GetChild(0));
+            agent.transform.LookAt(GameObject.FindGameObjectWithTag("PlayerEyes").transform);
 
             // Start chasing for a limited time
             StartCoroutine(ChaseTime(NunlookTime));

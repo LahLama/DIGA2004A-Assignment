@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Starting New Game...");
         Time.timeScale = 1;                 // ensure game time is running
-       // PlayerPrefs.DeleteAll();            // Clear previous save data
+                                            // PlayerPrefs.DeleteAll();            // Clear previous save data
         SceneManager.LoadScene("GameScene"); // load new game scene
     }
 
@@ -57,8 +57,8 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Opening Settings...");
         settingsPanel.SetActive(true);
         //  mainMenuButtons.SetActive(false);
-        
-        
+
+
     }
 
     // Open in-game settings: show settings and pause the game, hide HUD
@@ -67,7 +67,8 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Opening Settings...");
         settingsPanel.SetActive(true);
         UIPanel.SetActive(false);
-        PauseGame();
+        if (PlayerStats.Instance.playerLevel != PlayerStats.PlayerLevel.Cutscene)
+            PauseGame();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -91,8 +92,8 @@ public class MainMenu : MonoBehaviour
         ResumeGame();
         UIPanel.SetActive(true);
         //mainMenuButtons.SetActive(true);
-        
-        
+
+
     }
 
     // Load the main menu scene (from other scenes)
@@ -107,7 +108,8 @@ public class MainMenu : MonoBehaviour
     public void OpenOptions()
     {
         Debug.Log("Opening Options...");
-        PauseGame();
+        if (PlayerStats.Instance.playerLevel != PlayerStats.PlayerLevel.Cutscene)
+            PauseGame();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -185,7 +187,7 @@ public class MainMenu : MonoBehaviour
     // Listen for Escape key to toggle pause/options UI
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && PlayerStats.Instance.playerLevel != PlayerStats.PlayerLevel.Cutscene)
         {
             if (!isPaused)
             {

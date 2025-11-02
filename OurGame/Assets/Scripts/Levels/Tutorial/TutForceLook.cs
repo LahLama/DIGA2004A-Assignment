@@ -22,7 +22,7 @@ public class TutForceLook : MonoBehaviour
 
     void ForceLook()
     {
-
+        PlayerStats.Instance.playerLevel = PlayerStats.PlayerLevel.Cutscene;
         camera.LookAt(girlEyes);
         Vector3 euler = camera.rotation.eulerAngles;
         startDialougeScript.StartDialouge();

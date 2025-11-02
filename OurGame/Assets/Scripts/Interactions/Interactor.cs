@@ -66,7 +66,7 @@ public class Interactor : MonoBehaviour
     [Header("InteractionVar")]
     public float _interactionDelay = 0f;
     private float _maxInteractionDelay = 0.5f;
-    private float _interactionRange = 1.5f;
+    private float _interactionRange = 1.1f;
     public float hideDuration = 5f;
     private Collider _currentHideObj;
     RaycastHit lineCasthit;
@@ -106,11 +106,11 @@ public class Interactor : MonoBehaviour
     }
 
 
-    /* private void OnDrawGizmos()
-     {
-         Gizmos.color = Color.green;
-         Gizmos.DrawSphere(transform.position + transform.forward * _interactionRange, 0.3f);
-     }*/
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position + transform.forward * _interactionRange, 0.1f);
+    }
 
 
 
@@ -127,9 +127,9 @@ public class Interactor : MonoBehaviour
     {
         noLOS = Physics.Raycast(transform.position, transform.forward, out lineCasthit, _interactionRange / 3, StopMasks);
 
-        hitObj = Physics.SphereCast(transform.position, 0.3f, transform.forward, out raycastHit, _interactionRange, ResponsiveMasks);
+        hitObj = Physics.SphereCast(transform.position, 0.1f, transform.forward, out raycastHit, _interactionRange, ResponsiveMasks);
 
-        if (!noLOS)
+        if (!noLOS && PlayerStats.Instance.playerLevel != PlayerStats.PlayerLevel.Cutscene)
             reticleManagement.HandleTooltip();
 
 
@@ -148,7 +148,7 @@ public class Interactor : MonoBehaviour
          }*/
 
 
-        if (_interactionInput && _interactionDelay <= 0)
+        if (_interactionInput && _interactionDelay <= 0 && Time.timeScale != 0 && PlayerStats.Instance.playerLevel != PlayerStats.PlayerLevel.Cutscene)
         {
 
             switch (LayerName)

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    
+
     #region Varibles
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -27,15 +27,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Sprint Controls")]
     private float _sprintTimer;
+    // current available stamina (seconds)
+    private float _sprintStamina;
     bool _canSprint = true;
     private float _sprintDuration = 4f;
     public Scrollbar sprintBar;
-
-    [Header("Dialogue State")]
-    public bool isDialogueActive = false;
-
-    [Header("Audio Settings")]
-    public Slider sfxVolumeSlider;
 
     [Header("Other Componets")]
     private CharacterController controller;
@@ -59,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
 
         CanvasGroup canvasGroup = sprintBar.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0f;
+        _sprintStamina = _sprintDuration;
 
     }
     private void Update()
@@ -115,18 +112,25 @@ public class PlayerMovement : MonoBehaviour
     {
 
         float __sprintSpeed = 2.5f;
-        int __sprintFOV = 80;
-
-        if (_sprintTimer >= _sprintDuration) { _canSprint = true; }
-        if (_sprintTimer < 0) { _canSprint = false; }
-
+        int __sprintFOV = 75;
+        _canSprint = _sprintStamina > 0f;
         if (_sprintInput && _canSprint)
         {
+            // only consume stamina when player is actually moving
+            bool isMoving = _moveInput.magnitude > 0.1f;
+            if (isMoving)
+            {
+                // consume stamina
+                _sprintStamina = Mathf.Max(0f, _sprintStamina - Time.deltaTime);
+                if (_sprintStamina <= 0f) _canSprint = false;
+            }
+
             moveSpeed = __sprintSpeed; // Sprint speed
             debugText.text = "Sprinting"; // Update debug text
             float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
             _cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
             _OverlaycameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
+
 
             if (_moveInput.magnitude > 0.1f)
             {
@@ -265,36 +269,27 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-public void HandleFootstepAudio()
-{
-    if (Time.timeScale == 0f || isDialogueActive)
+    public void HandleFootstepAudio()
     {
-        SoundManager.Instance.StopLooping("SprintStep");
-        SoundManager.Instance.StopLooping("WalkStep");
-        return;
-    }
-
-    float volume = sfxVolumeSlider != null ? sfxVolumeSlider.value : 1f;
-
-    if (_moveInput.magnitude > 0.1f && controller.isGrounded)
-    {
-        if (_sprintInput && _canSprint)
+        if (_moveInput.magnitude > 0.1f && controller.isGrounded)
         {
-            SoundManager.Instance.SetLoopingVolume("SprintStep", volume);
-            SoundManager.Instance.PlayLooping("SprintStep");
+            if (_sprintInput && _canSprint)
+            {
+                SoundManager.Instance.PlayLooping("SprintStep");
+            }
+            else
+            {
+                SoundManager.Instance.PlayLooping("WalkStep");
+            }
         }
         else
         {
-            SoundManager.Instance.SetLoopingVolume("WalkStep", volume);
-            SoundManager.Instance.PlayLooping("WalkStep");
+            SoundManager.Instance.StopLooping("SprintStep");
+            SoundManager.Instance.StopLooping("WalkStep");
         }
     }
-    else
-    {
-        SoundManager.Instance.StopLooping("SprintStep");
-        SoundManager.Instance.StopLooping("WalkStep");
-    }
-}
+
+
 
 
 }

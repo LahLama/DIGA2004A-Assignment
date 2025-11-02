@@ -4,8 +4,9 @@ public class text_interaction : MonoBehaviour, IInteractables
 {
 
     private InnerDialouge innerDialouge;
-
+    [TextArea]
     public string MyWords;
+
     private void Awake()
     {
         innerDialouge = GameObject.FindWithTag("MainCamera").GetComponent<InnerDialouge>();
