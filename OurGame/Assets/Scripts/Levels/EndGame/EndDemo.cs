@@ -1,25 +1,71 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.SceneManagement;
 
 public class EndDemo : MonoBehaviour, IInteractables
 {
-    [SerializeField] private VideoPlayer endDemoVideoPlayer;
+    [Header("Video Settings")]
+    public GameObject videoRawImage;
+    public VideoPlayer videoPlayer;
+    public GameObject UIPanel;
+
+    [Header("Audio Settings")]
+    public AudioSource musicSource;
+    public double triggerTime = 10.0; // Time in seconds when music should start
+
+    [Header("Scene Settings")]
+    public string nextSceneName = "final cutscene "; // Set this in Inspector
+
+    private bool hasTriggeredAudio = false;
+    private bool hasPlayedVideo = false;
 
     public void Interact()
     {
-        EndDemoScreen();
+        if (!hasPlayedVideo)
+        {
+            EndDemoScreen();
+        }
     }
 
     private void EndDemoScreen()
     {
-        if (endDemoVideoPlayer != null)
+        Debug.Log("Transition to the END VIDEO here");
+
+        videoRawImage.SetActive(true);
+
+        if (videoPlayer != null)
         {
-            endDemoVideoPlayer.Play();
-            Debug.Log("Playing end demo video...");
+            videoPlayer.Play();
+            hasTriggeredAudio = false;
+            hasPlayedVideo = true;
+
+            if (musicSource != null)
+                musicSource.Stop(); // Reset music
+
+            videoPlayer.loopPointReached += OnVideoFinished; // Subscribe to end event
         }
-        else
+
+        UIPanel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (videoPlayer != null && videoPlayer.isPlaying && !hasTriggeredAudio)
         {
-            Debug.LogWarning("End demo video player not assigned.");
+            if (videoPlayer.time >= triggerTime)
+            {
+                if (musicSource != null)
+                    musicSource.Play();
+
+                hasTriggeredAudio = true;
+            }
         }
+    }
+
+    private void OnVideoFinished(VideoPlayer vp)
+    {
+        Debug.Log("Video finished. Loading next scene...");
+        SceneManager.LoadScene(nextSceneName);
     }
 }
