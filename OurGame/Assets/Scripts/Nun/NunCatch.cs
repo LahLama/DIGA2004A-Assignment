@@ -25,6 +25,8 @@ public class NunCatch : MonoBehaviour
 
     public void CatchPlayer()
     {
+        SoundManager.Instance.StopLooping("SprintStep");
+        SoundManager.Instance.StopLooping("WalkStep");
         // Stop the nun in place
         agent.SetDestination(transform.position);
 

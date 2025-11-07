@@ -99,6 +99,10 @@ public class HideAndShowPlayer : MonoBehaviour
 
         // Move player to new layer for AI masking while hidden
         _player.layer = LayerMask.NameToLayer("hidePlacesMask");
+
+        SoundManager.Instance.StopLooping("SprintStep");
+        SoundManager.Instance.StopLooping("WalkStep");
+
     }
 
     public void ShowPlayer()

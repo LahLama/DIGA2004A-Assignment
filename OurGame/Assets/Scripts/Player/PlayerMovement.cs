@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    
+
     #region Varibles
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -46,7 +46,9 @@ public class PlayerMovement : MonoBehaviour
     private GameObject _OverlaycameraTransform;
     private LookFunction lookFunction;
     private NunAi enemyAI;
+    private int hideLayer;
 
+    private Interactor _interactor;
     #endregion
 
     #region UnityFunctions
@@ -58,10 +60,11 @@ public class PlayerMovement : MonoBehaviour
         _OverlaycameraTransform = GameObject.FindWithTag("OverlayCamera");
         enemyAI = GameObject.FindAnyObjectByType<NunAi>();
         _sprintTimer = 4f;
-
+        hideLayer = LayerMask.NameToLayer("hidePlacesMask");
         CanvasGroup canvasGroup = sprintBar.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0f;
         _sprintStamina = _sprintDuration;
+        _interactor = GameObject.FindAnyObjectByType<Interactor>();
 
     }
     private void Update()
@@ -219,7 +222,7 @@ public class PlayerMovement : MonoBehaviour
         if (_sprintInput && !_crouchInput && !_isUnderSomething)
         {
             HandleSprint();
-            
+
 
         }
         else if (_crouchInput && !_sprintInput)
@@ -278,36 +281,38 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-public void HandleFootstepAudio()
-{
-    if (Time.timeScale == 0f || isDialogueActive)
+    public void HandleFootstepAudio()
     {
-        SoundManager.Instance.StopLooping("SprintStep");
-        SoundManager.Instance.StopLooping("WalkStep");
-        return;
-    }
+        float volume = sfxVolumeSlider != null ? sfxVolumeSlider.value : 1f;
 
-    float volume = sfxVolumeSlider != null ? sfxVolumeSlider.value : 1f;
-
-    if (_moveInput.magnitude > 0.1f && controller.isGrounded)
-    {
-        if (_sprintInput && _canSprint)
+        // if player is hidden (via interactor flag) or player layer is hide layer, immediately stop footsteps
+        if ((_interactor != null && _interactor._PlayerIsHidden) || gameObject.layer == hideLayer)
         {
-            SoundManager.Instance.SetLoopingVolume("SprintStep", volume);
-            SoundManager.Instance.PlayLooping("SprintStep");
+            SoundManager.Instance.StopLooping("SprintStep");
+            SoundManager.Instance.StopLooping("WalkStep");
+            return;
+        }
+
+        if (_moveInput.magnitude > 0.1f && controller.isGrounded)
+        {
+            if (_sprintInput && _canSprint)
+            {
+                SoundManager.Instance.SetLoopingVolume("SprintStep", volume);
+                SoundManager.Instance.PlayLooping("SprintStep");
+                Debug.Log("A");
+            }
+            else
+            {
+                SoundManager.Instance.SetLoopingVolume("WalkStep", volume);
+                SoundManager.Instance.PlayLooping("WalkStep");
+                Debug.Log("B");
+            }
         }
         else
         {
-            SoundManager.Instance.SetLoopingVolume("WalkStep", volume);
-            SoundManager.Instance.PlayLooping("WalkStep");
+            SoundManager.Instance.StopLooping("SprintStep");
+            SoundManager.Instance.StopLooping("WalkStep");
+            Debug.Log("C");
         }
     }
-    else
-    {
-        SoundManager.Instance.StopLooping("SprintStep");
-        SoundManager.Instance.StopLooping("WalkStep");
-    }
-}
-
-
 }
