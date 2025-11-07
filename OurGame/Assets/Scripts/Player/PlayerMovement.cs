@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+    
     #region Varibles
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -32,6 +32,12 @@ public class PlayerMovement : MonoBehaviour
     bool _canSprint = true;
     private float _sprintDuration = 4f;
     public Scrollbar sprintBar;
+
+    [Header("Dialogue State")]
+    public bool isDialogueActive = false;
+
+    [Header("Audio Settings")]
+    public Slider sfxVolumeSlider;
 
     [Header("Other Componets")]
     private CharacterController controller;
@@ -112,8 +118,11 @@ public class PlayerMovement : MonoBehaviour
     {
 
         float __sprintSpeed = 2.5f;
-        int __sprintFOV = 75;
-        _canSprint = _sprintStamina > 0f;
+        int __sprintFOV = 80;
+
+        if (_sprintTimer >= _sprintDuration) { _canSprint = true; }
+        if (_sprintTimer < 0) { _canSprint = false; }
+
         if (_sprintInput && _canSprint)
         {
             // only consume stamina when player is actually moving
@@ -130,7 +139,6 @@ public class PlayerMovement : MonoBehaviour
             float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
             _cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
             _OverlaycameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
-
 
             if (_moveInput.magnitude > 0.1f)
             {
@@ -211,6 +219,7 @@ public class PlayerMovement : MonoBehaviour
         if (_sprintInput && !_crouchInput && !_isUnderSomething)
         {
             HandleSprint();
+            
 
         }
         else if (_crouchInput && !_sprintInput)
@@ -269,27 +278,36 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void HandleFootstepAudio()
+public void HandleFootstepAudio()
+{
+    if (Time.timeScale == 0f || isDialogueActive)
     {
-        if (_moveInput.magnitude > 0.1f && controller.isGrounded)
+        SoundManager.Instance.StopLooping("SprintStep");
+        SoundManager.Instance.StopLooping("WalkStep");
+        return;
+    }
+
+    float volume = sfxVolumeSlider != null ? sfxVolumeSlider.value : 1f;
+
+    if (_moveInput.magnitude > 0.1f && controller.isGrounded)
+    {
+        if (_sprintInput && _canSprint)
         {
-            if (_sprintInput && _canSprint)
-            {
-                SoundManager.Instance.PlayLooping("SprintStep");
-            }
-            else
-            {
-                SoundManager.Instance.PlayLooping("WalkStep");
-            }
+            SoundManager.Instance.SetLoopingVolume("SprintStep", volume);
+            SoundManager.Instance.PlayLooping("SprintStep");
         }
         else
         {
-            SoundManager.Instance.StopLooping("SprintStep");
-            SoundManager.Instance.StopLooping("WalkStep");
+            SoundManager.Instance.SetLoopingVolume("WalkStep", volume);
+            SoundManager.Instance.PlayLooping("WalkStep");
         }
     }
-
-
+    else
+    {
+        SoundManager.Instance.StopLooping("SprintStep");
+        SoundManager.Instance.StopLooping("WalkStep");
+    }
+}
 
 
 }

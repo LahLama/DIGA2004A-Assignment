@@ -1,14 +1,14 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndDemo : MonoBehaviour, IInteractables
 {
+    [Header("Scene Settings")]
+    public string videoSceneName = "EndVideoScene"; // Set this to your video scene name
+
     public void Interact()
     {
-        EndDemoScreen();
-    }
-
-    private void EndDemoScreen()
-    {
-        Debug.Log("Transistion to the END VIDEO here");
+        Debug.Log("Door opened. Loading video scene...");
+        SceneManager.LoadScene(videoSceneName);
     }
 }
