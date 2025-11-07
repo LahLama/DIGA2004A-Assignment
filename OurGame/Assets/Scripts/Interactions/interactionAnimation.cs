@@ -7,7 +7,7 @@ public class interactionAnimation : MonoBehaviour, IInteractables
     {
         if (TryGetComponent<Animator>(out Animator animator))
             animator.SetTrigger("trigAnim");
-        else if (transform.parent.TryGetComponent<Animator>(out Animator Parentanimator))
-            Parentanimator.SetTrigger("trigAnim");
+        else
+            GetComponentInChildren<Animator>().SetTrigger("trigAnim");
     }
 }
