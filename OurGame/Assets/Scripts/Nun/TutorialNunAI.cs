@@ -92,7 +92,8 @@ public class TutorialNunAI : MonoBehaviour
         this.transform.localScale = Vector3.one;
         camera.rotation = Quaternion.Euler(0, 0, 0);
         player.transform.rotation = Quaternion.Euler(0, 0, 0);
-
+        SoundManager.Instance.StopLooping("SprintStep");
+        SoundManager.Instance.StopLooping("WalkStep");
         // Disable player movement to prevent interaction while nun spawns
         player.GetComponent<PlayerMovement>().enabled = false;
         player.GetComponent<LookFunction>().enabled = false;
