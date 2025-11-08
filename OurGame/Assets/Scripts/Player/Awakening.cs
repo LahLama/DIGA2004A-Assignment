@@ -12,6 +12,7 @@ public class Awakening : MonoBehaviour
 
     void Awake()
     {
+
         playerMovement = GetComponent<PlayerMovement>();
         lookFunction = GetComponent<LookFunction>();
         animationClip = GetComponent<Animation>();
@@ -26,6 +27,7 @@ public class Awakening : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         PlayerStats.Instance.playerLevel = PlayerStats.PlayerLevel.Cutscene;
         player.transform.rotation = Quaternion.identity;
+        UI.SetActive(false);
 
 
         if (playerMovement != null) playerMovement.enabled = false;
@@ -38,7 +40,7 @@ public class Awakening : MonoBehaviour
             BlinkShader.SetFloat("_blinkState", BlinkVal);
 
 
-        UI.SetActive(true);
+
     }
 
     void Update()
@@ -51,6 +53,7 @@ public class Awakening : MonoBehaviour
             lookFunction.enabled = true;
             BlinkShader.SetFloat("_blinkState", BlinkVal);
             PlayerStats.Instance.playerLevel = PlayerStats.PlayerLevel.Tutorial;
+            UI.SetActive(true);
             this.enabled = false;
 
 

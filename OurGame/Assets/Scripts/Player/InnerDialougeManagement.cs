@@ -39,4 +39,16 @@ public class InnerDialouge : MonoBehaviour
         yield return new WaitForSeconds(0.32f);
         panel.SetActive(false);
     }
+
+    public void InnerDialougeON()
+    {
+        panel.GetComponent<Image>().CrossFadeAlpha(1f, 0.2f, true);
+        panel.SetActive(true);
+    }
+    public void InnerDialougeOFF()
+    {
+        panel.GetComponent<Image>().CrossFadeAlpha(0f, 0.3f, true);
+        panel.SetActive(false);
+    }
+
 }

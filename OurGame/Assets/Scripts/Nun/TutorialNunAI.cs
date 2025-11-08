@@ -13,6 +13,9 @@ public class TutorialNunAI : MonoBehaviour
     private Transform player;
     public Vector3 OriginalPos;
     private Transform camera;
+    private InnerDialouge innerDialouge;
+    [TextArea]
+    public string MyWords;
 
     // Tutorial and vignette states
     private bool TutEnded = false, TutItem = false, ApplyVignette = false;
@@ -31,7 +34,7 @@ public class TutorialNunAI : MonoBehaviour
         tutorial = FindAnyObjectByType<Tutorial>();
         tutorialPickUp = tutorial.gameObject.transform.GetChild(0).GetComponent<TutorialPickUp>();
         nunPatrol = FindAnyObjectByType<NunPatrol>();
-
+        innerDialouge = GameObject.FindWithTag("MainCamera").GetComponent<InnerDialouge>();
         // Reset any scaling issues that may arise
         this.transform.localScale = Vector3.one;
     }
@@ -78,8 +81,9 @@ public class TutorialNunAI : MonoBehaviour
     private void EndTut()
     {
         // End tutorial actions
+        innerDialouge.InnerDialougeOFF();
         tutorial.EndTutorial();
-        vignetteControl.RemoveVignette(1);
+
         nunPatrol.StartGracePeriod();
         GetComponent<NunAi>()._isGracePeriod = true;
         player.GetComponent<Awakening>().enabled = true;
@@ -88,6 +92,7 @@ public class TutorialNunAI : MonoBehaviour
     public void SpawnNunOnPlayer()
     {
         PlayerStats.Instance.playerLevel = PlayerStats.PlayerLevel.Cutscene;
+
         // Reset nun and player camera rotations
         this.transform.localScale = Vector3.one;
         camera.rotation = Quaternion.Euler(0, 0, 0);
@@ -102,7 +107,8 @@ public class TutorialNunAI : MonoBehaviour
         agent.Warp(NunSpawnPoint.position);
 
         nunSpawned = true;
-
+        innerDialouge.text.text = MyWords;
+        innerDialouge.InnerDialougeON();
         // After a short delay, start chasing player
         Invoke("MoveToPlayer", 2);
     }
@@ -111,5 +117,6 @@ public class TutorialNunAI : MonoBehaviour
     {
         // Nun moves towards the player position
         agent.SetDestination(player.position);
+
     }
 }

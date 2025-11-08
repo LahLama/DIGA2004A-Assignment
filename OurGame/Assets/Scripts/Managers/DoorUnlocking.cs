@@ -56,6 +56,10 @@ public class DoorUnlocking : MonoBehaviour
 
         if (_unlockedKeys.Contains(requiredTag))
         {
+            // call the interact method if present (some doors need their Interact logic to run)
+            var interactable = currentDoor.GetComponentInParent<IInteractables>();
+            if (interactable != null) interactable.Interact();
+
             DoorAnim(currentDoor);
 
             if (requiredTag == _doorTags[1] && RedDoors != null)
