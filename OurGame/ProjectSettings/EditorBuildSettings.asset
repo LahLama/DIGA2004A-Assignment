@@ -6,23 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/James/Folder 2/MainMenu.unity
-    guid: d79835ffac3a11c4b98192bf0c48c8aa
+    path: Assets/Scenes/MAIN/MainMenu.unity
+    guid: 29d13f3bbbf246b4aaed5a1d88da057c
   - enabled: 1
-    path: Assets/Scenes/James/Folder 2/GameScene.unity
-    guid: 050ae82d8a9e969418b1491941cb8fa3
+    path: Assets/Scenes/MAIN/GameScene.unity
+    guid: 0f1960dd57ba29f4e92c0c2de107e54d
   - enabled: 1
-    path: Assets/Scenes/James/Folder 2/End Scene.unity
-    guid: d21e5cc0f15aae54c855e59cd833e01f
+    path: Assets/Scenes/MAIN/DeathScene.unity
+    guid: af3ccf092cc95ed4492bddce3169871a
   - enabled: 1
-    path: Assets/Scenes/James/Folder 2/EndVideoScene.unity
-    guid: 77b829d60c3ab6e4aa659791ede533ae
+    path: Assets/Scenes/MAIN/EndVideoScene.unity
+    guid: 4995dac39b6366746ab34957d2df69c2
   - enabled: 1
-    path: Assets/Scenes/James/Folder 2/FinalCutscene.unity
-    guid: 5086607b653ea114687de38c3a4bfba1
+    path: Assets/Scenes/MAIN/ToBeContinued.unity
+    guid: f3855a9730b66974ba62cf87d1103a8d
   - enabled: 1
-    path: Assets/Scenes/James/Folder 2/CreditsScene.unity
-    guid: 7ee93856d22bf034fb8c09e1b8a256f6
+    path: Assets/Scenes/MAIN/CreditsScene.unity
+    guid: af59372e3d9abe24fa06ed99491b5520
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: a407d3d95c6a2554abb1a2e41ca5b0fe, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

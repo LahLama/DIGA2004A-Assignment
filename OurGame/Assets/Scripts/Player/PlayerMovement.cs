@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public bool _canSprint = true;
     private float _sprintDuration = 5f;
     public Scrollbar sprintBar;
+    [SerializeField] bool isMoving;
 
     [Header("Dialogue State")]
     public bool isDialogueActive = false;
@@ -47,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     private LookFunction lookFunction;
     private NunAi enemyAI;
     private int hideLayer;
+    public Animator MoveAnimation;
 
     private Interactor _interactor;
     #endregion
@@ -73,6 +75,20 @@ public class PlayerMovement : MonoBehaviour
         HandleMovementModifiers();
         HandleUnderAObject();
         HandleFootstepAudio();
+
+        if (_moveInput.magnitude > 0.1f)
+        {
+            MoveAnimation.SetBool("isMovin", true);
+            isMoving = true;
+        }
+        else
+        {
+            MoveAnimation.SetBool("isMovin", false);
+            isMoving = true;
+        }
+
+
+
     }
     #endregion
 

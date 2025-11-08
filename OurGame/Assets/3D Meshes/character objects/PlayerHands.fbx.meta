@@ -3,7 +3,22 @@ guid: f98d72f14dd5e8047bfb6f740470d63d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.011
+    second: {fileID: 2100000, guid: c770ea6dd14f14244be944c28069a532, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gamballs
+    second: {fileID: 2100000, guid: 4c804d1ee7e6361438b9c829e2c25a98, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: glass corrct.010
+    second: {fileID: 2100000, guid: 0d9e6a32774a0cd4cacd1b1186286d76, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +103,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0018000001
+    globalScale: 0.18
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
