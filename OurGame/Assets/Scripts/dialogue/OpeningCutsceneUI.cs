@@ -3,36 +3,40 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-//https://www.youtube.com/watch?v=UR_Rh0c4gbY
-//https://howto.im/q/how-to-create-a-typewriter-effect-with-textmesh-pro-in-unity
-//https://docs.unity3d.com/Manual/index.html
-//https://generalistprogrammer.com/tutorials/unity-dialogue-system-complete-conversation-tutorial
+// External references for typewriter effect and dialogue systems
+// https://www.youtube.com/watch?v=UR_Rh0c4gbY
+// https://howto.im/q/how-to-create-a-typewriter-effect-with-textmesh-pro-in-unity
+// https://docs.unity3d.com/Manual/index.html
+// https://generalistprogrammer.com/tutorials/unity-dialogue-system-complete-conversation-tutorial
 
 public class OpeningCutsceneUI : MonoBehaviour
 {
-    public CanvasGroup blackScreen;
-    public TextMeshProUGUI dialogueText;
-    public AudioSource audioSource;
-    public AudioClip typingSound;
+    public CanvasGroup blackScreen;               // UI overlay for fade-in/out effect
+    public TextMeshProUGUI dialogueText;          // Text element for displaying monologue
+    public AudioSource audioSource;               // AudioSource for typing sound
+    public AudioClip typingSound;                 // Sound played during typewriter effect
 
-    public GameObject UIPanel;
+    public GameObject UIPanel;                    // UI panel to activate after cutscene
 
     [TextArea(2, 5)]
-    public string[] monologueLines = new string[0];
+    public string[] monologueLines = new string[0]; // Array of dialogue lines for the cutscene
 
-    public float delayBetweenLines = 3f;
-    public float typingSpeed = 0.05f; // Speed of character reveal
+    public float delayBetweenLines = 3f;          // Delay between each line of dialogue
+    public float typingSpeed = 0.05f;             // Speed at which characters appear
 
-    private int currentLine = 0;
+    private int currentLine = 0;                  // Tracks current line index
 
     void Start()
     {
+        // Hide UI panel at start
         if (UIPanel != null)
             UIPanel.SetActive(false);
 
+        // Ensure monologue array is initialized
         if (monologueLines == null)
             monologueLines = new string[0];
 
+        // Attempt to auto-assign missing references
         if (blackScreen == null)
             blackScreen = GetComponentInChildren<CanvasGroup>();
 
@@ -42,6 +46,7 @@ public class OpeningCutsceneUI : MonoBehaviour
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
 
+        // If critical references are missing, log warning and disable script
         if (blackScreen == null || dialogueText == null)
         {
             Debug.LogWarning("OpeningCutsceneUI: Missing references (CanvasGroup or TextMeshProUGUI). Disabling script.");
@@ -51,69 +56,81 @@ public class OpeningCutsceneUI : MonoBehaviour
             return;
         }
 
+        // Start the cutscene coroutine
         StartCoroutine(PlayMonologue());
     }
 
     IEnumerator PlayMonologue()
     {
-        // Unlock cursor when dialogue starts
+        // Unlock and show cursor for cutscene
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        // Pause the game
+        // Pause game time
         Time.timeScale = 0f;
 
+        // Set black screen fully visible and clear dialogue text
         blackScreen.alpha = 1f;
         dialogueText.text = "";
 
-        yield return new WaitForSecondsRealtime(1f); // Optional pause before first line
+        // Optional delay before first line
+        yield return new WaitForSecondsRealtime(1f);
 
+        // Loop through each line in the monologue
         while (currentLine < monologueLines.Length)
         {
-            yield return StartCoroutine(TypeLine(monologueLines[currentLine]));
+            yield return StartCoroutine(TypeLine(monologueLines[currentLine])); // Type out line
             currentLine++;
-            yield return new WaitForSecondsRealtime(delayBetweenLines);
+            yield return new WaitForSecondsRealtime(delayBetweenLines);         // Wait before next line
         }
 
+        // Fade out black screen after dialogue
         yield return StartCoroutine(FadeOutBlackScreen());
 
-        // Resume the game
+        // Resume game time
         Time.timeScale = 1f;
 
-        // Lock cursor after dialogue ends
+        // Lock and hide cursor after cutscene
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        // Activate UI panel
         if (UIPanel != null)
             UIPanel.SetActive(true);
 
-        gameObject.SetActive(false); // Hide cutscene UI
+        // Disable cutscene UI
+        gameObject.SetActive(false);
+
+        // Update player level state
         PlayerStats.Instance.playerLevel = PlayerStats.PlayerLevel.Tutorial;
     }
 
     IEnumerator TypeLine(string line)
     {
         dialogueText.text = "";
+
+        // Reveal each character one by one
         foreach (char letter in line.ToCharArray())
         {
             dialogueText.text += letter;
 
-            // Play typing sound for non-whitespace characters (if available)
+            // Play typing sound for non-whitespace characters
             if (audioSource != null && typingSound != null && !char.IsWhiteSpace(letter))
             {
-                audioSource.pitch = Random.Range(0.95f, 1.05f);
+                audioSource.pitch = Random.Range(0.95f, 1.05f); // Slight pitch variation
                 audioSource.PlayOneShot(typingSound);
             }
 
-            yield return new WaitForSecondsRealtime(typingSpeed);
+            yield return new WaitForSecondsRealtime(typingSpeed); // Wait before next character
         }
     }
 
     IEnumerator FadeOutBlackScreen()
     {
-        float duration = 2f;
-        float elapsed = 0f;
+        float duration = 2f;     // Duration of fade
+        float elapsed = 0f;      // Time elapsed
 
+        // Gradually reduce alpha from 1 to 0
         while (elapsed < duration)
         {
             blackScreen.alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
@@ -121,26 +138,29 @@ public class OpeningCutsceneUI : MonoBehaviour
             yield return null;
         }
 
-        blackScreen.alpha = 0f;
+        blackScreen.alpha = 0f; // Ensure fully transparent
     }
 
     public void SkipCutscene()
     {
+        // Stop all running coroutines
         StopAllCoroutines();
+
+        // Immediately hide black screen
         blackScreen.alpha = 0f;
 
-        // Resume the game
+        // Resume game time
         Time.timeScale = 1f;
 
-        // Lock cursor when skipping
+        // Lock and hide cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        // Activate UI panel
         if (UIPanel != null)
             UIPanel.SetActive(true);
 
-        gameObject.SetActive(false); // Hide cutscene UI
-
-
+        // Disable cutscene UI
+        gameObject.SetActive(false);
     }
 }

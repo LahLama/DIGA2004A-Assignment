@@ -2,145 +2,150 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Reference:
+// https://www.daggerhartlab.com/unity-audio-and-sound-manager-singleton-script/
 //https://www.daggerhartlab.com/unity-audio-and-sound-manager-singleton-script/
+// This script provides a centralized sound manager using the Singleton pattern.
+// It handles music, sound effects, random pitch variation, and looping audio clips.
 public class SoundManager : MonoBehaviour
 {
-	// Audio players components.
-	public AudioSource EffectsSource;
-	public AudioSource MusicSource;
-	public AudioSource MainMenuSource;
+    // AudioSource components for different audio categories
+    public AudioSource EffectsSource;     // For sound effects
+    public AudioSource MusicSource;       // For background music
+    public AudioSource MainMenuSource;    // For main menu music
 
-	
-	
-	// Random pitch adjustment range.
-	public float LowPitchRange = .95f;
-	public float HighPitchRange = 1.05f;
+    // Pitch variation range for randomized sound effects
+    public float LowPitchRange = .95f;
+    public float HighPitchRange = 1.05f;
 
-	// Singleton instance.
-	public static SoundManager Instance = null;
-	
-	// Initialize the singleton instance.
-	private void Awake()
-	{
-		// If there is not already an instance of SoundManager, set it to this.
-		if (Instance == null)
-		{
-			Instance = this;
-		}
-		//If an instance already exists, destroy whatever this object is to enforce the singleton.
-		/*else if (Instance != this)
-		{
-			Destroy(gameObject);
-		}*/
+    // Singleton instance for global access
+    public static SoundManager Instance = null;
 
-		//Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
-		DontDestroyOnLoad (gameObject);
-	}
-
-	// Play a single clip through the sound effects source.
-	public void Play(AudioClip clip)
-	{
-		EffectsSource.clip = clip;
-		EffectsSource.Play();
-		
-	}
-
-	// Play a single clip through the music source.
-	public void PlayMusic(AudioClip clip)
-	{
-		MusicSource.clip = clip;
-		MusicSource.Play();
-		MainMenuSource.Stop();
-		
-	}
-
-	public void StopMainMenuMusic()
-	{
-		
-		MainMenuSource.Stop();
-		
-		
-	}
-
-	
-
-	// Play a random clip from an array, and randomize the pitch slightly.
-	public void RandomSoundEffect(params AudioClip[] clips)
-	{
-		int randomIndex = Random.Range(0, clips.Length);
-		float randomPitch = Random.Range(LowPitchRange, HighPitchRange);
-
-		EffectsSource.pitch = randomPitch;
-		EffectsSource.clip = clips[randomIndex];
-		EffectsSource.Play();
-	}
-
-	public void SetMusicVolume(float volume)
-{
-    MusicSource.volume = volume;
-	if (MainMenuSource != null)
-	{
-		MainMenuSource.volume = volume;
-	}
-	else
-	{
-		Debug.LogWarning("MainMenuSource is not assigned in SoundManager.");
-	}
-}
-
-public void SetEffectsVolume(float volume)
-{
-    EffectsSource.volume = volume;
-}
-
-public void SetMainMenuVolume(float volume)
-{
-    MainMenuSource.volume = volume;
-}
-
-private Dictionary<string, AudioSource> _loopingSources = new Dictionary<string, AudioSource>();
-
-public void PlayLooping(string clipName)
-{
-    if (_loopingSources.ContainsKey(clipName))
+    // Initialize the singleton instance
+    private void Awake()
     {
-        if (!_loopingSources[clipName].isPlaying)
-            _loopingSources[clipName].Play();
-        return;
+        // If no instance exists, assign this one
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        // Optional: destroy duplicate instances (commented out)
+        /*else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }*/
+
+        // Persist this GameObject across scene loads
+        DontDestroyOnLoad(gameObject);
     }
 
-    AudioClip clip = Resources.Load<AudioClip>(clipName);
-    if (clip == null)
+    // Play a single sound effect clip
+    public void Play(AudioClip clip)
     {
-        Debug.LogWarning($"Clip '{clipName}' not found in Resources.");
-        return;
+        EffectsSource.clip = clip;
+        EffectsSource.Play();
     }
 
-    AudioSource loopSource = gameObject.AddComponent<AudioSource>();
-    loopSource.clip = clip;
-    loopSource.loop = true;
-    loopSource.playOnAwake = false;
-    loopSource.volume = EffectsSource.volume;
-    loopSource.Play();
-
-    _loopingSources.Add(clipName, loopSource);
-}
-
-public void StopLooping(string clipName)
-{
-    if (_loopingSources.ContainsKey(clipName))
+    // Play a music clip and stop main menu music
+    public void PlayMusic(AudioClip clip)
     {
-        _loopingSources[clipName].Stop();
+        MusicSource.clip = clip;
+        MusicSource.Play();
+        MainMenuSource.Stop();
+    }
+
+    // Stop main menu music manually
+    public void StopMainMenuMusic()
+    {
+        MainMenuSource.Stop();
+    }
+
+    // Play a random sound effect from an array with pitch variation
+    public void RandomSoundEffect(params AudioClip[] clips)
+    {
+        int randomIndex = Random.Range(0, clips.Length);
+        float randomPitch = Random.Range(LowPitchRange, HighPitchRange);
+
+        EffectsSource.pitch = randomPitch;
+        EffectsSource.clip = clips[randomIndex];
+        EffectsSource.Play();
+    }
+
+    // Set volume for music sources
+    public void SetMusicVolume(float volume)
+    {
+        MusicSource.volume = volume;
+        if (MainMenuSource != null)
+        {
+            MainMenuSource.volume = volume;
+        }
+        else
+        {
+            Debug.LogWarning("MainMenuSource is not assigned in SoundManager.");
+        }
+    }
+
+    // Set volume for sound effects
+    public void SetEffectsVolume(float volume)
+    {
+        EffectsSource.volume = volume;
+    }
+
+    // Set volume for main menu music
+    public void SetMainMenuVolume(float volume)
+    {
+        MainMenuSource.volume = volume;
+    }
+
+    // Dictionary to manage looping audio sources by name
+    private Dictionary<string, AudioSource> _loopingSources = new Dictionary<string, AudioSource>();
+
+    // Play a looping sound by name (loaded from Resources)
+    public void PlayLooping(string clipName)
+    {
+        // If already playing, resume
+        if (_loopingSources.ContainsKey(clipName))
+        {
+            if (!_loopingSources[clipName].isPlaying)
+                _loopingSources[clipName].Play();
+            return;
+        }
+
+        // Load clip from Resources folder
+        AudioClip clip = Resources.Load<AudioClip>(clipName);
+        if (clip == null)
+        {
+            Debug.LogWarning($"Clip '{clipName}' not found in Resources.");
+            return;
+        }
+
+        // Create and configure a new AudioSource for looping
+        AudioSource loopSource = gameObject.AddComponent<AudioSource>();
+        loopSource.clip = clip;
+        loopSource.loop = true;
+        loopSource.playOnAwake = false;
+        loopSource.volume = EffectsSource.volume;
+        loopSource.Play();
+
+        // Store reference for future control
+        _loopingSources.Add(clipName, loopSource);
+    }
+
+    // Stop a looping sound by name
+    public void StopLooping(string clipName)
+    {
+        if (_loopingSources.ContainsKey(clipName))
+        {
+            _loopingSources[clipName].Stop();
+        }
+    }
+
+    // Adjust volume of a looping sound
+    public void SetLoopingVolume(string clipName, float volume)
+    {
+        if (_loopingSources.ContainsKey(clipName))
+        {
+            _loopingSources[clipName].volume = volume;
+        }
     }
 }
-
-public void SetLoopingVolume(string clipName, float volume)
-{
-    if (_loopingSources.ContainsKey(clipName))
-    {
-        _loopingSources[clipName].volume = volume;
-    }
-}
-	
-}
-
