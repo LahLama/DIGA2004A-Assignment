@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: badNode
   m_EditorClassIdentifier: 
   dialogueLine: " I\u2019m telling the nun!\r\nUnless\u2026 you bring me my Ball
-    from the foyer.\r\nHurry up, meanie!!"
+    from the foyer and put it in the room with the ball icon!\r\nHurry up, meanie!!"
   choices: []
