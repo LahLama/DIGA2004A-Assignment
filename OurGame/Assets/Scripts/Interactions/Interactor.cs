@@ -162,7 +162,7 @@ public class Interactor : MonoBehaviour
                         {
                             comp?.Interact();
                         }
-                        StartCoroutine(innerDialouge.InnerDialogueContorl());
+
                     }
                     else if (raycastHit.collider.gameObject.TryGetComponent<DialougeState>(out startDialougeScript) && hasChatted == false)
                     {
