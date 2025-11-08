@@ -128,6 +128,8 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Showing Credits...");
         Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene("CreditsScene");
     }
 

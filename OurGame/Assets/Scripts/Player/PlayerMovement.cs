@@ -26,11 +26,11 @@ public class PlayerMovement : MonoBehaviour
     bool _sightDecreased = false;
 
     [Header("Sprint Controls")]
-    private float _sprintTimer;
+    public float _sprintTimer = 5f;
     // current available stamina (seconds)
     private float _sprintStamina;
-    bool _canSprint = true;
-    private float _sprintDuration = 4f;
+    public bool _canSprint = true;
+    private float _sprintDuration = 5f;
     public Scrollbar sprintBar;
 
     [Header("Dialogue State")]
@@ -59,11 +59,11 @@ public class PlayerMovement : MonoBehaviour
         _cameraTransform = GameObject.FindWithTag("MainCamera");
         _OverlaycameraTransform = GameObject.FindWithTag("OverlayCamera");
         enemyAI = GameObject.FindAnyObjectByType<NunAi>();
-        _sprintTimer = 4f;
+        _sprintTimer = 5f;
         hideLayer = LayerMask.NameToLayer("hidePlacesMask");
         CanvasGroup canvasGroup = sprintBar.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0f;
-        _sprintStamina = _sprintDuration;
+
         _interactor = GameObject.FindAnyObjectByType<Interactor>();
 
     }
@@ -123,35 +123,22 @@ public class PlayerMovement : MonoBehaviour
         float __sprintSpeed = 2.5f;
         int __sprintFOV = 80;
 
-        if (_sprintTimer >= _sprintDuration) { _canSprint = true; }
-        if (_sprintTimer < 0) { _canSprint = false; }
+
 
         if (_sprintInput && _canSprint)
         {
-            // only consume stamina when player is actually moving
-            bool isMoving = _moveInput.magnitude > 0.1f;
-            if (isMoving)
-            {
-                // consume stamina
-                _sprintStamina = Mathf.Max(0f, _sprintStamina - Time.deltaTime);
-                if (_sprintStamina <= 0f) _canSprint = false;
-            }
-
             moveSpeed = __sprintSpeed; // Sprint speed
             debugText.text = "Sprinting"; // Update debug text
             float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
             _cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
             _OverlaycameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
-
-            if (_moveInput.magnitude > 0.1f)
-            {
-                _sprintTimer -= Time.deltaTime;
-                sprintBar.size = 1 - (_sprintTimer / 4);
-
-                //Debug.Log("--" + (int)_   sprint}Timer);
-            }
-
         }
+        else
+        {
+            HandleWalk();
+        }
+
+
 
     }
     public void HandleCrouch()
@@ -218,12 +205,46 @@ public class PlayerMovement : MonoBehaviour
     private void HandleMovementModifiers()
     {
         HandleSprintBarAppearing();
-        //A Psuedo-statemachine where the player can only do one modifier at a time 
-        if (_sprintInput && !_crouchInput && !_isUnderSomething)
+
+        bool isMoving = _moveInput.magnitude > 0.1f;
+        bool actuallySprinting = _sprintInput && isMoving && _sprintTimer > 0f;
+
+        // Update timer: consume when actually sprinting, otherwise regenerate
+        if (actuallySprinting)
+        {
+            _sprintTimer = Mathf.Max(0f, _sprintTimer - Time.deltaTime);
+            _canSprint = true;
+        }
+        else
+        {
+            _sprintTimer = Mathf.Min(_sprintDuration, _sprintTimer + Time.deltaTime);
+            if (_sprintTimer > 0f) _canSprint = true;
+        }
+
+        // Update UI (normalized)
+        if (sprintBar != null)
+            sprintBar.size = 1f - (_sprintTimer / _sprintDuration);
+
+        // If depleted, force walk and stop sprinting
+        if (_sprintTimer <= 0f)
+        {
+            _sprintTimer = 0f;
+            _canSprint = false;
+            _sprintInput = false;
+            HandleWalk();
+            if (SoundManager.Instance != null) SoundManager.Instance.StopLooping("SprintStep");
+            return;
+        }
+
+        // Movement state handling
+        if (actuallySprinting && !_crouchInput && !_isUnderSomething)
         {
             HandleSprint();
-
-
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlayLooping("SprintStep");
+                SoundManager.Instance.StopLooping("WalkStep");
+            }
         }
         else if (_crouchInput && !_sprintInput)
         {
@@ -232,29 +253,15 @@ public class PlayerMovement : MonoBehaviour
         else if (!_isUnderSomething)
         {
             HandleWalk();
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlayLooping("WalkStep");
+                SoundManager.Instance.StopLooping("SprintStep");
+            }
         }
         else if (_isUnderSomething)
         {
             HandleCrouch();
-
-        }
-
-        //The player can only crouch/walk whilst stuck crouching and can't sprint
-        if ((_sprintTimer < _sprintDuration && (!_canSprint || !_sprintInput)))
-        {
-            if (_crouchInput)
-            {
-                HandleCrouch();
-            }
-            else
-            {
-                HandleWalk();
-            }
-
-            //Decrease the sprintTimer
-            _sprintTimer += Time.deltaTime;
-            sprintBar.size = 1 - (_sprintTimer / 4);
-
         }
     }
 
@@ -299,20 +306,20 @@ public class PlayerMovement : MonoBehaviour
             {
                 SoundManager.Instance.SetLoopingVolume("SprintStep", volume);
                 SoundManager.Instance.PlayLooping("SprintStep");
-                Debug.Log("A");
+
             }
             else
             {
                 SoundManager.Instance.SetLoopingVolume("WalkStep", volume);
                 SoundManager.Instance.PlayLooping("WalkStep");
-                Debug.Log("B");
+
             }
         }
         else
         {
             SoundManager.Instance.StopLooping("SprintStep");
             SoundManager.Instance.StopLooping("WalkStep");
-            Debug.Log("C");
+
         }
     }
 }
