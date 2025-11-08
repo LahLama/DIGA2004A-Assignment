@@ -164,9 +164,9 @@ public class Interactor : MonoBehaviour
                         }
 
                     }
-                    else if (raycastHit.collider.gameObject.TryGetComponent<DialougeState>(out startDialougeScript) && hasChatted == false)
+                    if (raycastHit.collider.gameObject.TryGetComponent<DialougeState>(out startDialougeScript) && hasChatted == false)
                     {
-
+                        Debug.Log(raycastHit.collider.gameObject.TryGetComponent<DialougeState>(out startDialougeScript));
                         hasChatted = true;
                         startDialougeScript.StartDialouge();
                         //Destroy the tutorial trigger
