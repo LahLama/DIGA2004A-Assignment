@@ -86,6 +86,6 @@ public class NunCatch : MonoBehaviour
     {
         // Log and load end scene
         Debug.Log("GAME IS NOW OVER");
-        SceneManager.LoadScene("End Scene");
+        SceneManager.LoadScene("DeathScene");
     }
 }
