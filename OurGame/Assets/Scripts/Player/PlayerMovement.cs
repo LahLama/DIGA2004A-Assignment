@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
         HandleUnderAObject();
         HandleFootstepAudio();
 
-        if (_moveInput.magnitude > 0.1f)
+        if (_moveInput.magnitude > 0.1f && PlayerStats.Instance.playerLevel != PlayerStats.PlayerLevel.Cutscene)
         {
             MoveAnimation.SetBool("isMovin", true);
             isMoving = true;
@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             MoveAnimation.SetBool("isMovin", false);
-            isMoving = true;
+            isMoving = false;
         }
 
 

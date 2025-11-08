@@ -173,10 +173,7 @@ public class Interactor : MonoBehaviour
                         tutForce.SetActive(false);
                         return;
                     }
-                    else
-                    {
-                        innerDialouge.text.text = "";
-                    }
+
 
                     break;
 
