@@ -81,7 +81,7 @@ public class TutorialNunAI : MonoBehaviour
         tutorial.EndTutorial();
         vignetteControl.RemoveVignette(1);
         nunPatrol.StartGracePeriod();
-        GetComponent<NunPatrol>()._isGracePeriod = true;
+        GetComponent<NunAi>()._isGracePeriod = true;
         player.GetComponent<Awakening>().enabled = true;
     }
 

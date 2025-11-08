@@ -14,5 +14,8 @@ public class text_interaction : MonoBehaviour, IInteractables
     public void Interact()
     {
         innerDialouge.text.text = MyWords;
+        StartCoroutine(innerDialouge.InnerDialogueContorl());
     }
+
+
 }
