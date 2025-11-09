@@ -35,22 +35,35 @@ public class NunSoundTrigger : MonoBehaviour
     void Update()
     {
         // Exit early if player or sound clip is missing
-        if (player == null || npcSound == null) return;
+        /*  if (player == null || npcSound == null) return;
 
-        // Calculate distance between NPC and player
-        float distance = Vector3.Distance(transform.position, player.position);
+          // Calculate distance between NPC and player
+          float distance = Vector3.Distance(transform.position, player.position);
 
-        // If player is within trigger distance and sound hasn't played yet
-        if (distance <= triggerDistance && !hasPlayed && GameObject.FindFirstObjectByType<NunAi>().inLOS)
-        {
-            npcAudioSource.clip = npcSound;   // Assign the sound clip
-            npcAudioSource.Play();            // Play the sound
-            hasPlayed = true;                 // Mark as played to prevent repetition
-        }
-        else if (distance > triggerDistance)
-        {
-            // Reset flag when player moves out of range
-            hasPlayed = false;
-        }
+          // If player is within trigger distance and sound hasn't played yet
+          if (GameObject.FindFirstObjectByType<NunAi>().isChasing)
+          {
+              npcAudioSource.clip = npcSound;   // Assign the sound clip
+              npcAudioSource.Play();            // Play the sound
+              hasPlayed = true;                 // Mark as played to prevent repetition
+          }
+          else if (distance > triggerDistance)
+          {
+              // Reset flag when player moves out of range
+              hasPlayed = false;
+          }
+
+          if (FindAnyObjectByType<TutorialNunAI>().nunSpawned == true)
+          {
+              npcAudioSource.clip = npcSound;   // Assign the sound clip
+              npcAudioSource.Play();            // Play the sound
+                                                // Mark as played to prevent repetition
+          }*/
+    }
+
+    public void PlayNunMusic()
+    {
+        if (!npcAudioSource.isPlaying)
+            npcAudioSource.PlayOneShot(npcSound);            // Play the sound
     }
 }
