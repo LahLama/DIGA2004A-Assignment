@@ -21,6 +21,7 @@ public class SoundManager : MonoBehaviour
     // Singleton instance for global access
     public static SoundManager Instance = null;
 
+    
     // Initialize the singleton instance
     private void Awake()
     {
@@ -36,7 +37,7 @@ public class SoundManager : MonoBehaviour
         }*/
 
         // Persist this GameObject across scene loads
-        DontDestroyOnLoad(gameObject);
+       // DontDestroyOnLoad(gameObject);
     }
 
     // Play a single sound effect clip
