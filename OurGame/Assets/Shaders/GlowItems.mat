@@ -16,9 +16,8 @@ Material:
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
   m_LockedProperties: 
@@ -56,7 +55,7 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _CastShadows: 1
-    - _Cull: 2
+    - _Cull: 0
     - _DstBlend: 0
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -69,7 +68,7 @@ Material:
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColour: {r: 1, g: 1, b: 1, a: 0}
-    - _glintColor: {r: 1, g: 0, b: 0, a: 0}
+    - _glintColor: {r: 0, g: 1, b: 0.042949915, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &306989722198038416
