@@ -11,7 +11,7 @@ public class NunCatch : MonoBehaviour
     private Vector3 playerOGpos, nunOGpos; // Store original positions for potential respawn
     private NunPatrol nunPatrol;           // Reference to patrol behaviour
     bool HasRespawned = false;             // Flag to prevent multiple respawns
-
+    private InnerDialouge innerDialouge;
     void Awake()
     {
         // Cache references and initial positions
@@ -21,6 +21,8 @@ public class NunCatch : MonoBehaviour
         nunOGpos = agent.gameObject.transform.position;
         lifeCounter = GameObject.FindWithTag("PlayerStats").GetComponent<LivesTracker>();
         nunPatrol = this.GetComponent<NunPatrol>();
+        innerDialouge = GameObject.FindWithTag("MainCamera").GetComponent<InnerDialouge>();
+
     }
 
     public void CatchPlayer()
@@ -42,8 +44,10 @@ public class NunCatch : MonoBehaviour
         agent.transform.LookAt(GameObject.FindGameObjectWithTag("PlayerEyes").transform);
 
         /* GAME OVER LOGIC */
-        Invoke("endGameOnCatch", 4f);
 
+        Invoke("endGameOnCatch", 4f);
+        innerDialouge.text.text = "I told you to go to BED. You are coming with me now.";
+        innerDialouge.InnerDialougeON();
         player.GetComponent<LookFunction>().enabled = false;
         player.GetComponent<PlayerMovement>().enabled = false;
 
@@ -86,6 +90,7 @@ public class NunCatch : MonoBehaviour
     {
         // Log and load end scene
         Debug.Log("GAME IS NOW OVER");
+        innerDialouge.InnerDialougeOFF();
         SceneManager.LoadScene("DeathScene");
     }
 }
