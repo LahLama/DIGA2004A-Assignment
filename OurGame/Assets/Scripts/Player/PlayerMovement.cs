@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Other Componets")]
     private CharacterController controller;
-    public TextMeshProUGUI debugText;
+
     private GameObject _cameraTransform;
     private GameObject _OverlaycameraTransform;
     private LookFunction lookFunction;
@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         if (_sprintInput && _canSprint)
         {
             moveSpeed = __sprintSpeed; // Sprint speed
-            debugText.text = "Sprinting"; // Update debug text
+
             float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
             _cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
             _OverlaycameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(__CurrentFOV, __sprintFOV, Time.deltaTime / 0.3f);
@@ -156,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
         {
             moveSpeed = __crouchSpeed; // Sprint speed
             this.transform.localScale = new Vector3(__scaleModifer, __scaleModifer, __scaleModifer); // Adjust player scale for crouching
-            debugText.text = "Crouching"; // Update debug text 
+
         }
 
 
@@ -180,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
 
         moveSpeed = __normalSpeed; // Reset to normal speed
         this.transform.localScale = new Vector3(__normalScale, __normalScale, __normalScale); // Adjust player scale for crouching
-        debugText.text = "Walking"; // Update debug text
+
 
         //Get the current FOV and smoothly move Camera to new FOV
         float __CurrentFOV = _cameraTransform.GetComponent<Camera>().fieldOfView;
@@ -201,9 +201,6 @@ public class PlayerMovement : MonoBehaviour
         //Cast a ray above the player that detects if the player can stand or not.
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * underSomething.distance, Color.yellow);
         _isUnderSomething = Physics.Raycast(transform.position, transform.up, out underSomething, 1f);
-
-        if (_isUnderSomething)
-        { debugText.text = "Stuck Crouching"; }
     }
 
     private void HandleMovementModifiers()
