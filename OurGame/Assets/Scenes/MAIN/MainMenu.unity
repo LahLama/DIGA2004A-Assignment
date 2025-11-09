@@ -4160,7 +4160,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 382323234}
         m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
-        m_MethodName: OnSensitivityChanged
+        m_MethodName: OnControllerSensitivityChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7460,7 +7460,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 382323234}
         m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
-        m_MethodName: OnSensitivityChanged
+        m_MethodName: OnMouseSensitivityChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
