@@ -19,7 +19,7 @@ public class MoveFromMicrophone : MonoBehaviour
     public AudioLoudnessDetection detector;
     public Slider slider;
     [SerializeField] double _loudRange;
-    Image _barColorbg;
+    public Image _barColorbg;
     public bool isLoud = false;
     void Awake()
     {

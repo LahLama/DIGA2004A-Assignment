@@ -165,15 +165,8 @@ public class PickUpSystem : MonoBehaviour
         if (playerHands.childCount > 0)
         {
 
+            StartCoroutine(UpdateMicSliderForDuration());
 
-            float timer = 1;
-            while (timer > 0)
-            {
-                timer -= Time.deltaTime;
-                while (timer > 0.4f)
-                    FindAnyObjectByType<MoveFromMicrophone>().slider.value = FindAnyObjectByType<MoveFromMicrophone>().slider.maxValue;
-
-            }
             Transform equipedObj = playerHands.GetChild(0);
 
             Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
@@ -221,7 +214,21 @@ public class PickUpSystem : MonoBehaviour
         objHasBeenThrown = false;
     }
 
-
+    private IEnumerator UpdateMicSliderForDuration(float duration = 1f, float threshold = 0.4f)
+    {
+        var mover = FindAnyObjectByType<MoveFromMicrophone>();
+        float timer = duration;
+        while (timer > 0f)
+        {
+            if (mover != null && timer > threshold)
+            {
+                mover.slider.value = mover.slider.maxValue;
+                mover._barColorbg.color = new Color(1f, 0.5f, 0.5f, 1f);
+            }
+            timer -= Time.deltaTime;
+            yield return null; // allow frame updates
+        }
+    }
     private void RepositionItems()
     {
         if (playerHands.childCount > 1)
