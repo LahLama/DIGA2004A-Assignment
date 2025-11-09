@@ -6281,7 +6281,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1751429836
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6299,7 +6299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -325, y: -323}
+  m_AnchoredPosition: {x: -325, y: -194}
   m_SizeDelta: {x: 211.97, y: 49.569}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1751429837
@@ -6363,7 +6363,7 @@ MonoBehaviour:
         m_MethodName: Play
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 3103569221268f64096ab04fe04f27c7, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 87214fea827d21745bf9530e0cf3d2aa, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0

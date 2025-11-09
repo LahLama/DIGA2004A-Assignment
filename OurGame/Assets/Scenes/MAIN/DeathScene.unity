@@ -1063,7 +1063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundAudio: {fileID: 1087662417}
-  gameSceneName: End Scene
+  gameSceneName: DeathScene
 --- !u!1 &1290885435
 GameObject:
   m_ObjectHideFlags: 0

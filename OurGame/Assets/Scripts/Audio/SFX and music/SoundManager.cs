@@ -47,12 +47,24 @@ public class SoundManager : MonoBehaviour
     }
 
     // Play a music clip and stop main menu music
-    public void PlayMusic(AudioClip clip)
+   public void PlayMusic(AudioClip clip)
+{
+    if (MusicSource == null || !MusicSource.enabled || !MusicSource.gameObject.activeInHierarchy)
     {
-        MusicSource.clip = clip;
-        MusicSource.Play();
+        Debug.LogWarning("MusicSource is not active or enabled.");
+        return;
+    }
+
+    MusicSource.clip = clip;
+    MusicSource.Play();
+
+    if (MainMenuSource != null && MainMenuSource.isPlaying)
+    {
         MainMenuSource.Stop();
     }
+
+	
+}
 
     // Stop main menu music manually
     public void StopMainMenuMusic()

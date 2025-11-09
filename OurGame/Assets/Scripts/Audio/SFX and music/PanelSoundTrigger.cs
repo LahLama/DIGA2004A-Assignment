@@ -56,6 +56,7 @@ public class PanelSoundTrigger : MonoBehaviour
     // Plays the audio if it's not already playing and we're in the correct scene
     void TryPlayAudio()
     {
+       
         if (backgroundAudio != null && !backgroundAudio.isPlaying && SceneManager.GetActiveScene().name == gameSceneName)
         {
             backgroundAudio.Play();
