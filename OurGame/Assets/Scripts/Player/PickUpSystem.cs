@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 
 /*
@@ -164,6 +165,15 @@ public class PickUpSystem : MonoBehaviour
         if (playerHands.childCount > 0)
         {
 
+
+            float timer = 1;
+            while (timer > 0)
+            {
+                timer -= Time.deltaTime;
+                while (timer > 0.4f)
+                    FindAnyObjectByType<MoveFromMicrophone>().slider.value = FindAnyObjectByType<MoveFromMicrophone>().slider.maxValue;
+
+            }
             Transform equipedObj = playerHands.GetChild(0);
 
             Rigidbody rb = equipedObj.gameObject.AddComponent<Rigidbody>();
@@ -210,6 +220,7 @@ public class PickUpSystem : MonoBehaviour
         }
         objHasBeenThrown = false;
     }
+
 
     private void RepositionItems()
     {

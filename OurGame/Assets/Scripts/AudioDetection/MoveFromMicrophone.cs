@@ -17,7 +17,7 @@ public class MoveFromMicrophone : MonoBehaviour
     private NunAi enemyAI;
     private float NunlookTime;
     public AudioLoudnessDetection detector;
-    private Slider slider;
+    public Slider slider;
     [SerializeField] double _loudRange;
     Image _barColorbg;
     public bool isLoud = false;
