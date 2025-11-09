@@ -14,6 +14,7 @@ public class TutorialNunAI : MonoBehaviour
     public Vector3 OriginalPos;
     private Transform camera;
     private InnerDialouge innerDialouge;
+    private bool hasPanned = false;
     [TextArea]
     public string MyWords;
 
@@ -44,14 +45,15 @@ public class TutorialNunAI : MonoBehaviour
         // Behaviour when nun has spawned
         if (nunSpawned)
         {
-            // Force the camera to look at the nun to create dramatic tension
-            player.GetComponentInChildren<Camera>().transform.LookAt(
-                new Vector3(
+            Vector3 nunDirection = new Vector3(
                     this.gameObject.transform.position.x,
                     this.gameObject.transform.position.y + agent.height,
                     this.gameObject.transform.position.z
-                )
-            );
+                );
+
+            //slowy pan the camera to lock at the nun
+            // Force the camera to look at the nun to create dramatic tension
+            player.GetComponentInChildren<Camera>().transform.LookAt(nunDirection);
 
             // Make the nun face the player
             agent.transform.LookAt(GameObject.FindGameObjectWithTag("PlayerEyes").transform);
@@ -62,6 +64,7 @@ public class TutorialNunAI : MonoBehaviour
                 vignetteControl.ApplyVignette(1);
                 ApplyVignette = true;
             }
+
         }
 
         // Check if the tutorial item has been collected

@@ -3,7 +3,7 @@ using UnityEngine;
 public class VignetteControl : MonoBehaviour
 {
     // Main vignette current intensity
-    private float currentIntensity = 0f;
+    private float currentIntensity;
     // Hidden vignette current intensity
     private float HiddencurrentIntensity = 0f;
 
