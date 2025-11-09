@@ -4,7 +4,7 @@ public class PaperClickHandler : MonoBehaviour
 {
     public GameObject popupPanel; // The panel to show when clicked
     public GameObject collectedPanel; // The panel to show when clicked
-
+    public GameObject paperHolder;
 
     public bool hasBeenPicked = false;
     private Transform player;
@@ -35,7 +35,7 @@ public class PaperClickHandler : MonoBehaviour
     {
         popupPanel.SetActive(false);
         collectedPanel.SetActive(true);
-        gameObject.SetActive(false);
+        gameObject.transform.SetParent(paperHolder.transform);
 
 
     }

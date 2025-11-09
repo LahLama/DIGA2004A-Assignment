@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Other Componets")]
     private CharacterController controller;
-
+    public TextMeshProUGUI debugText;
     private GameObject _cameraTransform;
     private GameObject _OverlaycameraTransform;
     private LookFunction lookFunction;
@@ -201,6 +201,8 @@ public class PlayerMovement : MonoBehaviour
         //Cast a ray above the player that detects if the player can stand or not.
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * underSomething.distance, Color.yellow);
         _isUnderSomething = Physics.Raycast(transform.position, transform.up, out underSomething, 1f);
+
+
     }
 
     private void HandleMovementModifiers()
