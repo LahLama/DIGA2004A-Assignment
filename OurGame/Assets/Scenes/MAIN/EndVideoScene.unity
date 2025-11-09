@@ -322,7 +322,7 @@ MonoBehaviour:
   videoRawImage: {fileID: 200883140}
   videoPlayer: {fileID: 677819268}
   musicSource: {fileID: 298824321}
-  triggerTime: 9.85
+  triggerTime: 15
   nextSceneName: ToBeContinued
 --- !u!4 &298824323
 Transform:
@@ -573,7 +573,7 @@ VideoPlayer:
   m_DataSource: 0
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
-  m_AudioOutputMode: 1
+  m_AudioOutputMode: 2
   m_TargetAudioSources:
   - {fileID: 298824321}
   m_DirectAudioVolumes:
@@ -758,10 +758,10 @@ VideoPlayer:
   m_AspectRatio: 2
   m_DataSource: 0
   m_TimeUpdateMode: 2
-  m_PlaybackSpeed: 0.67
-  m_AudioOutputMode: 2
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 1
   m_TargetAudioSources:
-  - {fileID: 0}
+  - {fileID: 298824321}
   m_DirectAudioVolumes:
   - 0
   m_Url: 
