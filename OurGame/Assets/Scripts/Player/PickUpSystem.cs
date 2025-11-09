@@ -23,6 +23,9 @@ public class PickUpSystem : MonoBehaviour
     private Transform HoldL;
     private PlayerStats playerStats;
     private Transform HoldR;
+    bool swap1Item = false;
+    bool swap2Item = false;
+
 
     [Header("SFX (optional)")]
     [SerializeField] private AudioClip pickupSfx;
@@ -48,6 +51,8 @@ public class PickUpSystem : MonoBehaviour
 
         if (_soundManager == null)
             _soundManager = GameObject.FindAnyObjectByType<SoundManager>();
+
+
     }
 
 
@@ -65,7 +70,8 @@ public class PickUpSystem : MonoBehaviour
         //Only if the player has an open slot then reparent the object to the player
         if (playerHands.childCount > 1)
         {
-            DropItem();
+            // DropItem();
+            return;
         }
         if (_hitPickUp.collider)
         {
@@ -220,26 +226,36 @@ public class PickUpSystem : MonoBehaviour
 
     public void SwapItems()
     {
-        if (playerHands.childCount > 1)
+        if (playerHands.childCount == 1)
         {
-            playerHands.GetChild(1).SetAsFirstSibling();
-            playerHands.GetChild(0).transform.position = HoldR.position;
-            playerHands.GetChild(1).transform.position = HoldL.position;
-
-            // Play swap sound
-            if (_soundManager != null)
-                _soundManager.Play(swapSfx);
-            else if (swapSfx != null)
-                AudioSource.PlayClipAtPoint(swapSfx, transform.position);
+            swap1Item = !swap1Item;
+            if (swap1Item)
+                playerHands.GetChild(0).transform.position = HoldL.position;
+            else if (!swap1Item)
+                playerHands.GetChild(0).transform.position = HoldR.position;
         }
-        else if (playerHands.childCount == 1)
+
+
+        if (playerHands.childCount == 2)
         {
-            playerHands.GetChild(0).transform.position = HoldR.position;
-        }
-        else
-            return;
+            swap2Item = !swap2Item;
 
+            if (swap2Item)
+            {
+                playerHands.GetChild(0).transform.position = HoldL.position;
+                playerHands.GetChild(1).transform.position = HoldR.position;
+            }
+
+            else if (!swap2Item)
+            {
+                playerHands.GetChild(0).transform.position = HoldR.position;
+                playerHands.GetChild(1).transform.position = HoldL.position;
+            }
+
+        }
     }
+
+
     private void SetParentPreserveWorldScale(Transform child, Transform parent, bool worldPositionStays)
     {
         if (child == null)
