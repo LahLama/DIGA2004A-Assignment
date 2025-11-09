@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _sprintInput;
     private bool _crouchInput;
     private Vector3 _velocity;
-    private Vector2 _moveInput;
+    public Vector2 _moveInput;
 
 
 
@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     private LookFunction lookFunction;
     private NunAi enemyAI;
     private int hideLayer;
-    public Animator MoveAnimation;
+
 
     private Interactor _interactor;
     #endregion
@@ -75,18 +75,6 @@ public class PlayerMovement : MonoBehaviour
         HandleMovementModifiers();
         HandleUnderAObject();
         HandleFootstepAudio();
-
-        if (_moveInput.magnitude > 0.1f && PlayerStats.Instance.playerLevel != PlayerStats.PlayerLevel.Cutscene)
-        {
-            MoveAnimation.SetBool("isMovin", true);
-            isMoving = true;
-        }
-        else
-        {
-            MoveAnimation.SetBool("isMovin", false);
-            isMoving = false;
-        }
-
 
 
     }
