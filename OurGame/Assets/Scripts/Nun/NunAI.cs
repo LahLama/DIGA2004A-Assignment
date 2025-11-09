@@ -31,7 +31,7 @@ public class NunAi : MonoBehaviour
     public float NunlookTime = 5;              // Duration for looking at player
     private float _agentSpeed;                 // Original agent speed
     public bool _isGracePeriod = true;         // Grace period where nun does not chase
-    public float graceDelay = 15;
+    public float graceDelay = 25;
 
     private NunDoors nunDoors;                 // Handles door interactions
     private NunCatch nunCatch;                 // Handles catching player

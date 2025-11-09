@@ -66,7 +66,7 @@ public class Interactor : MonoBehaviour
     [Header("InteractionVar")]
     public float _interactionDelay = 0f;
     private float _maxInteractionDelay = 0.5f;
-    private float _interactionRange = 1.1f;
+    private float _interactionRange = 1.5f;
     public float hideDuration = 5f;
     private Collider _currentHideObj;
     RaycastHit lineCasthit;
