@@ -7,7 +7,7 @@ public class TutorialNunAI : MonoBehaviour
     private NunPatrol nunPatrol;
     private NavMeshAgent agent;
     private VignetteControl vignetteControl;
-    private bool nunSpawned = false;
+    public bool nunSpawned = false;
     private Tutorial tutorial;
     private TutorialPickUp tutorialPickUp;
     private Transform player;
@@ -109,6 +109,7 @@ public class TutorialNunAI : MonoBehaviour
         // Move nun to defined spawn point instantly
         agent.Warp(NunSpawnPoint.position);
 
+        FindAnyObjectByType<NunSoundTrigger>().PlayNunMusic();
         nunSpawned = true;
         innerDialouge.text.text = MyWords;
         innerDialouge.InnerDialougeON();

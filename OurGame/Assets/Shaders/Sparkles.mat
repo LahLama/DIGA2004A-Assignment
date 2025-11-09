@@ -48,9 +48,10 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _TwinkleSpeed: 5
+    - _TwinkleSpeed: 1
     - _Twinkle_Amount: 1
-    m_Colors: []
+    m_Colors:
+    - _TwinkleColour: {r: 0.2905661, g: 0.26915523, b: 0.0060306103, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5007459808191933791

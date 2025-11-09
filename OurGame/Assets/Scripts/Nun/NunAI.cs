@@ -75,6 +75,7 @@ public class NunAi : MonoBehaviour
             if (isChasing)
             {
                 rumbler.RumbleStream(0.2f, 0.5f, 0.25f);
+                FindAnyObjectByType<NunSoundTrigger>().PlayNunMusic();
             }
             else if (!isChasing)
             {
