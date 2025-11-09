@@ -41,7 +41,7 @@ public class NunSoundTrigger : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.position);
 
         // If player is within trigger distance and sound hasn't played yet
-        if (distance <= triggerDistance && !hasPlayed && GameObject.FindObjectOfType<NunAi>().inLOS)
+        if (distance <= triggerDistance && !hasPlayed && GameObject.FindFirstObjectByType<NunAi>().inLOS)
         {
             npcAudioSource.clip = npcSound;   // Assign the sound clip
             npcAudioSource.Play();            // Play the sound

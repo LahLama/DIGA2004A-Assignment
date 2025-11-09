@@ -16,7 +16,6 @@ public class NunPatrol : MonoBehaviour
     public int currentWayPointIndex = 0;    // Tracks which waypoint is the next destination
     bool isWaitingAtWaypoint = false;       // Patrolling pause state
 
-    public bool _isGracePeriod = true;      // Grace period means nun does not chase the player yet
     public float WaitPointDelay = 5;        // Time spent at each waypoint before moving on
 
     void Awake()
@@ -56,18 +55,18 @@ public class NunPatrol : MonoBehaviour
         agent.SetDestination(waypoints[currentWayPointIndex].position);
     }
 
-    public void StartGracePeriod()
-    {
-        // Temporary calm period before the nun can chase
-        _isGracePeriod = true;
-        Invoke("EndGracePeriod", 15); // Automatically end after a delay
-    }
+    /* public void StartGracePeriod()
+     {
+         // Temporary calm period before the nun can chase
+         _isGracePeriod = true;
+         Invoke("EndGracePeriod", 15); // Automatically end after a delay
+     }
 
-    private void EndGracePeriod()
-    {
-        // Nun becomes active and dangerous once more
-        _isGracePeriod = false;
-    }
+     private void EndGracePeriod()
+     {
+         // Nun becomes active and dangerous once more
+         _isGracePeriod = false;
+     }*/
 
     IEnumerator WaitToGoToNextPoint(float delay)
     {

@@ -6,6 +6,7 @@ public class TutForceLook : MonoBehaviour
     public DialougeState startDialougeScript;
     public Transform girlEyes;
     private Transform camera;
+    public Animator GirlAnim;
     void Awake()
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera").transform;
@@ -29,6 +30,9 @@ public class TutForceLook : MonoBehaviour
         camera.rotation = Quaternion.Euler(euler.x, euler.y, 0);
         //Set to default so player cant click on the girl again.
         girlEyes.parent.gameObject.layer = 0;
+        GirlAnim.SetTrigger("trigAnim");
+
         this.gameObject.SetActive(false);
+
     }
 }

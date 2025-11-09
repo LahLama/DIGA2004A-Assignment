@@ -199,7 +199,7 @@ public class PickUpSystem : MonoBehaviour
 
     }
 
-    private IEnumerator ThrowCooldown(GameObject gameObject)
+    public IEnumerator ThrowCooldown(GameObject gameObject)
     {
         float timer = 5f;
         while (timer > 0f)

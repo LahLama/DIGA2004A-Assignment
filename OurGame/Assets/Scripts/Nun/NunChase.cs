@@ -15,7 +15,7 @@ public class NunChase : MonoBehaviour
 
     public float NunlookTime = 2;          // Duration nun keeps chasing
 
-    public bool los;                       // Stores whether player is in line of sight
+    bool los;                       // Stores whether player is in line of sight
     bool isLoud;
     void Awake()
     {
@@ -29,10 +29,11 @@ public class NunChase : MonoBehaviour
     }
 
     public void ChasePlayer()
-    {
+    { // Update line of sight flag
+        los = GetComponent<NunAi>().PlayerInLineOfSight();
         isLoud = moveFromMicrophone.isLoud;
         // Check if the player is on the correct layer and is in line of sight
-        if (player.gameObject.layer == LayerMask.NameToLayer("Player") && PlayerInLineOfSight() || isLoud)
+        if (player.gameObject.layer == LayerMask.NameToLayer("Player") && los || isLoud)
         {
             // Increase agent speed during chase
             agent.speed = _agentSpeed * (4 / 3.0f);
@@ -55,8 +56,7 @@ public class NunChase : MonoBehaviour
             StopCoroutine(ChaseTime(NunlookTime));
         }
 
-        // Update line of sight flag
-        los = PlayerInLineOfSight();
+
     }
 
     private IEnumerator ChaseTime(float delay)
@@ -76,24 +76,7 @@ public class NunChase : MonoBehaviour
         }
     }
 
-    public bool PlayerInLineOfSight()
-    {
-        Vector3 directionToPlayer = player.position - agent.transform.position;
-        float distanceToPlayer = directionToPlayer.magnitude;
 
-        // Raycast from nun to player, considering obstacles
-        RaycastHit hit;
-        if (Physics.Raycast(agent.transform.position, directionToPlayer.normalized, out hit, distanceToPlayer))
-        {
-            // Only return true if the first object hit is the player
-            if (hit.transform == player)
-            {
-                return true;
-            }
-        }
-
-        return false; // Player blocked or not hit
-    }
 
     private void OnDrawGizmosSelected()
     {

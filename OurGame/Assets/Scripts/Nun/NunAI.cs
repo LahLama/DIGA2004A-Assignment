@@ -21,6 +21,7 @@ public class NunAi : MonoBehaviour
     private Interactor _interactor;            // Tracks player hiding state
     private VignetteControl vignetteControl;   // Controls visual vignette effects
 
+
     // Detection and range variables
     public float sightRange, catchRange;       // Ranges for sight and catching
     public bool playerInSightRange, playerInCatchRange; // Booleans tracking if player is detected
@@ -30,6 +31,7 @@ public class NunAi : MonoBehaviour
     public float NunlookTime = 5;              // Duration for looking at player
     private float _agentSpeed;                 // Original agent speed
     public bool _isGracePeriod = true;         // Grace period where nun does not chase
+    public float graceDelay = 15;
 
     private NunDoors nunDoors;                 // Handles door interactions
     private NunCatch nunCatch;                 // Handles catching player
@@ -63,26 +65,26 @@ public class NunAi : MonoBehaviour
         playerInCatchRange = Physics.CheckSphere(transform.position, catchRange, playerLayer);
 
         // Currently assumes line of sight is always true
-        inLOS = true;
-        isChasing = playerInSightRange && !playerInCatchRange && inLOS;
+        inLOS = PlayerInLineOfSight();
+        isChasing = playerInSightRange && !playerInCatchRange && inLOS || isLoud;
 
         // Only act if grace period has ended
         if (_isGracePeriod == false)
         {
             // Handle controller rumble
-            if (isLoud || isChasing)
+            if (isChasing)
             {
                 rumbler.RumbleStream(0.2f, 0.5f, 0.25f);
             }
-            else if (!isLoud && !isChasing)
+            else if (!isChasing)
             {
                 rumbler.StopRumbleSteam();
             }
 
             // Patrolling, chasing, and catching logic
             if (!playerInSightRange && !playerInCatchRange) nunPatrol.Patrol();
-            if ((isChasing || isLoud) && !onHiddenCooldownTime) nunChase.ChasePlayer();
-            if (playerInSightRange && playerInCatchRange) nunCatch.CatchPlayer();
+            if ((isChasing) && !onHiddenCooldownTime) nunChase.ChasePlayer();
+            if (playerInSightRange && playerInCatchRange && inLOS) nunCatch.CatchPlayer();
         }
 
         // Handle player hiding cooldown
@@ -116,5 +118,37 @@ public class NunAi : MonoBehaviour
         }
 
         onHiddenCooldownTime = false; // Reset cooldown flag
+    }
+
+    public void StartGracePeriod()
+    {
+        // Temporary calm period before the nun can chase
+        _isGracePeriod = true;
+        Invoke("EndGracePeriod", graceDelay); // Automatically end after a delay
+    }
+
+    private void EndGracePeriod()
+    {
+        // Nun becomes active and dangerous once more
+        _isGracePeriod = false;
+    }
+
+    public bool PlayerInLineOfSight()
+    {
+        Vector3 directionToPlayer = player.position - agent.transform.position;
+        float distanceToPlayer = directionToPlayer.magnitude;
+
+        // Raycast from nun to player, considering obstacles
+        RaycastHit hit;
+        if (Physics.Raycast(agent.transform.position, directionToPlayer.normalized, out hit, distanceToPlayer))
+        {
+            // Only return true if the first object hit is the player
+            if (hit.transform == player)
+            {
+                return true;
+            }
+        }
+
+        return false; // Player blocked or not hit
     }
 }

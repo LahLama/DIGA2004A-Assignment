@@ -84,7 +84,7 @@ public class TutorialNunAI : MonoBehaviour
         innerDialouge.InnerDialougeOFF();
         tutorial.EndTutorial();
 
-        nunPatrol.StartGracePeriod();
+        GetComponent<NunAi>().StartGracePeriod();
         GetComponent<NunAi>()._isGracePeriod = true;
         player.GetComponent<Awakening>().enabled = true;
     }

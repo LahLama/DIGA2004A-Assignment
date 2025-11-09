@@ -29,6 +29,8 @@ public class PlayerInteractionFallObject : MonoBehaviour
                 // Warn if the sound clip couldn't be found
                 Debug.LogWarning($"Sound clip '{fallSoundName}' not found in Resources.");
             }
+            GameObject.FindFirstObjectByType<PickUpSystem>().ThrowCooldown(this.gameObject);
+            this.enabled = false;
         }
     }
 }
