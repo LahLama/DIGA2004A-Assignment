@@ -20,13 +20,19 @@ public class MoveFromAudioClip : MonoBehaviour
     public float threshold = 0.1f;
     public float maxTime = 0.1f;
     public AudioLoudnessDetection detector;
-    public GameObject[] Soundtrack;
+    public Transform SoundtrackHolder;
+    public List<Transform> Soundtrack;
     private float itemTimer = 0f;
     private int index;
     private float intialYpos;
 
     void Awake()
     {
+
+
+
+        Debug.Log("COUNT: " + Soundtrack.Count);
+
         //maxTime = source.clip.length / detector.sampleWindow;
         Debug.Log("MaxTime: " + maxTime);
         intialYpos = Soundtrack[0].transform.position.y;
@@ -47,7 +53,7 @@ public class MoveFromAudioClip : MonoBehaviour
             if (loudness > threshold && itemTimer > maxTime)
             {
                 // Reset pos after a few seconds:
-                ResetPos(YPos, loudness);
+                // ResetPos(YPos, loudness);
                 float newYPos = YPos + loudness;
                 if (newYPos > maxHeight)
                 {
@@ -59,11 +65,11 @@ public class MoveFromAudioClip : MonoBehaviour
                         new Vector2(Soundtrack[index].transform.position.x, newYPos),
                         loudness);
 
-                //RightSlide(index, loudness);
-                //LeftSlide(index, loudness);
+                RightSlide(index, loudness);
+                LeftSlide(index, loudness);
                 index++;
 
-                if (index >= Soundtrack.Length)
+                if (index >= Soundtrack.Count)
                     index = 0;
 
 
@@ -81,7 +87,7 @@ public class MoveFromAudioClip : MonoBehaviour
     {
         if (index == 0)
         {
-            int new_index = Soundtrack.Length - 1;
+            int new_index = Soundtrack.Count - 1;
             Soundtrack[new_index].transform.position = Vector2.Lerp(
                             new Vector2(Soundtrack[new_index].transform.position.x, Yposition),
                             new Vector2(Soundtrack[new_index].transform.position.x, intialYpos),
@@ -103,7 +109,9 @@ public class MoveFromAudioClip : MonoBehaviour
 
     private void RightSlide(int StartIndex, float loudness)
     {
-        float fraction = 1.0f;
+
+        float denom = Soundtrack.Count;
+        float numer = denom - 1;
         float HeightOfConcern = Soundtrack[StartIndex].transform.position.y;
         // Debug.Log("StartIndex: " + StartIndex);
         // Debug.Log("Height 0 : " + HeightOfConcern);
@@ -111,21 +119,23 @@ public class MoveFromAudioClip : MonoBehaviour
         // Debug.Log("Height 2 : " + HeightOfConcern * 1 / 3);
         // Debug.Log("Height 3 : " + HeightOfConcern * 1 / 4);
 
-        for (int i = StartIndex + 1; i <= Soundtrack.Length - 1; i++)
+        for (int i = StartIndex + 1; i <= Soundtrack.Count - 1; i++)
         {
             var track = Soundtrack[i];
             track.transform.position = Vector2.Lerp(
                                      new Vector2(track.transform.position.x, track.transform.position.y),
-                                     new Vector2(track.transform.position.x, HeightOfConcern * (1 / fraction)),
+                                     new Vector2(track.transform.position.x, HeightOfConcern * (numer / denom)),
                                      loudness);
-            fraction++;
+            numer--;
             // Debug.Log("Fraction: " + fraction + " affecting the " + i + " index.");
         }
     }
 
     private void LeftSlide(int StartIndex, float loudness)
     {
-        float fraction = 1.0f;
+        float denom = Soundtrack.Count;
+        float numer = denom - 1;
+
         float HeightOfConcern = Soundtrack[StartIndex].transform.position.y;
         // Debug.Log("StartIndex: " + StartIndex);
         // Debug.Log("Height 0 : " + HeightOfConcern);
@@ -138,9 +148,9 @@ public class MoveFromAudioClip : MonoBehaviour
             var track = Soundtrack[i];
             track.transform.position = Vector2.Lerp(
                                      new Vector2(track.transform.position.x, track.transform.position.y),
-                                     new Vector2(track.transform.position.x, HeightOfConcern * (1 / fraction)),
+                                     new Vector2(track.transform.position.x, HeightOfConcern * (numer / denom)),
                                      loudness);
-            fraction++;
+            numer--;
             // Debug.Log("Fraction: " + fraction + " affecting the " + i + " index.");
         }
     }
