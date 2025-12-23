@@ -67,6 +67,7 @@ public class MoveFromAudioClip : MonoBehaviour
 
                 RightSlide(index, loudness);
                 LeftSlide(index, loudness);
+
                 index++;
 
                 if (index >= Soundtrack.Count)
@@ -154,4 +155,5 @@ public class MoveFromAudioClip : MonoBehaviour
             // Debug.Log("Fraction: " + fraction + " affecting the " + i + " index.");
         }
     }
+
 }

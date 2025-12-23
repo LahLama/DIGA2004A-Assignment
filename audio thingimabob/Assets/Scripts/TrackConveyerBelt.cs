@@ -17,6 +17,7 @@ public class TrackConveyerBelt : MonoBehaviour
         foreach (var item in Soundtrack)
         {
             item.transform.position -= new Vector3(moveAmount, 0, 0);
+
         }
     }
 
