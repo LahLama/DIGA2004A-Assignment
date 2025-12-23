@@ -45,7 +45,7 @@ public class AudioLoudnessDetection : MonoBehaviour
         // array for the data
         // postion to start getting data
         clip.GetData(waveData, startPosition);
-        // clip.GetData(visualSegments, startPosition);
+        clip.GetData(AverageSamples, startPosition);
 
 
         //Get loudness

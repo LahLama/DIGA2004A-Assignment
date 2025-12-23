@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 /*
     Title: How to Use Your Voice as Input in Unity - Microphone and Audio Loudness Detection
@@ -15,8 +16,9 @@ public class MoveFromMicrophone : MonoBehaviour
     private float Prevloudness;
     private float loudness;
     public AudioLoudnessDetection detector;
-
     public bool isLoud = false;
+
+    public List<GameObject> TrackObjects;
 
 
     void Update()
