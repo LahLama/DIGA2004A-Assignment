@@ -47,7 +47,7 @@ public class MoveFromAudioClip : MonoBehaviour
             if (loudness > threshold && itemTimer > maxTime)
             {
                 // Reset pos after a few seconds:
-                // ResetPos(YPos, loudness);
+                ResetPos(YPos, loudness);
                 float newYPos = YPos + loudness;
                 if (newYPos > maxHeight)
                 {
@@ -59,8 +59,8 @@ public class MoveFromAudioClip : MonoBehaviour
                         new Vector2(Soundtrack[index].transform.position.x, newYPos),
                         loudness);
 
-                RightSlide(index, loudness);
-                LeftSlide(index, loudness);
+                //RightSlide(index, loudness);
+                //LeftSlide(index, loudness);
                 index++;
 
                 if (index >= Soundtrack.Length)

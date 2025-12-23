@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class TrackTeleport : MonoBehaviour
 {
-    public GameObject[] soundtrack;
+
     public GameObject BeltStart;
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnTriggerExit2D(Collider2D collider)
     {
-        collision.collider.transform.position = new Vector2(BeltStart.transform.position.x, 0);
+        Debug.Log("Name: " + collider);
+        collider.transform.position = new Vector2(BeltStart.transform.position.x, 0);
     }
 
 
