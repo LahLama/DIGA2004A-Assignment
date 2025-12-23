@@ -14,49 +14,32 @@ public class MoveFromMicrophone : MonoBehaviour
     public float threshold = 0.3f;
     private float Prevloudness;
     private float loudness;
-    private NunAi enemyAI;
-    private float NunlookTime;
     public AudioLoudnessDetection detector;
-    public Slider slider;
-    [SerializeField] double _loudRange;
-    public Image _barColorbg;
+
     public bool isLoud = false;
-    void Awake()
-    {
-        slider = GetComponent<Slider>();
-        _barColorbg = this.transform.Find("Fill Area").Find("Fill").GetComponent<Image>();
-
-        _loudRange = (slider.maxValue - threshold) * (60.0f / 100.0f);
-        slider.value = 0;
-        enemyAI = GameObject.FindGameObjectWithTag("NunEnemy").GetComponent<NunAi>();
-    }
-
 
 
     void Update()
     {
-        NunlookTime = enemyAI.NunlookTime;
-        loudness = detector.GetLoudnessFromMicrophone() * sensibility;
 
-        if (loudness > threshold)
-            loudness = loudness - threshold;
+        /* loudness = detector.GetLoudnessFromMicrophone() * sensibility;
 
-        slider.value = Mathf.Lerp(loudness, Prevloudness, 0.5f);
+         if (loudness > threshold)
+             loudness = loudness - threshold;
 
+         if (slider.value > _loudRange)
+         {
+             _barColorbg.color = new Color(1f, 0.5f, 0.5f, 1f);
+             isLoud = true;
+             StartCoroutine(Cooldown(NunlookTime));
+         }
+         else
+         {
+             _barColorbg.color = new Color(0.5f, 0.5f, 1f, 1f); ;
 
-        if (slider.value > _loudRange)
-        {
-            _barColorbg.color = new Color(1f, 0.5f, 0.5f, 1f);
-            isLoud = true;
-            StartCoroutine(Cooldown(NunlookTime));
-        }
-        else
-        {
-            _barColorbg.color = new Color(0.5f, 0.5f, 1f, 1f); ;
+         }
 
-        }
-
-        Prevloudness = loudness;
+         Prevloudness = loudness;*/
 
     }
 
