@@ -14,13 +14,11 @@ using UnityEngine.UIElements;
 public class MoveFromAudioClip : MonoBehaviour
 {
     public AudioSource source;
-    public float minHeight;
     public float maxHeight;
     public float sensibility = 100;
     public float threshold = 0.1f;
     public float maxTime = 0.1f;
     public AudioLoudnessDetection detector;
-    public Transform SoundtrackHolder;
     public List<Transform> Soundtrack;
     private float itemTimer = 0f;
     private int index;
@@ -28,13 +26,6 @@ public class MoveFromAudioClip : MonoBehaviour
 
     void Awake()
     {
-
-
-
-        Debug.Log("COUNT: " + Soundtrack.Count);
-
-        //maxTime = source.clip.length / detector.sampleWindow;
-        Debug.Log("MaxTime: " + maxTime);
         intialYpos = Soundtrack[0].transform.position.y;
     }
 
@@ -42,44 +33,58 @@ public class MoveFromAudioClip : MonoBehaviour
     {
         float loudness = detector.GetLoudnessFromAudioClip(source.timeSamples, source.clip) * sensibility;
 
+        //if (loudness > threshold)
+        // {
+        //     // Debug.Log("Loudness: " + loudness);
+        //     // Debug.Log("Index: " + Soundtrack[index].name);
+
+
+        //     Soundtrack[0].transform.position = new Vector2(Soundtrack[0].transform.position.x, intialYpos + loudness);
+
+        //     for (int i = 1; i < Soundtrack.Count; i++)
+        //     {
+        //         Soundtrack[i].position = new Vector2(Soundtrack[i].position.x, Soundtrack[0].position.y * ((float)Soundtrack.Count) / (float)i);
+        //         Debug.Log(Soundtrack[i].position);
+        //     }
+
+        // }
+
+
+
+        float YPos = Soundtrack[index].transform.position.y;
+        itemTimer += Time.deltaTime;
+
         if (loudness > threshold)
         {
-            // Debug.Log("Loudness: " + loudness);
-            // Debug.Log("Index: " + Soundtrack[index].name);
-
-            float YPos = Soundtrack[index].transform.position.y;
-            itemTimer += Time.deltaTime;
-
-            if (loudness > threshold && itemTimer > maxTime)
+            // Reset pos after a few seconds:
+            // ResetPos(YPos, loudness);
+            float newYPos = YPos + loudness;
+            if (newYPos > maxHeight)
             {
-                // Reset pos after a few seconds:
-                // ResetPos(YPos, loudness);
-                float newYPos = YPos + loudness;
-                if (newYPos > maxHeight)
-                {
-                    newYPos = maxHeight;
-                }
-                Soundtrack[index].transform.position =
-                    Vector2.Lerp(
-                        new Vector2(Soundtrack[index].transform.position.x, YPos),
-                        new Vector2(Soundtrack[index].transform.position.x, newYPos),
-                        loudness);
-
-                RightSlide(index, loudness);
-                LeftSlide(index, loudness);
-
-                index++;
-
-                if (index >= Soundtrack.Count)
-                    index = 0;
-
-
-
-                itemTimer = 0;
-                return;
+                newYPos = maxHeight;
             }
+            Soundtrack[index].transform.position =
+                Vector2.Lerp(
+                    new Vector2(Soundtrack[index].transform.position.x, YPos),
+                    new Vector2(Soundtrack[index].transform.position.x, newYPos),
+                    loudness);
 
+            //RightSlide(index, loudness);
+            //LeftSlide(index, loudness);
+            ResetPos(YPos, loudness);
+
+            index++;
+
+            if (index >= Soundtrack.Count)
+                index = 0;
+
+
+
+            itemTimer = 0;
+            return;
         }
+
+
         else
             loudness = 0;
     }
@@ -107,6 +112,8 @@ public class MoveFromAudioClip : MonoBehaviour
         }
 
     }
+
+
 
     private void RightSlide(int StartIndex, float loudness)
     {
